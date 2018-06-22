@@ -1,0 +1,103 @@
+#This is the translation file where you can define your own translations, aliases, prefixes and much much more!
+#100% of plugin messages are fully translatable!
+#You can use in some places special variables like %command%, %usage% etc. but it works only for certian entries where variables list was defined in a comment.
+#Have on mind that if you want to do a "hard-enter" you need to use \n variable and surround your text with double quotes!
+
+
+
+
+################################### CHAT & PREFIXES
+CONSOLE_LOG_COLOR_PREFIX: '&7'
+ERROR_COLOR_PREFIX: '&4'
+WARNING_COLOR_PREFIX: '&cHey! &e'
+INFO_COLOR_PREFIX: '&2'
+ANNOUNCEMENT_COLOR_PREFIX: '&a'
+DEBUG_COLOR_PREFIX: '&3'
+
+
+
+################################### SYSTEM
+# %number% variable available
+LANGUAGE_STATEMENTS_LOADED: '&a%number% &2language statements loaded.'
+MISSING_LANGUAGE_STATEMENTS: '%number% missing language statements!'
+
+# %file% variable available
+OLD_CONFIG: 'You are working on an old config. Please remove config named (%file%) and let plugin generate it afresh for full plugin functionality.'
+
+# %lang% variable available
+LANGUAGE_NOT_SUPPORTED: 'Selected language (%lang%) is not supported or is filled incorrectly.. Using english as default.'
+
+DEPENDENCY_CHECKING: 'Checking dependencies..'
+
+# %plugins% variable available
+PLUGINS_HOOKED: '&aHooked plugins: %plugins%'
+
+PLUGIN_ENABLED: '&aPVP&2Controll &3by IdkMan enabled!'
+PLUGIN_DISABLED: '&7PVPControl disabled.'
+RELOAD_COMPLETE: '&aReloaded!'
+
+
+
+################################### PVP
+YOU_ARE_IN_PVP: "&4&l&m-&c&l&m----------------&4&l&m-\n&4Hey! &cYou are in PVP!"
+YOU_ARE_NOT_IN_PVP: "&2&l&m-&a&l&m----------------&2&l&m-\n&aHey! &2You are safe now!"
+COMMANDS_NOT_ALLOWED_DURING_PVP: 'Commands are not allowed during PVP!'
+THIS_COMMAND_IS_NOT_ALLOWED_DURING_PVP: 'This command is not allowed during PVP!'
+
+# %player% variable available
+PLAYER_LOG_OUT_DURING_PVP_SERVER_BROADCAST: '&2Player &5%player% &2logout during PVP! &aNo mercy!'
+
+TELEPORTING_NOT_ALLOWED_DURING_PVP: 'Teleporting is not allowed during PVP!'
+CHORUS_FRUIT_NOT_ALLOWED_DURING_PVP: 'Chorus fruit is not allowed during PVP!'
+ENDER_PEARL_NOT_ALLOWED_DURING_PVP: 'Ender pearl is not allowed during PVP!'
+PVP_MODE_ON: '&4PVP mode &cON!'
+PVP_MODE_OFF: '&2PVP mode &aOFF!'
+
+
+
+################################### COMMANDS
+
+INCORRECT_COMMAND_SYNTAX: 'Incorrect command syntax. Type /k help to see full list of commands.'
+COMMAND_NOT_ENOUGH_ARGUMENTS: "Not enough arguments for this command. Usage:\n %usage%"
+COMMAND_TOO_MUCH_ARGUMENTS: "Too much arguments for /k %argument% command. Usage:\n %usage%"
+COMMAND_NOT_ALLOWED_FOR_CONSOLE: 'This command cannot be executed from console.'
+COMMAND_NO_PERMISSIONS: 'You dont have rights to do this!'
+
+#You can use following variables in almost whole section below:
+# %argument%, %alias%, %usage%, %permission%
+COMMAND_RELOAD: 'reload'
+COMMAND_RELOAD_ALIAS: ''
+COMMAND_RELOAD_USAGE: '&6/pvpc reload &ereloading whole configuration.'
+COMMAND_RELOAD_RELOADED_SUCCESSFULLY: 'Successfully reloaded.'
+
+COMMAND_HELP: 'help'
+COMMAND_HELP_ALIAS: ''
+COMMAND_HELP_USAGE: '&6/pvpc help <?> &eshows specific page of help.'
+
+#/pvp command:
+# %seconds% variable available
+YOU_ARE_STILL_ON_PVP: '&cYou are still on PVP: %seconds% sec left!'
+
+YOU_ARE_NOT_ON_PVP: '&aYou are not on PVP. Stay cool!'
+
+
+
+################################### OTHER
+THEMATIC_BREAK: '&2&l&m-&a&l&m----------------------------------&2&l&m-'
+
+# %page% variable available
+HELP_TITLE: '&3&l>&3> &6Available commands: &6&o[page %page%]'
+
+# %next_page% variable available
+HELP_NEXT_PAGE_INFO: 'Type &6/k help %next_page% &eto see next page.'
+HELP_LAST_PAGE_INFO: 'This is the last page.'
+
+# %usage% variable available
+HELP_INCORRECT_PAGE: "Specified page is incorrect! \nUsage: %usage%"
+
+
+
+
+
+
+

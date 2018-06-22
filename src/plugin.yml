@@ -1,0 +1,54 @@
+name: PVPControl
+main: com.gmail.nowyarek.pvpcontrol.PVPControl
+version: 0.01
+author: IdkMan
+
+commands:
+  pvpc:
+    description: Main command of PVPControll.
+    aliases: [pvpm, pvpcontrol]
+  pvp:
+    decription: Command to check or switch PVP Mode.
+    
+permissions:
+  pvpc.admin:
+    decription: Grants all privileges.
+    children:
+      pvpc.command.pvp.admin: true
+      pvpc.command.pvpc: true
+      pvpc.command.pvpc.help: true
+      pvpc.command.pvpc.reload: true
+      pvpc.bypass.pvpmode: true
+      pvpc.bypass.fly: true
+      pvpc.bypass.commands: true
+      pvpc.bypass.invisibility: true
+  pvpc.command.pvp:
+    description: Permission for /pvp
+    default: true
+  pvpc.command.pvp.admin:
+    description: Permission for /pvp (switching)
+    children:
+      pvpc.command.pvp: true
+  pvpc.command.pvpc:
+    description: Permission for /pvpc
+  pvpc.command.pvpc.help:
+    description: Permission for /pvpc help
+  pvpc.command.pvpc.reload:
+    description: Permission for /pvpc reload
+  pvpc.bypass.fly:
+    description: Bypasses fly off on pvp
+  pvpc.bypass.commands:
+    description: Bypasses commands block on pvp
+  pvpc.bypass.invisibility:
+    description: Bypasses invisibility off on pvp
+  pvpc.bypass.teleports:
+    description: Bypasses teleports on pvp
+    children:
+      pvpc.bypass.chorusfruit: true
+      pvpc.bypass.enderpearl: true
+  pvpc.bypass.chorusfruit:
+    description: Bypasses chorus fruit on pvp
+  pvpc.bypass.enderpearl:
+    description: Bypasses ender pearl on pvp
+    
+    
