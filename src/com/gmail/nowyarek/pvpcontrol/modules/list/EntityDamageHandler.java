@@ -46,6 +46,8 @@ public class EntityDamageHandler extends Module implements Listener {
 				return;
 		}
 		
+		if(e.getEntity().getUniqueId().compareTo(e.getDamager().getUniqueId())==0) return;
+		
 		if(victim.hasMetadata("pvpmode.admin")) {
 			e.setCancelled(true);
 			return;
