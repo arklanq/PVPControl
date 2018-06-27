@@ -5,4 +5,4 @@ Want to block certain commands during PVP?
 Tired of finding the right plugin?  
 #### Take a sit and watch out this plugin! :D
 
-[Config can be found here](PVPControl/src/settings.yml)
+[Config can be found here](src/settings.yml)
