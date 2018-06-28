@@ -1,6 +1,6 @@
 name: PVPControl
 main: com.gmail.nowyarek.pvpcontrol.PVPControl
-version: 0.01
+version: 1.1
 author: IdkMan
 
 commands:
