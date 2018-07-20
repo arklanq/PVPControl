@@ -36,6 +36,10 @@ PLUGIN_ENABLED: '&aPVP&2Controll &3by IdkMan enabled!'
 PLUGIN_DISABLED: '&7PVPControl disabled.'
 RELOAD_COMPLETE: '&aReloaded!'
 
+# %plugins% variable available
+PLUGIN_HOOKED_BUT_WAS_NOT_RECOGNIZED: 'Plugin %plugin% was hooked, but seemes that it is not recognized at all. Maybe you are using unsupported version?'
+GOD_MODE_HAS_BEEN_DISABLED: '&7God mode &cdisabled'
+
 
 
 ################################### PVP

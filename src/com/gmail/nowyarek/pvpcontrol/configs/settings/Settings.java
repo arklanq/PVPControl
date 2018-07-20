@@ -18,6 +18,7 @@ public class Settings {
 	public Other other;
 	public PVP pvp;
 	public Performance performance;
+	public Integration integrationSection;
 	
 	public Settings(FileManager filemanager){
 		this.filemanager = filemanager;
@@ -41,6 +42,7 @@ public class Settings {
 		other = new Other(settings, defaults);
 		pvp = new PVP(settings, defaults);
 		performance = new Performance(settings, defaults);
+		integrationSection = new Integration(settings, defaults);
 	}
 }
 

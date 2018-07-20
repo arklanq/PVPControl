@@ -11,8 +11,14 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
+import com.gmail.nowyarek.pvpcontrol.basic.Msg;
+import com.gmail.nowyarek.pvpcontrol.basic.Text;
 import com.gmail.nowyarek.pvpcontrol.configs.ConfigsAccess;
 import com.gmail.nowyarek.pvpcontrol.exceptions.ModuleException;
+import com.gmail.nowyarek.pvpcontrol.integration.DependencyType;
+import com.gmail.nowyarek.pvpcontrol.integration.Integration;
 import com.gmail.nowyarek.pvpcontrol.modules.Module;
 import com.gmail.nowyarek.pvpcontrol.pvpmode.PVPModeHandler;
 
@@ -20,14 +26,19 @@ public class EntityDamageHandler extends Module implements Listener {
 	private Plugin plugin;
 	private ConfigsAccess configsAccess;
 	private PVPModeHandler pvpModeHandler;
+	private final Essentials essentials;
 	
-	public EntityDamageHandler(Plugin plugin, ConfigsAccess configsAccess, PVPModeHandler pvpModeHandler) {
+	public EntityDamageHandler(Plugin plugin, ConfigsAccess configsAccess, PVPModeHandler pvpModeHandler, Integration integration) {
 		this.plugin = plugin;
 		this.configsAccess = configsAccess;
 		this.pvpModeHandler = pvpModeHandler;
+		if(integration.check(DependencyType.ESSENTIALSX)) {
+			this.essentials = integration.getEssentials();
+		} else
+			this.essentials = null;
 	}
 	
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
 		
 		if(!(e.getEntity() instanceof Player)) return;
@@ -57,17 +68,17 @@ public class EntityDamageHandler extends Module implements Listener {
 			return;
 		}
 		
-		if(pvpModeHandler.getPlayerPVPStartTime(victim.getUniqueId())!=0) {
-			pvpModeHandler.updatePlayerPVPStartTime(victim.getUniqueId());
-		}else {
-			pvpModeHandler.turnOnCombatModeForPlayer(victim);
+		if(essentials!=null && configsAccess.settings.integrationSection.isDisableEssentialsGodModeOnHit()) {
+			User user = essentials.getUser(victim.getUniqueId());
+			if(user.isGodModeEnabled()) {
+				user.setGodModeEnabled(false);
+				e.setCancelled(false);
+				victim.sendMessage(Msg.info(Text.GOD_MODE_HAS_BEEN_DISABLED));
+			}
 		}
 		
-		if(pvpModeHandler.getPlayerPVPStartTime(damager.getUniqueId())!=0) {
-			pvpModeHandler.updatePlayerPVPStartTime(damager.getUniqueId());
-		}else {
-			pvpModeHandler.turnOnCombatModeForPlayer(damager);
-		}
+		if(e.isCancelled())
+			return;
 		
 		if(configsAccess.settings.pvp.getTurnOffFlyOnPVP()) {
 			if(!victim.hasPermission("pvpc.bypass.fly")) {
@@ -83,6 +94,7 @@ public class EntityDamageHandler extends Module implements Listener {
 				damager.setAllowFlight(false);
 			}
 		}
+		
 		if(configsAccess.settings.pvp.getDisableInvisibilityOnPVP()) {
 			if(victim.hasPotionEffect(PotionEffectType.INVISIBILITY) 
 					&& !isVanished(victim) 
@@ -94,6 +106,18 @@ public class EntityDamageHandler extends Module implements Listener {
 					&& !victim.hasPermission("pvpc.bypass.invisibility")) {
 				damager.removePotionEffect(PotionEffectType.INVISIBILITY);
 			}
+		}
+		
+		if(pvpModeHandler.getPlayerPVPStartTime(victim.getUniqueId())!=0) {
+			pvpModeHandler.updatePlayerPVPStartTime(victim.getUniqueId());
+		}else {
+			pvpModeHandler.turnOnCombatModeForPlayer(victim);
+		}
+		
+		if(pvpModeHandler.getPlayerPVPStartTime(damager.getUniqueId())!=0) {
+			pvpModeHandler.updatePlayerPVPStartTime(damager.getUniqueId());
+		}else {
+			pvpModeHandler.turnOnCombatModeForPlayer(damager);
 		}
 		
 	}

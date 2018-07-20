@@ -9,6 +9,7 @@ import com.gmail.nowyarek.pvpcontrol.commands.pvpc.PvpcCommand;
 import com.gmail.nowyarek.pvpcontrol.configs.ConfigsAccess;
 import com.gmail.nowyarek.pvpcontrol.exceptions.PVPCriticalException;
 import com.gmail.nowyarek.pvpcontrol.exceptions.PVPSoftException;
+import com.gmail.nowyarek.pvpcontrol.integration.Integration;
 import com.gmail.nowyarek.pvpcontrol.modules.ModulesManager;
 import com.gmail.nowyarek.pvpcontrol.pvpmode.PVPModeHandler;
 
@@ -19,6 +20,7 @@ public class PVPCore {
 	private PVPModeHandler pvpModeHandler;
 	private ModulesManager modulesManager;
 	private PvpcCommand pvpcCommand;
+	private Integration integration;
 	private Reloader reloader;
 	
 	PVPCore(JavaPlugin plugin, FileManager fileManager, ConfigsAccess configsAccess){
@@ -33,6 +35,8 @@ public class PVPCore {
 		} catch(Exception e) {
 			throw new PVPCriticalException("PVPModeHandler, exception occured");
 		}
+		integration = new Integration(plugin);
+		integration.checkDependency();
 		modulesManager = new ModulesManager(this);
 		modulesManager.initializeModules();
 		reloader = new Reloader(this);
@@ -63,6 +67,10 @@ public class PVPCore {
 	}
 	public Reloader getReloader() {
 		return this.reloader;
+	}
+
+	public Integration getIntegration() {
+		return integration;
 	}
 	
 }

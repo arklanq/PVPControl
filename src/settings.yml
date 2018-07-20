@@ -36,6 +36,10 @@ PVP:
   #This option will be ignored if *KillWhenLogoutOnPVP* option is set to FALSE.
   BroadcastPlayerLoggingOnPVP: true
 
+Hooks:
+  #Works only when supported version of EssentialsX is installed on the server.
+  disableEssentialsGodModeOnHit: false
+
 Other:
   #All commands that will be executed in console when player log out during PVP. You can use %player% variable.
   #Commands should be written without a preceding slash "/"

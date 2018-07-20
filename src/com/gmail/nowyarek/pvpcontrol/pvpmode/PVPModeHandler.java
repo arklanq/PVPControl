@@ -9,9 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import com.gmail.nowyarek.pvpcontrol.basic.Msg;
 import com.gmail.nowyarek.pvpcontrol.basic.Text;
+import com.gmail.nowyarek.pvpcontrol.basic.TextManager;
 import com.gmail.nowyarek.pvpcontrol.configs.ConfigsAccess;
 
 public class PVPModeHandler {
@@ -71,7 +70,7 @@ public class PVPModeHandler {
 	public void turnOnCombatModeForPlayer(Player player) {
 		playersInCombat.put(player.getUniqueId(), System.currentTimeMillis());
 		//say
-		player.sendMessage(Msg.info(Text.YOU_ARE_IN_PVP));
+		player.sendMessage(TextManager.Say(Text.YOU_ARE_IN_PVP));
 	}
 	
 	public void turnOffCombatModeForPlayer(UUID uuid) {
@@ -79,7 +78,7 @@ public class PVPModeHandler {
 		//say
 		Player p = plugin.getServer().getPlayer(uuid);
 		if(p==null) return;
-		p.sendMessage(Msg.info(Text.YOU_ARE_NOT_IN_PVP));
+		p.sendMessage(TextManager.Say(Text.YOU_ARE_NOT_IN_PVP));
 	}
 	
 	public void reload(boolean reloadConfigsAccess) {

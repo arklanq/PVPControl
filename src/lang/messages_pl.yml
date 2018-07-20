@@ -17,24 +17,28 @@ DEBUG_COLOR_PREFIX: '&3'
 
 
 ################################### SYSTEM
-# %number% variable available
+# zmienna %number% dostepna
 LANGUAGE_STATEMENTS_LOADED: '&a%number% &2tlumaczeń jezykowych zaladowanych.'
 MISSING_LANGUAGE_STATEMENTS: '%number% brakujacych tlumaczeń jezykowych!'
 
-# %file% variable available
+# zmienna %file% dostepna
 OLD_CONFIG: 'Pracujesz na starej konfiguracji. Prosze usuń plik (%file%) i pozwol go wygenerowac pluginowi na nowo dla pelnej funkcjonalnosci.'
 
-# %lang% variable available
+# zmienna %lang% dostepna
 LANGUAGE_NOT_SUPPORTED: 'Wybrany jezyk (%lang%) nie jest wspierany. Uzyje PL jako domyslne.'
 
 DEPENDENCY_CHECKING: 'Sprawdzam zintegrowane pluginy i moduly..'
 
-# %plugins% variable available
+# zmienna %plugins% dostepna
 PLUGINS_HOOKED: '&aZintegrowane pluginy: %plugins%'
 
 PLUGIN_ENABLED: '&aPVPControl odpalony!'
 PLUGIN_DISABLED: '&7PVPControl wylaczony.'
 RELOAD_COMPLETE: 'Pomyslnie przeladowano plugin!'
+
+# zmienna %plugins% dostepna
+PLUGIN_HOOKED_BUT_WAS_NOT_RECOGNIZED: 'Plugin %plugin% zostal zaladowany, jednak nie udalo nam sie go rozpoznac Moze uzywasz nie wspieranej wersji?'
+GOD_MODE_HAS_BEEN_DISABLED: '&7God mode &cwy�aczony'
 
 
 
@@ -44,7 +48,7 @@ YOU_ARE_NOT_IN_PVP: "&2&l&m-&a&l&m----------------&2&l&m-\n&aHej! &2Jesteś tera
 COMMANDS_NOT_ALLOWED_DURING_PVP: 'Komendy nie są dozwolone podczas PVP!'
 THIS_COMMAND_IS_NOT_ALLOWED_DURING_PVP: 'Ta komenda nie jest dozwolona podczas PVP!'
 
-# %player% variable available
+# zmienna %player% dostepna
 PLAYER_LOG_OUT_DURING_PVP_SERVER_BROADCAST: '&2Gracz &5%player% &2lognął podczas PVP! &aBez litości!'
 
 TELEPORTING_NOT_ALLOWED_DURING_PVP: 'Teleportacja nie jest dozwolona podczas PVP!'
@@ -64,7 +68,7 @@ COMMAND_NOT_ALLOWED_FOR_CONSOLE: 'Ta komenda nie moze byc odpalona z konsoli.'
 COMMAND_NO_PERMISSIONS: 'Nie masz pozwoleń, aby to zrobić!'
 
 #You can use following variables in almost whole section below:
-# %argument%, %alias%, %usage%, %permission%
+# zmienna %argument%, %alias%, %usage%, %permission%
 COMMAND_RELOAD: 'przeladuj'
 COMMAND_RELOAD_ALIAS: 'reload'
 COMMAND_RELOAD_USAGE: '&6/pvpc przeladuj &eprzeladowuje całą konfigurację.'
@@ -75,7 +79,7 @@ COMMAND_HELP_ALIAS: 'help'
 COMMAND_HELP_USAGE: '&6/pvpc pomoc (nr strony) &ewystawiela strony pomocy'
 
 #/pvp command:
-# %seconds% variable available
+# zmienna %seconds% dostepna
 YOU_ARE_STILL_ON_PVP: '&cNadal jesteś na PVP: %seconds% sekund do końca!'
 
 YOU_ARE_NOT_ON_PVP: '&aNie jesteś na PVP. Zachowaj spokój.'
@@ -85,14 +89,14 @@ YOU_ARE_NOT_ON_PVP: '&aNie jesteś na PVP. Zachowaj spokój.'
 ################################### INNE
 THEMATIC_BREAK: '&2&l&m-&a&l&m----------------------------------&2&l&m-'
 
-# %page% variable available
+# zmienna %page% dostepna
 HELP_TITLE: '&3&l>&3> &cPVPControl komendy: &6&o[strona %page%]'
 
-# %next_page% variable available
+# zmienna %next_page% dostepna
 HELP_NEXT_PAGE_INFO: 'Wpisz /pvpc pomoc %next_page% aby, zobaczyć kolejną stronę.'
 HELP_LAST_PAGE_INFO: 'To już ostatnia strona pomocy.'
 
-# %usage% variable available
+# zmienna %usage% dostepna
 HELP_INCORRECT_PAGE: "Wskazana strona jest nieprawidłowa! Użycie: %usage%"
 
 
