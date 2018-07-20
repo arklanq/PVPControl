@@ -31,7 +31,8 @@ public class ModulesManager {
 		entityDamageHandler = new EntityDamageHandler(
 				core.getPlugin(),
 				core.getConfigsAccess(),
-				core.getPVPModeHandler()
+				core.getPVPModeHandler(),
+				core.getIntegration()
 				);
 		playerTeleportHandler = new PlayerTeleportHandler(
 				core.getPlugin(),

@@ -2,6 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.basic;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class TextManager{
@@ -26,10 +27,10 @@ public class TextManager{
 		for(Text text : Text.values()){
 			String msg = msgsFile.getString(text.toString());
 			if(msg==null){
-				Bukkit.getConsoleSender().sendMessage(Msg.plugin_prefix+"§4"+text.toString()+" does not exist in built-in language file.");
+				Bukkit.getConsoleSender().sendMessage(Msg.plugin_prefix+ChatColor.DARK_RED+text.toString()+" does not exist in built-in language file.");
 				continue;
 			}
-			msg = msg.replaceAll("&", "§");
+			msg = msg.replaceAll("&", "�");
 			msgsFile.set(text.toString(), msg);
 			i++;
 		}
@@ -38,18 +39,18 @@ public class TextManager{
 	
 	public static String Say(Text text){
 		String msg = msgsFile.getString(text.toString());
-		if(msg == null) msg = "§3Error, unknow translation: §f"+text.toString()+"\n";
+		if(msg == null) msg = ChatColor.DARK_AQUA+"Error, unknow translation: "+ChatColor.WHITE+text.toString()+"\n";
 		return msg;
 	}
 	public static String Say(Text text, Variables var){
 		String msg = msgsFile.getString(text.toString());
-		if(msg == null) msg = "§3Error, unknow translation: §f"+text.toString();
+		if(msg == null) msg = ChatColor.DARK_AQUA+"Error, unknow translation: "+ChatColor.WHITE+text.toString();
 		msg = checkForVariables(msg, var);
 		return msg;
 	}
 	public static boolean available(Text text){
 		String msg = msgsFile.getString(text.toString());
-		if(msg.startsWith("§3Error, unknow translation: §f")) return false;
+		if(msg.startsWith(ChatColor.DARK_AQUA+"Error, unknow translation: "+ChatColor.WHITE)) return false;
 		else return true;
 	}
 	

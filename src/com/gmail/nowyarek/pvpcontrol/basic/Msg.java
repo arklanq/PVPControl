@@ -2,6 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.basic;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 
 import com.gmail.nowyarek.pvpcontrol.logs.LogsManager;
@@ -9,7 +10,7 @@ import com.gmail.nowyarek.pvpcontrol.logs.LogsManager;
 
 public class Msg {
 	private static ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-	static final String plugin_prefix = "§7[§2PVP§aControl§7] ";
+	static final String plugin_prefix = ChatColor.GRAY+"["+ChatColor.DARK_GREEN+"PVP"+ChatColor.GREEN+"Control"+ChatColor.GRAY+"] ";
 	private static ArrayList<PreloadedMessage> preloaded_msgs_to_say = new ArrayList<PreloadedMessage>();
 	private static String CONSOLE_LOG_PREFIX, ERROR_PREFIX, WARNING_PREFIX, INFO_PREFIX, ANNOUNCEMENT_PREFIX, DEBUG_PREFIX;
 	private static TextManager manager;
