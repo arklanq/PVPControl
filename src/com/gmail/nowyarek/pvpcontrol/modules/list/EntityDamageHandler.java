@@ -75,6 +75,12 @@ public class EntityDamageHandler extends Module implements Listener {
 				e.setCancelled(false);
 				victim.sendMessage(Msg.info(Text.GOD_MODE_HAS_BEEN_DISABLED));
 			}
+			user = essentials.getUser(damager.getUniqueId());
+			if(user.isGodModeEnabled()) {
+				user.setGodModeEnabled(false);
+				e.setCancelled(false);
+				damager.sendMessage(Msg.info(Text.GOD_MODE_HAS_BEEN_DISABLED));
+			}
 		}
 		
 		if(e.isCancelled())
