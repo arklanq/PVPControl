@@ -1,18 +1,33 @@
 package com.gmail.nowyarek.pvpcontrol.exceptions;
 
-public class ModuleException extends Exception {
+import com.gmail.nowyarek.pvpcontrol.modules.Module;
+import com.gmail.nowyarek.pvpcontrol.modules.ModuleType;
 
-	public ModuleException(Exception e, String module){
-		super("Module detected an unknown error. Send this stack trace to @IdkMan on spigot:");
-		e.printStackTrace();
+public class ModuleException extends Exception {
+	
+	public ModuleException(Module module){
+		this(module.getType());
+	}
+
+	public ModuleException(Module module, Exception e){
+		this(module.getType(), e);
 	}
 	
-	public ModuleException(Exception e, String module, String msg){
-		
-		super("Module detected an unknown error. Send this stack trace to @IdkMan on spigot:"
+	public ModuleException(Module module, Exception e, String msg){
+		this(module.getType(), e, msg);
+	}
+	
+	public ModuleException(ModuleType module){
+		super("PVPControl detected an unknown error with "+module.toString()+" module. Send console logs to @IdkMan on spigot:");
+	}
+
+	public ModuleException(ModuleType module, Exception e){
+		super("PVPControl detected an unknown error with "+module.toString()+" module. Send this error log to @IdkMan on spigot:");
+	}
+	
+	public ModuleException(ModuleType module, Exception e, String msg){
+		super("PVPControl detected an unknown error with "+module.toString()+" module. Send this error log to @IdkMan on spigot:"
 				+ "Additional info: "+msg);
-		e.printStackTrace();
-				
 	}
 	
 	/**

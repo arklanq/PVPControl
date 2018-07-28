@@ -1,2 +1,10 @@
-/bin/
+# Eclipse stuff
+.classpath
+.project
+.settings/
 
+# maven
+target/
+
+# various other potential build files
+bin/
