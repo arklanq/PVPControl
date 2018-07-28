@@ -27,10 +27,10 @@ public class TextManager{
 		for(Text text : Text.values()){
 			String msg = msgsFile.getString(text.toString());
 			if(msg==null){
-				Bukkit.getConsoleSender().sendMessage(Msg.plugin_prefix+ChatColor.DARK_RED+text.toString()+" does not exist in built-in language file.");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED+"[PVPControl]"+text.toString()+" does not exist in built-in language file.");
 				continue;
 			}
-			msg = msg.replaceAll("&", "ง");
+			msg = msg.replaceAll("&", "ยง");
 			msgsFile.set(text.toString(), msg);
 			i++;
 		}

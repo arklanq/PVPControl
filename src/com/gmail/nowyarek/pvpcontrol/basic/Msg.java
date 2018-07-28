@@ -2,7 +2,6 @@ package com.gmail.nowyarek.pvpcontrol.basic;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 
 import com.gmail.nowyarek.pvpcontrol.logs.LogsManager;
@@ -10,7 +9,7 @@ import com.gmail.nowyarek.pvpcontrol.logs.LogsManager;
 
 public class Msg {
 	private static ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-	static final String plugin_prefix = ChatColor.GRAY+"["+ChatColor.DARK_GREEN+"PVP"+ChatColor.GREEN+"Control"+ChatColor.GRAY+"] ";
+	private static String PLUGIN_PREFIX;
 	private static ArrayList<PreloadedMessage> preloaded_msgs_to_say = new ArrayList<PreloadedMessage>();
 	private static String CONSOLE_LOG_PREFIX, ERROR_PREFIX, WARNING_PREFIX, INFO_PREFIX, ANNOUNCEMENT_PREFIX, DEBUG_PREFIX;
 	private static TextManager manager;
@@ -35,12 +34,13 @@ public class Msg {
 	}
 	
 	private void initializePrefixes(){
-		CONSOLE_LOG_PREFIX = plugin_prefix + TextManager.Say(Text.CONSOLE_LOG_COLOR_PREFIX);
-		ERROR_PREFIX = plugin_prefix + TextManager.Say(Text.ERROR_COLOR_PREFIX);
-		WARNING_PREFIX = plugin_prefix + TextManager.Say(Text.WARNING_COLOR_PREFIX);
-		INFO_PREFIX = plugin_prefix + TextManager.Say(Text.INFO_COLOR_PREFIX);
-		ANNOUNCEMENT_PREFIX = plugin_prefix + TextManager.Say(Text.ANNOUNCEMENT_COLOR_PREFIX);
-		DEBUG_PREFIX = plugin_prefix + TextManager.Say(Text.DEBUG_COLOR_PREFIX);
+		PLUGIN_PREFIX = TextManager.Say(Text.PLUGIN_PREFIX);
+		CONSOLE_LOG_PREFIX = PLUGIN_PREFIX + TextManager.Say(Text.CONSOLE_LOG_COLOR_PREFIX);
+		ERROR_PREFIX = PLUGIN_PREFIX + TextManager.Say(Text.ERROR_COLOR_PREFIX);
+		WARNING_PREFIX = PLUGIN_PREFIX + TextManager.Say(Text.WARNING_COLOR_PREFIX);
+		INFO_PREFIX = PLUGIN_PREFIX + TextManager.Say(Text.INFO_COLOR_PREFIX);
+		ANNOUNCEMENT_PREFIX = PLUGIN_PREFIX + TextManager.Say(Text.ANNOUNCEMENT_COLOR_PREFIX);
+		DEBUG_PREFIX = PLUGIN_PREFIX + TextManager.Say(Text.DEBUG_COLOR_PREFIX);
 	}
 	
 	void addPreloadMessageToSayLater(PreloadedMessage pmsg){

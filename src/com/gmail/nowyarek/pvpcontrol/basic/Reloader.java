@@ -45,9 +45,10 @@ public class Reloader {
 	}
 	void reloadModulesManager() {
 		try {
-			pvpCore.getModulesManager().reload(false);
+			pvpCore.getModulesManager().reloadAll(false);
 		} catch (PVPCriticalException e) {
 			e.printStackTrace();
+			pvpCore.getPlugin().getServer().getPluginManager().disablePlugin(pvpCore.getPlugin());
 		}
 	}
 }

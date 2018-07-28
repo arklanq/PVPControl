@@ -1,6 +1,17 @@
-/bin/
+# Eclipse stuff
+.classpath
+.project
+.settings/
 
+<<<<<<< HEAD
+# maven
+target/
+
+# various other potential build files
+bin/
+=======
 /.classpath
 /.project
 /.settings/
 /target/
+>>>>>>> refs/heads/master

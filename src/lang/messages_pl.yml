@@ -7,6 +7,7 @@
 
 
 ################################### CZAT I PREFIKSY
+PLUGIN_PREFIX: '&7[&2PVP&aControl&7] '
 CONSOLE_LOG_COLOR_PREFIX: '&7'
 ERROR_COLOR_PREFIX: '&4'
 WARNING_COLOR_PREFIX: '&cHej! &e'
@@ -18,7 +19,7 @@ DEBUG_COLOR_PREFIX: '&3'
 
 ################################### SYSTEM
 # zmienna %number% dostepna
-LANGUAGE_STATEMENTS_LOADED: '&a%number% &2tlumaczeń jezykowych zaladowanych.'
+LANGUAGE_STATEMENTS_LOADED: '&a%number% &2tlumaczen jezykowych zaladowanych.'
 MISSING_LANGUAGE_STATEMENTS: '%number% brakujacych tlumaczeń jezykowych!'
 
 # zmienna %file% dostepna
@@ -38,7 +39,7 @@ RELOAD_COMPLETE: 'Pomyslnie przeladowano plugin!'
 
 # zmienna %plugins% dostepna
 PLUGIN_HOOKED_BUT_WAS_NOT_RECOGNIZED: 'Plugin %plugin% zostal zaladowany, jednak nie udalo nam sie go rozpoznac Moze uzywasz nie wspieranej wersji?'
-GOD_MODE_HAS_BEEN_DISABLED: '&7God mode &cwy�aczony'
+GOD_MODE_HAS_BEEN_DISABLED: '&7God mode &cwyłączony'
 
 
 

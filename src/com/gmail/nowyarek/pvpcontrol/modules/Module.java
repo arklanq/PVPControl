@@ -7,9 +7,8 @@ public abstract class Module {
 
 	public abstract void onEnable() throws ModuleException;
 	public abstract void onDisable() throws ModuleException;
-	public abstract void onReload() throws ModuleException;
-	public abstract String getName();
-	
+	public abstract ModuleType getType();
+	public abstract boolean shouldBeEnabled();
 	public boolean isEnabled() {
 		return this.enabled;
 	}
