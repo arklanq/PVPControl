@@ -20,7 +20,7 @@ DEBUG_COLOR_PREFIX: '&3'
 ################################### SYSTEM
 # zmienna %number% dostepna
 LANGUAGE_STATEMENTS_LOADED: '&a%number% &2tlumaczen jezykowych zaladowanych.'
-MISSING_LANGUAGE_STATEMENTS: '%number% brakujacych tlumaczeń jezykowych!'
+MISSING_LANGUAGE_STATEMENTS: '%number% brakujacych tlumaczen jezykowych!'
 
 # zmienna %file% dostepna
 OLD_CONFIG: 'Pracujesz na starej konfiguracji. Prosze usuń plik (%file%) i pozwol go wygenerowac pluginowi na nowo dla pelnej funkcjonalnosci.'
