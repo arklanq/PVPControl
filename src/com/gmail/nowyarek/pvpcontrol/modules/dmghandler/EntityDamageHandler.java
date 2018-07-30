@@ -10,7 +10,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.nowyarek.pvpcontrol.PVPCore;
-import com.gmail.nowyarek.pvpcontrol.basic.Msg;
 import com.gmail.nowyarek.pvpcontrol.exceptions.ModuleException;
 import com.gmail.nowyarek.pvpcontrol.modules.Module;
 import com.gmail.nowyarek.pvpcontrol.modules.ModuleType;
@@ -38,7 +37,7 @@ public class EntityDamageHandler extends Module implements Listener {
 		Player damager;
 		if(e.getDamager() instanceof Player) {
 			damager = (Player) e.getDamager();
-		}else {
+		} else {
 			if(e.getDamager() instanceof Projectile) {
 				if( ((Projectile) e.getDamager()).getShooter() instanceof Player ) {
 					damager = (Player)((Projectile) e.getDamager()).getShooter();
@@ -48,7 +47,7 @@ public class EntityDamageHandler extends Module implements Listener {
 				return;
 		}
 		
-		if(e.getEntity().getUniqueId().compareTo(e.getDamager().getUniqueId())==0) return;
+		if(victim.getUniqueId().compareTo(damager.getUniqueId())==0) return;
 		
 		if(victim.hasMetadata("pvpmode.admin")) {
 			e.setCancelled(true);
@@ -66,18 +65,14 @@ public class EntityDamageHandler extends Module implements Listener {
 			}
 		}
 
-		Msg.debug("All \"before-cancel\" addons finished successfully");
 		if(e.isCancelled()) return;
-		Msg.debug("event is not finished");
 		
 		//run all "after-cancel" addons
 		for(EntityDmgHandlerAddon addon : addonsManager.getIgnoreCancellationAddons()) {
 			addon.run(e, victim, damager);
 		}
 		
-		Msg.debug("All \"after-cancel\" addons finished successfully");
 		if(e.isCancelled()) return;
-		Msg.debug("event is not finished");
 		
 		if(pvpModeHandler.getPlayerPVPStartTime(victim.getUniqueId())!=0) {
 			pvpModeHandler.updatePlayerPVPStartTime(victim.getUniqueId());
