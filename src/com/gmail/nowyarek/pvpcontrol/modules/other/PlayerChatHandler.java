@@ -26,8 +26,9 @@ public class PlayerChatHandler extends Module implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerTeleport(PlayerCommandPreprocessEvent e) {
+	public void onPlayerChat(PlayerCommandPreprocessEvent e) {
 		if(e.getMessage().startsWith("/pvp")) return;
+		if(e.getMessage().charAt(0)!='/') return;
 		if(!pvpModeHandler.isPlayerInCombat(e.getPlayer().getUniqueId())) return;
 		if(e.getPlayer().hasPermission("pvpc.bypass.commands")) return;
 		
@@ -37,10 +38,10 @@ public class PlayerChatHandler extends Module implements Listener {
 			return;
 		}
 		
-		String cmd = e.getMessage().substring(1);
-		
+		String cmd = e.getMessage().toLowerCase().substring(1).split(" ")[0];
+
 		for(String blockedCmd : configsAccess.settings.other.getListOfBlockedCommands()) {
-			if(blockedCmd.equalsIgnoreCase(cmd)) {
+			if(blockedCmd.equals(cmd)) {
 				e.setCancelled(true);
 				e.getPlayer().sendMessage(Msg.warn(Text.THIS_COMMAND_IS_NOT_ALLOWED_DURING_PVP));
 				break;

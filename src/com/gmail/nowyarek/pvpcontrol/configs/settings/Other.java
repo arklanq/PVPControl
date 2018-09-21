@@ -36,8 +36,9 @@ public class Other extends SettingsSubSection {
 			for(int i=0; i<blockedCmds.size(); i++) {
 				String cmd = blockedCmds.get(i);
 				if(cmd.charAt(0)=='/') {
-					blockedCmds.set(i, cmd.substring(1));
+					cmd = cmd.substring(1);
 				}
+				blockedCmds.set(i, cmd.toLowerCase());
 			}
 		} catch(Exception e) {
 			CheckSectionExpeller.signalConfigurationError(this, "BlockOnlySelectedCommandsOnPVP");
