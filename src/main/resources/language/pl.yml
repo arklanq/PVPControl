@@ -1,0 +1,96 @@
+# To jest plik z tłumaczeniami językowymi, gdzie możesz zdefiniować własne tłumaczenia, prefiksy i wiele więcej.
+# W niektórych wpisach możesz używać spejalnych zmiennych, takich jak: %command%, %usage% itp. - ale działają one tylko w wyznaczonych miejscach, tam gdzie zmienne zostały wylistsowane w komentarzu powyżej wpisu.
+# Miej na uwadze, iż jeśli chcesz zrobić "twardy enter" - musisz użyć znaku "\n" oraz otoczyć cały teksty podwójnymi cudzysłowami.
+# Oczywiście nie musisz używać wszystkich dostępnych zmiennych - nie musisz używać nawet żadnej, jeśli sobie życzysz.
+
+
+
+################################### CZAT I PREFIKSY
+PLUGIN_PREFIX: '&7[&2PVP&aControl&7] '
+ERROR_PREFIX: '&4'
+WARNING_PREFIX: '&6Hej! &e'
+INFO_PREFIX: '&2'
+SUCCESS_PREFIX: '&a'
+LOG_PREFIX: '&7'
+DEBUG_PREFIX: '&3'
+
+
+
+################################### PLUGIN
+# Zmienne: %file%
+MISSING_LANGUAGE_STATEMENTS: 'Pluginowi brakuje czesci tlumaczen jezykowych. Rozwaz usuniecie pliku `%file%` i wygenerowanie go na nowo.'
+# Zmienne: %file%
+OLD_CONFIG: 'Pracujesz na starej konfiguracji. Prosze usun plik `%file%` i pozwol go wygenerowac pluginowi na nowo dla pelnej funkcjonalnosci.'
+# Zmienne: %lang%
+LANGUAGE_NOT_SUPPORTED: 'Wybrany jezyk (%lang%) nie jest wspierany. Uzyje PL jako domyslne.'
+PLUGIN_ENABLED: 'Odpalony.'
+PLUGIN_DISABLED: 'Wylaczony.'
+RELOAD_COMPLETE: 'Przeladowany.'
+
+
+
+################################### PVP
+YOU_ARE_IN_PVP: "&4&l&m-&c&l&m----------------&4&l&m-\n&4Hej! &cJesteś podczas PVP!"
+YOU_ARE_NOT_IN_PVP: "&2&l&m-&a&l&m----------------&2&l&m-\n&aHej! &2Jesteś teraz bezpieczny!"
+COMMANDS_NOT_ALLOWED_DURING_PVP: 'Komendy nie są dozwolone podczas PVP!'
+THIS_COMMAND_IS_NOT_ALLOWED_DURING_PVP: 'Ta komenda nie jest dozwolona podczas PVP!'
+
+# Zmienne: %player%
+PLAYER_LOG_OUT_DURING_PVP_SERVER_BROADCAST: '&2Gracz &5%player% &2lognął podczas PVP! &aBez litości!'
+
+TELEPORTING_NOT_ALLOWED_DURING_PVP: 'Teleportacja nie jest dozwolona podczas PVP!'
+CHORUS_FRUIT_NOT_ALLOWED_DURING_PVP: 'Owoce refruensu nie są dozwolone podczas PVP!'
+ENDER_PEARL_NOT_ALLOWED_DURING_PVP: 'Ender perły nie są dozwolone podczas PVP!'
+PVP_MODE_ON: '&4Tryb PVP &cON!'
+PVP_MODE_OFF: '&2Tryb PVP &aOFF!'
+
+
+
+################################### HOOKI
+# Zmienne: %plugins%
+PLUGIN_HOOKED_BUT_WAS_NOT_RECOGNIZED: 'Plugin %plugin% zostal zaladowany, jednak nie udalo nam sie go rozpoznac Moze uzywasz nie wspieranej wersji?'
+GOD_MODE_HAS_BEEN_DISABLED: '&7God mode &cwyłączony'
+
+
+
+################################### KOMENDY
+# Variables: %command%, %permission%, %usage%
+INCORRECT_COMMAND_SYNTAX: "Niepoprawna składnia komendy. Uzycie:\n%usage%"
+# Variables: %command%, %permission%, %usage%
+COMMAND_NOT_ENOUGH_ARGUMENTS: "Zbyt mało argumentów dla komendy %argument%. Użycie:\n %usage%"
+# Variables: %command%, %permission%, %usage%
+COMMAND_NOT_ALLOWED_FOR_CONSOLE: 'Ta komenda nie moze byc odpalona z konsoli.'
+# Variables: %command%, %permission%, %usage%
+COMMAND_NO_PERMISSIONS: 'Nie masz pozwoleń, aby to zrobić!'
+
+COMMAND_PVPCONTROL_USAGE: '&6/pvpcontrol <?> &eglówna komenda pluginu.'
+
+SUB_COMMAND_RELOAD_USAGE: '&6/pvpcontrol przeladuj &eprzeladowuje całą konfigurację.'
+SUB_COMMAND_RELOAD_RELOADED_SUCCESSFULLY: 'Pomyslnie przeladowano.'
+
+SUB_COMMAND_HELP_USAGE: '&6/pvpcontrol pomoc <?> &ewystawiela strony pomocy.'
+
+# Zmienne: %seconds%
+YOU_ARE_STILL_ON_PVP: '&cNadal jesteś na PVP: %seconds% sekund do końca!'
+YOU_ARE_NOT_ON_PVP: '&aNie jesteś na PVP. Zachowaj spokój.'
+
+
+
+################################### INNE
+THEMATIC_BREAK: '&2&l&m-&a&l&m----------------------------------&2&l&m-'
+# Zmienne: %page%
+HELP_TITLE: '&2&l>&2> &cPVPControl komendy: &6&o[strona %page%]'
+# Variables: %command%, %permission%, %usage%
+HELP_COMMAND_ENTRY: '%usage%'
+# Zmienne: %next_page%
+HELP_NEXT_PAGE_INFO: 'Wpisz /pvpcontrol pomoc %next_page% aby, zobaczyć kolejną stronę.'
+HELP_LAST_PAGE_INFO: 'To już ostatnia strona pomocy.'
+# Zmienne: %usage%
+HELP_INCORRECT_PAGE: "Wskazana strona jest nieprawidłowa. Użycie: %usage%"
+
+
+
+
+
+
+

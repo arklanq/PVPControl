@@ -1,0 +1,95 @@
+# This is the translation file where you can define your own translations, prefixes and much much more.
+# You can use in some places special variables like %command%, %usage% etc. but it works only for certian entries where variables list was defined in a comment above.
+# Have on mind that if you want to do a "hard-enter" you need to use "\n" character and surround your text with double quotes.
+# And of course you don't have to use all available variables - You don't have to use them at all if you wish.
+
+
+################################### CHAT & PREFIXES
+PLUGIN_PREFIX: '&7[&2PVP&aControl&7] '
+ERROR_PREFIX: '&4'
+WARNING_PREFIX: '&6Hey! &e'
+INFO_PREFIX: '&2'
+SUCCESS_PREFIX: '&a'
+LOG_PREFIX: '&7'
+DEBUG_PREFIX: '&3'
+
+
+
+################################### PLUGIN
+# Variables: %file%
+MISSING_LANGUAGE_STATEMENTS: 'The plugin is missing some language translations. Consider removing `%file%` file and let plugin generate it afresh.'
+# Variables: %file%
+OLD_CONFIG: 'You are working on an old config. Please remove config named `%file%` and let plugin generate it afresh for full plugin functionality.'
+# Variables: %lang%
+LANGUAGE_NOT_SUPPORTED: 'Selected language (%lang%) is not supported or is filled incorrectly.. Using english as default.'
+PLUGIN_ENABLED: 'Enabled.'
+PLUGIN_DISABLED: 'Disabled.'
+RELOAD_COMPLETE: 'Reloaded.'
+
+
+
+################################### PVP
+YOU_ARE_IN_PVP: "&4&l&m-&c&l&m----------------&4&l&m-\n&4Hey! &cYou are in PVP!"
+YOU_ARE_NOT_IN_PVP: "&2&l&m-&a&l&m----------------&2&l&m-\n&aHey! &2You are safe now!"
+COMMANDS_NOT_ALLOWED_DURING_PVP: 'Commands are not allowed during PVP!'
+THIS_COMMAND_IS_NOT_ALLOWED_DURING_PVP: 'This command is not allowed during PVP!'
+
+# Variables: %player%
+PLAYER_LOG_OUT_DURING_PVP_SERVER_BROADCAST: '&2Player &5%player% &2logout during PVP! &aNo mercy!'
+
+TELEPORTING_NOT_ALLOWED_DURING_PVP: 'Teleporting is not allowed during PVP!'
+CHORUS_FRUIT_NOT_ALLOWED_DURING_PVP: 'Chorus fruit is not allowed during PVP!'
+ENDER_PEARL_NOT_ALLOWED_DURING_PVP: 'Ender pearl is not allowed during PVP!'
+PVP_MODE_ON: '&4PVP mode &cON!'
+PVP_MODE_OFF: '&2PVP mode &aOFF!'
+
+
+
+################################### HOOKS
+# Variables: %plugins%
+PLUGIN_HOOKED_BUT_WAS_NOT_RECOGNIZED: 'Plugin %plugin% was hooked, but seemes that it is not recognized. Maybe you are using unsupported version?'
+GOD_MODE_HAS_BEEN_DISABLED: '&7God mode &cdisabled'
+
+
+
+################################### COMMANDS
+# Variables: %command%, %permission%, %usage%
+INCORRECT_COMMAND_SYNTAX: 'Incorrect command syntax. Type "/pvpcontrol help" to see full list of commands.'
+# Variables: %command%, %permission%, %usage%
+COMMAND_NOT_ENOUGH_ARGUMENTS: "Not enough arguments for this command. Usage:\n %usage%"
+# Variables: %command%, %permission%, %usage%
+COMMAND_NOT_ALLOWED_FOR_CONSOLE: 'This command cannot be executed from console.'
+# Variables: %command%, %permission%, %usage%
+COMMAND_NO_PERMISSIONS: 'You dont have rights to do this!'
+
+COMMAND_PVPCONTROL_USAGE: '&6/pvpcontrol <?> &eMain command of the plugin.'
+
+SUB_COMMAND_RELOAD_USAGE: '&6/pvpcontrol reload &ereloading whole configuration.'
+SUB_COMMAND_RELOAD_RELOADED_SUCCESSFULLY: 'Successfully reloaded.'
+
+SUB_COMMAND_HELP_USAGE: '&6/pvpcontrol help <?> &eshows specific page of help.'
+
+# Variables: %seconds%
+COMMAND_PVP_YOU_ARE_STILL_ON_PVP: '&cYou are still on PVP: %seconds% sec left!'
+COMMAND_PVP_YOU_ARE_NOT_ON_PVP: '&aYou are not on PVP. Stay cool!'
+
+
+
+################################### OTHER
+THEMATIC_BREAK: '&2&l&m-&a&l&m----------------------------------&2&l&m-'
+# Variables: %page%
+HELP_TITLE: '&2&l>&2> &6Available commands: &6&o[page %page%]'
+# Variables: %command%, %permission%, %usage%
+HELP_COMMAND_ENTRY: '%usage%'
+# Variables: %next_page%
+HELP_NEXT_PAGE_INFO: 'Type &6/k help %next_page% &eto see next page.'
+HELP_LAST_PAGE_INFO: 'This is the last page.'
+# Variables: %usage%
+HELP_INCORRECT_PAGE: "Specified page is incorrect. \nUsage: %usage%"
+
+
+
+
+
+
+

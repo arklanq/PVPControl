@@ -1,0 +1,37 @@
+name: "PVPControl"
+main: "com.gmail.nowyarek.pvpcontrol.PVPControl"
+version: "1.5.0"
+author: "IdkMan"
+api-version: "1.15"
+
+commands:
+  pvpcontrol:
+    description: "Administrative command of PVPControl."
+    aliases: ["pvpc", "pvpcontroll"]
+  pvp:
+    decription: "Command to check PVP mode."
+    
+permissions:
+  pvpcontrol.admin:
+    description: "Grants all admin specific privileges."
+    children:
+      pvpcontrol.player: true
+      pvpcontrol.cmd.pvpcontrol: true
+  pvpcontrol.player:
+    description: "Grants all player specific privileges."
+    default: true
+    children:
+      pvpcontrol.cmd.pvp: true
+  pvpcontrol.cmd.pvpcontrol:
+    description: "Grants all privileges for whole /pvpcontrol command."
+    children:
+      pvpcontrol.cmd.pvpcontrol.help: true
+      pvpcontrol.cmd.pvpcontrol.reload: true
+  pvpcontrol.cmd.pvpcontrol.help:
+    description: "Allows to use the `/pvpcontrol help` command."
+  pvpcontrol.cmd.pvpcontrol.reload:
+    description: "Allows to use the `/pvpcontrol reload` command."
+  pvpcontrol.cmd.pvp:
+    description: "Allows to use /pvp command."
+
+

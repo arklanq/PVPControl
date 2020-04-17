@@ -3,15 +3,16 @@
 .project
 .settings/
 
-<<<<<<< HEAD
-# maven
-target/
-
 # various other potential build files
 bin/
-=======
+.idea/
 /.classpath
 /.project
 /.settings/
 /target/
->>>>>>> refs/heads/master
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
