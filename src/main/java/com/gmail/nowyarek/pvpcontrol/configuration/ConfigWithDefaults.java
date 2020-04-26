@@ -1,6 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.configuration;
 
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigWithDefaults extends ConfigBase {
@@ -12,7 +13,7 @@ public class ConfigWithDefaults extends ConfigBase {
     }
 
     @Override
-    public void initialize() {
+    public void initialize() throws InvalidConfigurationException {
         super.initialize();
         this.initializeDefaults();
     }

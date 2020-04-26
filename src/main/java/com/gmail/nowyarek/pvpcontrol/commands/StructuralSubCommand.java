@@ -1,6 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.commands;
 
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
+import com.gmail.nowyarek.pvpcontrol.core.PvpPlayer;
 import com.gmail.nowyarek.pvpcontrol.io.MessagesSender;
 import com.gmail.nowyarek.pvpcontrol.io.Text;
 import com.gmail.nowyarek.pvpcontrol.io.Variables;
@@ -87,7 +88,7 @@ public class StructuralSubCommand {
     protected MessagesSender getMessageRecipient(@NotNull CommandSender sender) {
         MessagesSender recipient;
         if(sender instanceof Player) {
-            return plugin.getPlayersStore().getPlayer(((Player) sender).getUniqueId());
+            return PvpPlayer.getFromMeta((Player) sender);
         } else {
             return plugin.getConsole();
         }

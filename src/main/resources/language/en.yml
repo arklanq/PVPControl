@@ -1,6 +1,6 @@
 # This is the translation file where you can define your own translations, prefixes and much much more.
-# You can use in some places special variables like %command%, %usage% etc. but it works only for certian entries where variables list was defined in a comment above.
-# Have on mind that if you want to do a "hard-enter" you need to use "\n" character and surround your text with double quotes.
+# You can use special variables like %command%, %usage% etc. in some places but it works only for entries where a variables list was defined in a comment above.
+# Keep in mind that if you want to do a "hard-enter" you need to use "\n" character and surround your text with double quotes.
 # And of course you don't have to use all available variables - You don't have to use them at all if you wish.
 
 
@@ -11,7 +11,6 @@ WARNING_PREFIX: '&6Hey! &e'
 INFO_PREFIX: '&2'
 SUCCESS_PREFIX: '&a'
 LOG_PREFIX: '&7'
-DEBUG_PREFIX: '&3'
 
 
 
@@ -20,11 +19,16 @@ DEBUG_PREFIX: '&3'
 MISSING_LANGUAGE_STATEMENTS: 'The plugin is missing some language translations. Consider removing `%file%` file and let plugin generate it afresh.'
 # Variables: %file%
 OLD_CONFIG: 'You are working on an old config. Please remove config named `%file%` and let plugin generate it afresh for full plugin functionality.'
+# Variables: %file%
+CORRUPTED_CONFIG: 'File `%file%` seems to be corrupted, plugin cannot read data from it. Look at the stack trace above to resolve the problem. If problem persists try to remove file `%file%` and let plugin generate it afresh. At the moment PVPControl will fallback to default configuration.'
+# Variables: %file%, %position%, %expected%, %defaultValue%
+INVALID_ENTRY: 'There is an invalid value in file `%file%`, at position `%position%`. Expected `%expected%`, fallback to default value: `%defaultValue%`.'
 # Variables: %lang%
 LANGUAGE_NOT_SUPPORTED: 'Selected language (%lang%) is not supported or is filled incorrectly.. Using english as default.'
 PLUGIN_ENABLED: 'Enabled.'
 PLUGIN_DISABLED: 'Disabled.'
 RELOAD_COMPLETE: 'Reloaded.'
+UNKNOWN_ERROR: 'The plugin encountered an unknown error: `%error%`.'
 
 
 
@@ -88,8 +92,7 @@ HELP_LAST_PAGE_INFO: 'This is the last page.'
 HELP_INCORRECT_PAGE: "Specified page is incorrect. \nUsage: %usage%"
 
 
-
-
-
+# If you have filled this file with your native language translations then please change this filename to your respective country code
+# and contact me on Spigot: @IdkMan. I would love to add more translations to this plugin with your help.
 
 

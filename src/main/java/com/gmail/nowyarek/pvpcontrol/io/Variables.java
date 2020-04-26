@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Variables {
+public class Variables implements Cloneable {
     public final Map<String, String> variables;
 
     public Variables() {
@@ -31,6 +31,15 @@ public class Variables {
 
     public void clearVariables() {
         variables.clear();
+    }
+
+    @Override
+    public Variables clone() {
+        try {
+            return (Variables) super.clone();
+        } catch(CloneNotSupportedException e) {
+            throw new RuntimeException("Variables clone error"); // This will never happen.
+        }
     }
 
     public static String formatMessage(@NotNull String plainText, Variables var) {

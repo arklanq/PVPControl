@@ -2,8 +2,6 @@ package com.gmail.nowyarek.pvpcontrol.io;
 
 public interface MessagesSender {
 
-    void debug(String ...messsages);
-
     void error(Text text);
     void error(Text text, Variables var);
     void error(QueueableMessage message);

@@ -25,10 +25,6 @@ public class ConfigurationManager {
         determineTranslations();
     }
 
-    public MainConfig getMainConfig() {
-        return this.mainConfig;
-    }
-
     private void determineTranslations() {
         String pickedLang = this.getPickedLanguage();
 

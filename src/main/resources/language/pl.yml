@@ -2,7 +2,7 @@
 # W niektórych wpisach możesz używać spejalnych zmiennych, takich jak: %command%, %usage% itp. - ale działają one tylko w wyznaczonych miejscach, tam gdzie zmienne zostały wylistsowane w komentarzu powyżej wpisu.
 # Miej na uwadze, iż jeśli chcesz zrobić "twardy enter" - musisz użyć znaku "\n" oraz otoczyć cały teksty podwójnymi cudzysłowami.
 # Oczywiście nie musisz używać wszystkich dostępnych zmiennych - nie musisz używać nawet żadnej, jeśli sobie życzysz.
-
+# Niektóre wpisy uwzględniają polskie znaki, niektóre nie - wynika to z tego, że niektóre z nich wyświetlane są również w konsoli, a nie każda konsola obsługuje polskiego znaki.
 
 
 ################################### CZAT I PREFIKSY
@@ -12,7 +12,6 @@ WARNING_PREFIX: '&6Hej! &e'
 INFO_PREFIX: '&2'
 SUCCESS_PREFIX: '&a'
 LOG_PREFIX: '&7'
-DEBUG_PREFIX: '&3'
 
 
 
@@ -21,11 +20,16 @@ DEBUG_PREFIX: '&3'
 MISSING_LANGUAGE_STATEMENTS: 'Pluginowi brakuje czesci tlumaczen jezykowych. Rozwaz usuniecie pliku `%file%` i wygenerowanie go na nowo.'
 # Zmienne: %file%
 OLD_CONFIG: 'Pracujesz na starej konfiguracji. Prosze usun plik `%file%` i pozwol go wygenerowac pluginowi na nowo dla pelnej funkcjonalnosci.'
+# Variables: %file%
+CORRUPTED_CONFIG: 'Plik `%file%` wyglada na uszkodzony, plugin nie moze odczytac z niego danych. Spojrz na kod powyzej, aby rozwiazac ten problem. Jesli problem nie ustanie sprobuj usunac plik `%file%` i pozwolic pluginowi wygenerowac go na nowo. Na ten moment PVPControl powroci do domyslnej konfiguracji.'
+# Zmienne: %file%, %position%, %expected%, %defaultValue%
+INVALID_ENTRY: 'Znaleziono nieprawidlowa wartosc w pliku `%file%`, na pozycji `%position%`. Oczekiwano `%expected%`, przywracam domyslna wartosc: `%defaultValue%`.'
 # Zmienne: %lang%
 LANGUAGE_NOT_SUPPORTED: 'Wybrany jezyk (%lang%) nie jest wspierany. Uzyje PL jako domyslne.'
 PLUGIN_ENABLED: 'Odpalony.'
 PLUGIN_DISABLED: 'Wylaczony.'
 RELOAD_COMPLETE: 'Przeladowany.'
+UNKNOWN_ERROR: 'Plugin napotkał nieznany błąd: `%error%`.'
 
 
 
@@ -79,7 +83,7 @@ YOU_ARE_NOT_ON_PVP: '&aNie jesteś na PVP. Zachowaj spokój.'
 ################################### INNE
 THEMATIC_BREAK: '&2&l&m-&a&l&m----------------------------------&2&l&m-'
 # Zmienne: %page%
-HELP_TITLE: '&2&l>&2> &cPVPControl komendy: &6&o[strona %page%]'
+HELP_TITLE: '&2&l>&2> &6Dostępne komendy: &6&o[strona %page%]'
 # Variables: %command%, %permission%, %usage%
 HELP_COMMAND_ENTRY: '%usage%'
 # Zmienne: %next_page%

@@ -2,14 +2,12 @@ package com.gmail.nowyarek.pvpcontrol.commands.pvpcontrol;
 
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
 import com.gmail.nowyarek.pvpcontrol.commands.StructuralSubCommand;
-import com.gmail.nowyarek.pvpcontrol.core.PvpPlayersStore;
 import com.gmail.nowyarek.pvpcontrol.io.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class HelpSubCmd extends StructuralSubCommand {
-    private final PvpPlayersStore pvpStore;
     private final HelpEntry[][] pagesContent; // command, alias, usage, permission
     private final String[] preformattedPagesContent;
 
@@ -19,7 +17,6 @@ public class HelpSubCmd extends StructuralSubCommand {
             Localization.translate(Text.SUB_COMMAND_HELP_USAGE),
             null
         );
-        this.pvpStore = plugin.getPlayersStore();
         pagesContent = new HelpEntry[][] {
             {
                 new HelpEntry("help", "pvpcontrol.cmd.pvpcontrol.help", Text.SUB_COMMAND_HELP_USAGE),

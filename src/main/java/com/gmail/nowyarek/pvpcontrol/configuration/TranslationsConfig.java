@@ -3,6 +3,7 @@ package com.gmail.nowyarek.pvpcontrol.configuration;
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
 import com.gmail.nowyarek.pvpcontrol.io.Text;
 import com.gmail.nowyarek.pvpcontrol.io.Variables;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.jetbrains.annotations.NotNull;
 
 public class TranslationsConfig extends ConfigWithDefaults {
@@ -13,9 +14,15 @@ public class TranslationsConfig extends ConfigWithDefaults {
 
     @Override
     public void initialize() {
-        super.initialize();
-        if(oldConfiguration) {
-            plugin.getConsole().warning(Text.MISSING_LANGUAGE_STATEMENTS, new Variables("%file%", configName));
+        try {
+            super.initialize();
+            if(oldConfiguration) {
+                plugin.getConsole().warning(Text.MISSING_LANGUAGE_STATEMENTS, new Variables("%file%", configName));
+            }
+        } catch(InvalidConfigurationException e) {
+            this.initializeDefaults();
+            configuration = defaultsConfiguration;
+            plugin.getConsole().error(Text.CORRUPTED_CONFIG, new Variables("%file%", configName));
         }
     }
 
@@ -26,7 +33,7 @@ public class TranslationsConfig extends ConfigWithDefaults {
         if(value == null) {
             throw new NullPointerException(String.format("Missing translation key: '%s'.", key));
         }
-        return value.replaceAll("&", "§");
+        return value.replaceAll("&", "\u00A7");
     }
 
 }

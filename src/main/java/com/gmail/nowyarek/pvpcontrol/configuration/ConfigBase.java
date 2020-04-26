@@ -1,6 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.configuration;
 
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -22,16 +23,20 @@ public class ConfigBase {
         return this.configuration;
     }
 
-    public void initialize() {
+    public void initialize() throws InvalidConfigurationException {
         File configFile = new File(dataFolder, this.configName);
         if (!configFile.exists()) {
             plugin.saveResource(this.configName, false);
         }
-        this.configuration = YamlConfiguration.loadConfiguration(configFile);
+        configuration = YamlConfiguration.loadConfiguration(configFile);
+        if(configuration.getKeys(false).size() == 0) {
+            // empty file caused by InvalidConfigurationException
+            throw new InvalidConfigurationException();
+        }
     }
 
     // Alias
-    public void reload() {
+    public void reload() throws InvalidConfigurationException {
         this.initialize();
     }
 

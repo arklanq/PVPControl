@@ -6,14 +6,14 @@
 #                                                                             by IdkMan
 
 General:
-  #Here you can change language of the plugin, currenty supported languages: EN, PL.
-  #If you want to add your own language just fill messenges_en.yml file and contact with me on spigot @IdkMan.
+  # Here you can change language of the plugin, currenty supported languages: EN, PL.
+  # If you want to add your own language just fill `language/en.yml` file and contact with me on spigot @IdkMan.
   Language: EN
 
 
 PVP:
   # How long PVP mode should be active?
-  TimeInPVPMode: 15
+  TimeInPVP: 15
   # Turn off *fly* on pvp.
   TurnOffFlyOnPVP: true
   # Disable potion invisibility. Does not disable vanish!
@@ -30,7 +30,7 @@ PVP:
   # If *BlockAnyKindOfTeleportOnPVP* option is set to TRUE then this option will be ignored.
   BlockEnderPeralTeleport: true
   # Should player be killed when logged out during PVP?
-  KillWhenLogoutOnPVP: true
+  KillOnLogoutDuringPVP: true
   # Should items be dropped on the ground when player is killed?
   # This applies only for the situation where player is killed because he logged out.
   # This option will be ignored if *KillWhenLogoutOnPVP* option is set to FALSE.
@@ -60,7 +60,7 @@ PVP:
 Hooks:
   # Turn off god mode when the player is attacked.
   # Works only when supported version of EssentialsX is installed on the server.
-  disableEssentialsGodModeOnHit: false
+  DisableEssentialsGodModeOnHit: false
 
 
 # Not enough features? Let me know what you want! Write private message to me on spigot @IdkMan

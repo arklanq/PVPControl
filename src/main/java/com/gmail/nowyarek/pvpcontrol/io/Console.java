@@ -8,7 +8,7 @@ import java.util.List;
 public class Console implements MessagesSender, HasMessagesBuffor {
     private final ConsoleCommandSender console;
     private final List<AbstractMap.SimpleEntry<OutputType, QueueableMessage>> messagesBuffer = new ArrayList<>();
-    private boolean locked = true;
+    private boolean bufferLocked = true;
 
     public Console(ConsoleCommandSender console) {
         this.console = console;
@@ -16,20 +16,19 @@ public class Console implements MessagesSender, HasMessagesBuffor {
 
     @Override
     public void lockBuffer() {
-        locked = true;
+        bufferLocked = true;
     }
     @Override
     public void releaseBuffer() {
-        locked = false;
+        bufferLocked = false;
         messagesBuffer.forEach((keyValuePair) -> send(keyValuePair.getKey(), keyValuePair.getValue()));
         messagesBuffer.clear();
     }
 
-    @Override
-    public void debug(String ...messages) {
+    public static void debug(String ...messages) {
         String prefixes = Prefixes.getForOutputType(OutputType.DEBUG);
         for(String message : messages) {
-            this.console.sendMessage(prefixes + message);
+            System.out.println(prefixes + message); // emergency debug
         }
     }
 
@@ -98,7 +97,7 @@ public class Console implements MessagesSender, HasMessagesBuffor {
     private boolean send(OutputType outputType, QueueableMessage ...messages) {
         String prefixes = Prefixes.getForOutputType(outputType);
 
-        if(locked) { // queue messages
+        if(bufferLocked) { // queue messages
             for(QueueableMessage message : messages) {
                 messagesBuffer.add(
                     new AbstractMap.SimpleEntry<>(outputType, message)

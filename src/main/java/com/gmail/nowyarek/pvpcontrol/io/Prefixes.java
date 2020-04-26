@@ -1,13 +1,13 @@
 package com.gmail.nowyarek.pvpcontrol.io;
 
 public class Prefixes {
-    public static String PLUGIN = "§7[§2PVP§aControl§7] ";
-    public static String ERROR = "§4";
-    public static String WARN = "§cHey! §e";
-    public static String LOG = "§7";
-    public static String INFO = "§2";
-    public static String SUCCESS = "§a";
-    public static String DEBUG = "§3";
+    public static String PLUGIN = "\u00A77[§2PVP§aControl§7] ";
+    public static String ERROR = "\u00A74";
+    public static String WARN = "\u00A7cHey! §e";
+    public static String LOG = "\u00A77";
+    public static String INFO = "\u00A72";
+    public static String SUCCESS = "\u00A7a";
+    public final static String DEBUG = "\u00A73";
 
     // Not static to hide from usage on class
     public void update() {
@@ -17,7 +17,6 @@ public class Prefixes {
         Prefixes.LOG = Localization.translate(Text.LOG_PREFIX);
         Prefixes.INFO = Localization.translate(Text.INFO_PREFIX);
         Prefixes.SUCCESS = Localization.translate(Text.SUCCESS_PREFIX);
-        Prefixes.DEBUG = Localization.translate(Text.DEBUG_PREFIX);
     }
 
     public static String getForOutputType(OutputType outputType) {

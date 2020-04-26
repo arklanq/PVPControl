@@ -50,3 +50,8 @@ pvpc.bypass.enderpearl - ender pearl teleport block bypass
 For player:  
 pvpc.command.pvp - permission for normal /pvp command  
 (default for all players)  
+
+//TODO: 
+* Boosbar;
+* actionbar;
+* on/off start/end comabat messages;

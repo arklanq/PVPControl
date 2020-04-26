@@ -3,7 +3,6 @@ package com.gmail.nowyarek.pvpcontrol.commands.pvpcontrol;
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
 import com.gmail.nowyarek.pvpcontrol.commands.StructuralRootCommand;
 import com.gmail.nowyarek.pvpcontrol.commands.StructuralSubCommand;
-import com.gmail.nowyarek.pvpcontrol.core.PvpPlayersStore;
 import com.gmail.nowyarek.pvpcontrol.io.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class PvpControlCmd extends StructuralRootCommand {
-    private final PvpPlayersStore pvpStore;
 
     public PvpControlCmd(PVPControl plugin) {
         super(
@@ -23,7 +21,6 @@ public class PvpControlCmd extends StructuralRootCommand {
                 new ReloadSubCmd(plugin),
             }
         );
-        pvpStore = plugin.getPlayersStore();
     }
 
     @Override
