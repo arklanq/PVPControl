@@ -1,5 +1,5 @@
 ![alt text](https://cdn.discordapp.com/attachments/385541380312924160/461238574595964948/project.png)
-## Highly customizable PVP plugin for your server!  
+## Highly customizable PVP plugin for Minecraft server.
   
 ### ========♔===ABOUT ===♔===========>  
 Players are logging while battle?  
