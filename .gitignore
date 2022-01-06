@@ -1,0 +1,12 @@
+### OS ###
+/.DS_Store
+
+### IDE ###
+/.idea
+
+### Gradle ###
+/.gradle
+/build
+
+### Environment variables ###
+/.env
