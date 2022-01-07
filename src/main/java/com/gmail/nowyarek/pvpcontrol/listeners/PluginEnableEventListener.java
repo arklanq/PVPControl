@@ -1,24 +1,30 @@
 package com.gmail.nowyarek.pvpcontrol.listeners;
 
-import com.gmail.nowyarek.pvpcontrol.annotations.PluginVersion;
+import com.gmail.nowyarek.pvpcontrol.annotations.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.events.PluginEnableEvent;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
+import com.google.inject.Stage;
 
 import java.util.EventListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PluginEnableEventListener implements EventListener {
-    private final String pluginVersion;
+    private final Stage stage;
+    private final Logger logger;
 
     @Inject
-    public PluginEnableEventListener(@PluginVersion String pluginVersion) {
-        this.pluginVersion = pluginVersion;
+    public PluginEnableEventListener(Stage stage, @PluginLogger Logger logger) {
+        this.stage = stage;
+        this.logger = logger;
     }
 
     @Subscribe
     public void onEvent(PluginEnableEvent e) {
-        e.getPlugin().getServer().getConsoleSender().sendMessage(
-            String.format("§2%s v%s enabled.", e.getPlugin().getName(), pluginVersion)
+        logger.log(
+            Level.INFO,
+            String.format("Enabled%s.", stage == Stage.DEVELOPMENT ? String.format(" [%s]", stage) : "")
         );
     }
 

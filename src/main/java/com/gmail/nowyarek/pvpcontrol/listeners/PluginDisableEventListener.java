@@ -1,30 +1,34 @@
 package com.gmail.nowyarek.pvpcontrol.listeners;
 
-import co.aikar.taskchain.TaskChainFactory;
-import com.gmail.nowyarek.pvpcontrol.annotations.PluginVersion;
+import com.gmail.nowyarek.pvpcontrol.annotations.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.events.PluginDisableEvent;
-import com.gmail.nowyarek.pvpcontrol.events.PluginEnableEvent;
+import com.gmail.nowyarek.pvpcontrol.providers.TaskChainFactoryProvider;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
-import org.bukkit.Server;
 
 import java.util.EventListener;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PluginDisableEventListener implements EventListener {
-    private final TaskChainFactory taskChainFactory;
+    private final TaskChainFactoryProvider taskChainFactoryProvider;
+    private final Logger logger;
 
     @Inject
-    public PluginDisableEventListener(TaskChainFactory taskChainFactory) {
-        this.taskChainFactory = taskChainFactory;
+    public PluginDisableEventListener(TaskChainFactoryProvider taskChainFactoryProvider, @PluginLogger Logger logger) {
+        this.taskChainFactoryProvider = taskChainFactoryProvider;
+        this.logger = logger;
     }
 
     @Subscribe
     public void onEvent(PluginDisableEvent e) {
-        this.taskChainFactory.shutdown(2500, TimeUnit.MILLISECONDS);
-        e.getPlugin().getServer().getConsoleSender().sendMessage(
-            String.format("§7%s disabled.", e.getPlugin().getName())
-        );
+        if (taskChainFactoryProvider.isCreated()) {
+            this.taskChainFactoryProvider.get().shutdown(2500, TimeUnit.MILLISECONDS);
+            this.logger.log(Level.FINE, "Shutting down Task Chain Factory");
+        }
+
+        logger.log(Level.INFO, "Disabled.");
     }
 
 }

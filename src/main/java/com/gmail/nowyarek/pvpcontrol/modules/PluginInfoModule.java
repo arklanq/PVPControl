@@ -7,26 +7,16 @@ import com.google.inject.Provides;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PluginInfoModule extends AbstractModule {
-    private final PVPControl plugin;
-
-    public PluginInfoModule(PVPControl plugin) {
-        this.plugin = plugin;
-    }
 
     @Provides
-    public PVPControl providePVPControlPlugin() {
-        return this.plugin;
-    }
-
-    @Provides
-    public JavaPlugin provideJavaPlugin() {
-        return this.plugin;
+    public JavaPlugin provideJavaPlugin(PVPControl plugin) {
+        return plugin;
     }
 
     @Provides
     @PluginVersion
-    public String providePluginVersion() {
-        return this.plugin.getDescription().getVersion();
+    public String providePluginVersion(PVPControl plugin) {
+        return plugin.getDescription().getVersion();
     }
 
 }
