@@ -52,14 +52,23 @@ repositories {
 
 // List dependencies
 dependencies {
+    /* Available at runtime classpath (shaded by Bukkit/CraftBukkit) */
     // Spigot API
-    implementation("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
-    // EssentialsX
-    implementation("net.ess3:EssentialsX:2.18.2")
+    compileOnly("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
+    // google/guava
+    compileOnly("com.google.guava:guava:31.0.1-jre")
+
+    /* Own dependencies, shaded into fat-jar */
     // Aikar/TaskChain
     implementation("co.aikar:taskchain-bukkit:3.7.2")
     // google/guice
     implementation("com.google.inject:guice:5.0.1")
+
+    /* Optional dependencies on 3rd party plugins */
+    // EssentialsX
+    compileOnly("net.ess3:EssentialsX:2.18.2")
+
+    /* Testing libararies */
     // API against which we are writting tests
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     // An implementation of the junit-platform-engine API that runs JUnit 5 tests.
