@@ -121,6 +121,12 @@ tasks.named<DefaultTask>("build") {
     dependsOn("shadowJar")
 }
 
+/* Java Docs */
+
+tasks.named<Javadoc>("javadoc") {
+
+}
+
 /* Deployment */
 
 tasks.create<Delete>("deleteOldArtifact") {
