@@ -16,6 +16,11 @@ public class InjectorConfigurationModule extends AbstractModule {
          * https://github.com/google/guice/wiki/MISSING_CONSTRUCTOR
          */
         binder().requireAtInjectOnConstructors();
+        /*
+         * Disable implicit bindings. Enforce that all bindings must be listed in a Module in order to be injected.
+         * https://github.com/google/guice/wiki/JustInTimeBindings
+         */
+        binder().requireExplicitBindings();
     }
 
 }
