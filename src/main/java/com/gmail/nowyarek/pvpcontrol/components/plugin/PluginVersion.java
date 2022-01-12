@@ -1,4 +1,4 @@
-package com.gmail.nowyarek.pvpcontrol.annotations;
+package com.gmail.nowyarek.pvpcontrol.components.plugin;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;

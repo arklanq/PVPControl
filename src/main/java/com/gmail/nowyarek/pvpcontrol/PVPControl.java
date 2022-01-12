@@ -1,14 +1,10 @@
 package com.gmail.nowyarek.pvpcontrol;
 
-import com.gmail.nowyarek.pvpcontrol.events.PluginDisableEvent;
-import com.gmail.nowyarek.pvpcontrol.events.PluginEnableEvent;
+import com.gmail.nowyarek.pvpcontrol.components.injector.InjectorConfigurationModule;
+import com.gmail.nowyarek.pvpcontrol.components.logging.LoggingModule;
+import com.gmail.nowyarek.pvpcontrol.components.plugin.*;
+import com.gmail.nowyarek.pvpcontrol.components.task_chain.TaskChainModule;
 import com.gmail.nowyarek.pvpcontrol.interfaces.EventsSource;
-import com.gmail.nowyarek.pvpcontrol.listeners.PluginDisableEventListener;
-import com.gmail.nowyarek.pvpcontrol.listeners.PluginEnableEventListener;
-import com.gmail.nowyarek.pvpcontrol.modules.InjectorConfigurationModule;
-import com.gmail.nowyarek.pvpcontrol.modules.PluginInfoModule;
-import com.gmail.nowyarek.pvpcontrol.modules.PluginEssentialsModule;
-import com.gmail.nowyarek.pvpcontrol.utils.PluginStageDetector;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -21,14 +17,16 @@ public class PVPControl extends JavaPlugin implements EventsSource {
 
     @Override
     public void onEnable() {
-        Stage stage = new PluginStageDetector(this.getLogger()).findOutStage();
+        Stage stage = new PluginStageDetector(this.getLogger()).detect();
 
         guiceInjector = Guice.createInjector(
             stage,
             binder -> binder.bind(PVPControl.class).toInstance(this),
             new InjectorConfigurationModule(),
             new PluginInfoModule(),
-            new PluginEssentialsModule()
+            new PluginEssentialsModule(),
+            new LoggingModule(),
+            new TaskChainModule()
         );
 
         this.eventBus.register(guiceInjector.getInstance(PluginEnableEventListener.class));

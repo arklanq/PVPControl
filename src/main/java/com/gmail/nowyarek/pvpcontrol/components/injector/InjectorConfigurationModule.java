@@ -1,4 +1,4 @@
-package com.gmail.nowyarek.pvpcontrol.modules;
+package com.gmail.nowyarek.pvpcontrol.components.injector;
 
 import com.google.inject.AbstractModule;
 

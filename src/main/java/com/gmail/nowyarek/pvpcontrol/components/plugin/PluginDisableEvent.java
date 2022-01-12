@@ -1,4 +1,4 @@
-package com.gmail.nowyarek.pvpcontrol.events;
+package com.gmail.nowyarek.pvpcontrol.components.plugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,7 +1,6 @@
-package com.gmail.nowyarek.pvpcontrol.modules;
+package com.gmail.nowyarek.pvpcontrol.components.plugin;
 
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
-import com.gmail.nowyarek.pvpcontrol.annotations.PluginVersion;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.bukkit.plugin.java.JavaPlugin;

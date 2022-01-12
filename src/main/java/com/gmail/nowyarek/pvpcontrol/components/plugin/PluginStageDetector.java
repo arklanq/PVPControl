@@ -1,19 +1,20 @@
-package com.gmail.nowyarek.pvpcontrol.utils;
+package com.gmail.nowyarek.pvpcontrol.components.plugin;
 
+import com.gmail.nowyarek.pvpcontrol.interfaces.Detector;
 import com.google.inject.Stage;
 
 import javax.annotation.Nullable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PluginStageDetector {
+public class PluginStageDetector implements Detector<Stage> {
     private final Logger logger;
 
     public PluginStageDetector(Logger logger) {
         this.logger = logger;
     }
 
-    public Stage findOutStage() {
+    public Stage detect() {
         @Nullable String stageStringValue = System.getenv("JAVA_ENV");
 
         if (stageStringValue == null)
