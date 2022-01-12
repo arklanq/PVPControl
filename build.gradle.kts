@@ -66,7 +66,7 @@ dependencies {
 
     /* Optional dependencies on 3rd party plugins */
     // EssentialsX
-    compileOnly("net.ess3:EssentialsX:2.18.2")
+    compileOnly("net.essentialsx:EssentialsX:2.19.2")
 
     /* Testing libararies */
     // API against which we are writting tests
