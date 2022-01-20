@@ -1,10 +1,11 @@
 package com.gmail.nowyarek.pvpcontrol;
 
+import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.injector.InjectorConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.logging.LoggingModule;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.*;
-import com.gmail.nowyarek.pvpcontrol.components.task_chain.TaskChainModule;
-import com.gmail.nowyarek.pvpcontrol.interfaces.EventsSource;
+import com.gmail.nowyarek.pvpcontrol.components.TaskChain.TaskChainModule;
+import com.gmail.nowyarek.pvpcontrol.models.EventsSource;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -17,7 +18,8 @@ public class PVPControl extends JavaPlugin implements EventsSource {
 
     @Override
     public void onEnable() {
-        Stage stage = new PluginStageDetector(this.getLogger()).detect();
+        System.out.println("Server main thread: " + Thread.currentThread().getName());
+        Stage stage = new PluginStageDetector(this.getLogger()).get();
 
         guiceInjector = Guice.createInjector(
             stage,
@@ -26,7 +28,8 @@ public class PVPControl extends JavaPlugin implements EventsSource {
             new PluginInfoModule(),
             new PluginEssentialsModule(),
             new LoggingModule(),
-            new TaskChainModule()
+            new TaskChainModule(),
+            new ConfigurationModule()
         );
 
         this.eventBus.register(guiceInjector.getInstance(PluginEnableEventListener.class));

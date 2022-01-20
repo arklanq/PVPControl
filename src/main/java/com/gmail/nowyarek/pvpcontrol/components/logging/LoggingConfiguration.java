@@ -31,7 +31,7 @@ public class LoggingConfiguration implements EventListener {
     }
 
     public void configureDefaultLogLevel() {
-        Level defaultLogLevel = logLevelDetector.detect();
+        Level defaultLogLevel = logLevelDetector.get();
         java.util.logging.Logger julLogger = plugin.getLogger();
         julLogger.setLevel(defaultLogLevel);
         logger.debug("Defined log level.");
