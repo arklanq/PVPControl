@@ -1,0 +1,69 @@
+#  ____   __     __  ____     ____                   _                    _
+# |  _ \  \ \   / / |  _ \   / ___|   ___    _ __   | |_   _ __    ___   | |
+# | |_) |  \ \ / /  | |_) | | |      / _ \  | '_ \  | __| | '__|  / _ \  | |
+# |  __/    \ V /   |  __/  | |___  | (_) | | | | | | |_  | |    | (_) | | |
+# |_|        \_/    |_|      \____|  \___/  |_| |_|  \__| |_|     \___/  |_|
+#                                                                             by IdkMan
+
+General:
+  # Here you can change language of the plugin, currenty supported languages: EN, PL
+  # If you want to add your own language just fill messenges_en.yml file and contact with me on spigot @IdkMan
+  Language: EN
+
+PVP:
+  # How long PVP mode should be?
+  TimeInPVPMode: 15
+  # Turn off `fly` on pvp. The PVP mode will also be turned on if you hit another player from the bow.
+  TurnOffFlyOnPVP: true
+  # Disable invisibility potion. Doesn't disable vanish.
+  DisableInvisibilityOnPVP: false
+  # Should we block any teleport commands, like */tpa <Player>*?
+  BlockTeleportCommandsDuringPVP: true
+  # Should we block chorus fruit teleport?
+  BlockChorusFruitTeleport: true
+  # Should we block ender pearl teleport?
+  BlockEnderPeralTeleport: true
+  # Should player be killed and items dropped on the ground when logging out during PVP?
+  KillWhenLogoutOnPVP: true
+  # Should we broadcast info to all players, that the player log out during PVP?
+  # This option will be ignored if `KillWhenLogoutOnPVP` option is set to FALSE.
+  BroadcastPlayerLoggingOnPVP: true
+
+Commands:
+  # Should all commands be blocked during PVP?
+  BlockAllCommands: false
+  # If `BlockAllCommands` is set to TRUE then you can define below commands that will be AVAILABLE during PVP.
+  # If `BlockAllCommands` option is set to FALSE then this option is ignored.
+  # You don't need to care about the case sensitiveness of commands.
+  # Example: - msg
+  CommandsWhitelist:
+    - msg
+    - tell
+    - whisper
+  # If `BlockAllCommands` is set to TRUE then this option is ignored.
+  # If `BlockAllCommands` option is set to FALSE you can define below commands that will be BLOCKED during PVP.
+  # You don't need to care about the case sensitiveness of commands.
+  # Example: - spawn
+  CommandsBlacklist:
+    - spawn
+    - tpa
+    - tpayes
+    - tpyes
+    - tpaccept
+    - tpadeny
+    - tpdeny
+    - tp
+    - teleport
+  # All commands that will be executed in console when player log out during PVP. You can use %player% variable.
+  # Commands should be written without a preceding slash "/"
+  # Example: - eco set %player% 0
+  CommandsExecutedWhenLogoutInPVP: []
+
+OtherPlugins:
+  # Options below works only when supported version of EssentialsX is installed on the server.
+  EssentialsX:
+    # Turn off God Mode on hit and enter PVP mode
+    disableEssentialsGodModeOnHit: false
+
+# Not enough features? Let me know what you want! Write private message to me on spigot @IdkMan
+# or describe your problem on discussion page of this plugin.
