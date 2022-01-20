@@ -46,7 +46,7 @@ repositories {
     }
     // EssentialsX
     maven {
-        setUrl("https://ci.ender.zone/plugin/repository/everything/")
+        setUrl("https://repo.essentialsx.net/releases")
     }
 }
 
@@ -69,7 +69,7 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsX:2.19.2")
 
     /* Testing libararies */
-    // API against which we are writting tests
+    // API against which we are writing tests
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     // An implementation of the junit-platform-engine API that runs JUnit 5 tests.
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
@@ -99,9 +99,24 @@ tasks.named<ShadowJar>("shadowJar") {
     }
 
     relocators = listOf<Relocator>(
-        SimpleRelocator("co.aikar.taskchain", "com.gmail.nowyarek.pvpcontrol.relocation.co.aikar.taskchain", ArrayList<String>(), ArrayList<String>()),
-        SimpleRelocator("com.google.inject", "com.gmail.nowyarek.pvpcontrol.relocation.com.google.inject", ArrayList<String>(), ArrayList<String>()),
-        SimpleRelocator("org.aopalliance", "com.gmail.nowyarek.pvpcontrol.relocation.org.aopalliance", ArrayList<String>(), ArrayList<String>()),
+        SimpleRelocator(
+            "co.aikar.taskchain",
+            "com.gmail.nowyarek.pvpcontrol.relocation.co.aikar.taskchain",
+            ArrayList<String>(),
+            ArrayList<String>()
+        ),
+        SimpleRelocator(
+            "com.google.inject",
+            "com.gmail.nowyarek.pvpcontrol.relocation.com.google.inject",
+            ArrayList<String>(),
+            ArrayList<String>()
+        ),
+        SimpleRelocator(
+            "org.aopalliance",
+            "com.gmail.nowyarek.pvpcontrol.relocation.org.aopalliance",
+            ArrayList<String>(),
+            ArrayList<String>()
+        ),
     )
 
     mergeServiceFiles()
@@ -125,6 +140,11 @@ tasks.named<DefaultTask>("build") {
 
 tasks.named<Javadoc>("javadoc") {
 
+}
+
+/* Tests */
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
 }
 
 /* Deployment */
