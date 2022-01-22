@@ -1,6 +1,6 @@
 package com.gmail.nowyarek.pvpcontrol;
 
-import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationModule;
+import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsModule;
 import com.gmail.nowyarek.pvpcontrol.components.injector.InjectorConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.logging.LoggingModule;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.*;
@@ -12,24 +12,24 @@ import com.google.inject.Injector;
 import com.google.inject.Stage;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nullable;
+
 public class PVPControl extends JavaPlugin implements EventsSource {
     private final EventBus eventBus = new EventBus();
-    private Injector guiceInjector;
+    @Nullable private Injector guiceInjector;
 
     @Override
     public void onEnable() {
-        System.out.println("Server main thread: " + Thread.currentThread().getName());
         Stage stage = new PluginStageDetector(this.getLogger()).get();
 
         guiceInjector = Guice.createInjector(
             stage,
             binder -> binder.bind(PVPControl.class).toInstance(this),
             new InjectorConfigurationModule(),
-            new PluginInfoModule(),
-            new PluginEssentialsModule(),
+            new PluginModule(),
             new LoggingModule(),
             new TaskChainModule(),
-            new ConfigurationModule()
+            new SettingsModule()
         );
 
         this.eventBus.register(guiceInjector.getInstance(PluginEnableEventListener.class));
@@ -38,8 +38,10 @@ public class PVPControl extends JavaPlugin implements EventsSource {
 
     @Override
     public void onDisable() {
-        this.eventBus.register(guiceInjector.getInstance(PluginDisableEventListener.class));
-        this.eventBus.post(new PluginDisableEvent(this));
+        if(this.guiceInjector != null) {
+            this.eventBus.register(guiceInjector.getInstance(PluginDisableEventListener.class));
+            this.eventBus.post(new PluginDisableEvent(this));
+        }
     }
 
     /**

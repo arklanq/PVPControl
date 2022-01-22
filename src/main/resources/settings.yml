@@ -7,36 +7,38 @@
 
 General:
   # Here you can change language of the plugin, currenty supported languages: EN, PL
-  # If you want to add your own language just fill messenges_en.yml file and contact with me on spigot @IdkMan
-  Language: EN
+  # If you want to introduce your own language contact me on SpigotMC (https://www.spigotmc.org/members/idkman.257368/)
+  language: EN
+  # Don't ever change this!
+  configVersion: 1
 
 PVP:
   # How long PVP mode should be?
-  TimeInPVPMode: 15
+  timeInPVPMode: 15
   # Turn off `fly` on pvp. The PVP mode will also be turned on if you hit another player from the bow.
-  TurnOffFlyOnPVP: true
+  turnOffFlyOnPVP: true
   # Disable invisibility potion. Doesn't disable vanish.
-  DisableInvisibilityOnPVP: false
+  disableInvisibilityOnPVP: false
   # Should we block any teleport commands, like */tpa <Player>*?
-  BlockTeleportCommandsDuringPVP: true
+  blockTeleportCommandsDuringPVP: true
   # Should we block chorus fruit teleport?
-  BlockChorusFruitTeleport: true
+  blockChorusFruitTeleport: true
   # Should we block ender pearl teleport?
-  BlockEnderPeralTeleport: true
+  blockEnderPeralTeleport: true
   # Should player be killed and items dropped on the ground when logging out during PVP?
-  KillWhenLogoutOnPVP: true
+  killWhenLogoutOnPVP: true
   # Should we broadcast info to all players, that the player log out during PVP?
   # This option will be ignored if `KillWhenLogoutOnPVP` option is set to FALSE.
-  BroadcastPlayerLoggingOnPVP: true
+  broadcastPlayerLoggingOnPVP: true
 
 Commands:
   # Should all commands be blocked during PVP?
-  BlockAllCommands: false
+  blockAllCommands: false
   # If `BlockAllCommands` is set to TRUE then you can define below commands that will be AVAILABLE during PVP.
   # If `BlockAllCommands` option is set to FALSE then this option is ignored.
   # You don't need to care about the case sensitiveness of commands.
   # Example: - msg
-  CommandsWhitelist:
+  commandsWhitelist:
     - msg
     - tell
     - whisper
@@ -44,7 +46,7 @@ Commands:
   # If `BlockAllCommands` option is set to FALSE you can define below commands that will be BLOCKED during PVP.
   # You don't need to care about the case sensitiveness of commands.
   # Example: - spawn
-  CommandsBlacklist:
+  commandsBlacklist:
     - spawn
     - tpa
     - tpayes
@@ -57,7 +59,7 @@ Commands:
   # All commands that will be executed in console when player log out during PVP. You can use %player% variable.
   # Commands should be written without a preceding slash "/"
   # Example: - eco set %player% 0
-  CommandsExecutedWhenLogoutInPVP: []
+  commandsExecutedWhenLogoutInPVP: []
 
 OtherPlugins:
   # Options below works only when supported version of EssentialsX is installed on the server.

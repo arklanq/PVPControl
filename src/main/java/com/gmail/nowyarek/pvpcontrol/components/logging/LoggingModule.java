@@ -7,7 +7,7 @@ public class LoggingModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(DefaultLogLevelDetector.class);
-        bind(LoggingConfiguration.class).asEagerSingleton();
         bind(PluginLogger.class);
+        bind(LoggingConfiguration.class).asEagerSingleton();
     }
 }
