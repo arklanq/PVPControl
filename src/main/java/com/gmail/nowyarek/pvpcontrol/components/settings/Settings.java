@@ -3,15 +3,14 @@ package com.gmail.nowyarek.pvpcontrol.components.settings;
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigInitializationException;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigWithDefaults;
-import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidationException;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
 import com.google.common.eventbus.Subscribe;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,21 +42,18 @@ public class Settings {
     }
 
     private void initializeSections() {
-        this.General = new GeneralSettings(config);
+        this.General = new GeneralSettings(config.configuration, config.defaultsConfiguration);
 
         List<String> violations = Stream.of(this.General)
-            .map((SettingsSection section) -> {
-                try {
-                    section.init();
-                    return null;
-                } catch (ConfigurationValidationException e) {
-                    return e.getMessage();
-                }
-            })
-            .filter(Objects::nonNull)
+            .map((SettingsSection section) -> section.init().getViolations())
+            .flatMap(Collection::stream)
             .collect(Collectors.toList());
 
-        if(violations.size() > 0)
+        this.processViolations(violations);
+    }
+
+    private void processViolations(List<String> violations) {
+        if (violations.size() > 0)
             this.logger.warn(
                 String.format(
                     "There was %s during validation of `settings.yml` configuration file.",
@@ -65,7 +61,13 @@ public class Settings {
                 )
             );
 
-        violations.forEach((violation) -> this.logger.warn(String.format("- %s", violation)));
+        for (int i = 0; i < 3 && i < violations.size(); i++) {
+            String violation = violations.get(i);
+            this.logger.warn(String.format("- %s", violation));
+        }
+
+        if (violations.size() > 3)
+            this.logger.warn(String.format("... and %s more.", violations.size() - 3));
     }
 
 }

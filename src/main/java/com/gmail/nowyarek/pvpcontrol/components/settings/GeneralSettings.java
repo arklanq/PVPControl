@@ -1,18 +1,16 @@
 package com.gmail.nowyarek.pvpcontrol.components.settings;
 
-import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigWithDefaults;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
-import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidationException;
+import org.bukkit.configuration.file.FileConfiguration;
 
-public class GeneralSettings implements SettingsSection {
-    private final ConfigWithDefaults config;
+public class GeneralSettings extends AbstractSettingsSection {
     private final String[] allowedLanguages = new String[] {"EN", "PL"};
 
     public String language;
     public int configVersion;
 
-    GeneralSettings(ConfigWithDefaults config) {
-        this.config = config;
+    GeneralSettings(FileConfiguration config, FileConfiguration defaultConfig) {
+        super(config, defaultConfig);
     }
 
     public String getLanguage() {
@@ -32,9 +30,12 @@ public class GeneralSettings implements SettingsSection {
     }
 
     @Override
-    public void init() throws ConfigurationValidationException {
-        ConfigurationValidation configuration = new ConfigurationValidation(this.config.getFileConfiguration());
+    public ConfigurationValidation init() {
+        ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
+
         this.language = configuration.requireStringEnum("General.language", allowedLanguages);
         this.configVersion = configuration.requireInt("General.configVersion");
+
+        return configuration;
     }
 }

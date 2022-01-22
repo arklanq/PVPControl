@@ -1,94 +1,176 @@
 package com.gmail.nowyarek.pvpcontrol.components.configuration;
 
+import com.google.common.collect.ImmutableList;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ConfigurationValidation {
-    private final ConfigurationSection section;
+    private final ConfigurationSection config;
+    @Nullable
+    private final ConfigurationSection defaults;
+    private final List<String> violations = new ArrayList<>();
 
-    public ConfigurationValidation(ConfigurationSection section) {
-        this.section = section;
+    public ConfigurationValidation(ConfigurationSection config, @Nullable ConfigurationSection defaults) {
+        this.config = config;
+        this.defaults = defaults;
     }
 
-    public String requireString(String path) throws ConfigurationValidationException {
+    public ImmutableList<String> getViolations() {
+        return ImmutableList.<String>builder().addAll(this.violations).build();
+    }
+
+    @Nullable
+    public String requireString(String path) {
         return this.requireString(path, null);
     }
 
-    public String requireString(String path, @Nullable String message) throws ConfigurationValidationException {
-        String val = section.getString(path);
+    @Nullable
+    public String requireString(String path, @Nullable String message) {
+        String val = config.getString(path);
+        ViolationMessageBuilder violationBuilder = ViolationMessageBuilder.forPath(this.joinPath(path));
+
         if (val == null) {
-            if (message != null) throw new ConfigurationValidationException(message, this.joinPath(path));
-            else throw new ConfigurationValidationException(String.class, this.joinPath(path));
+            violationBuilder.expectedType(String.class).message(message);
+
+            if(defaults != null) {
+                String defaultVal = defaults.getString(path);
+                violationBuilder.defaultValue(defaultVal);
+                this.generateViolation(violationBuilder.toString());
+                return defaultVal;
+            }
+
+            this.generateViolation(violationBuilder.toString());
+            return null;
         }
+
+        return val.trim();
+    }
+
+    @Nullable
+    public String requireStringEnum(String path, String[] enumValues) {
+        return this.requireStringEnum(path, enumValues, null);
+    }
+
+    @Nullable
+    public String requireStringEnum(String path, String[] enumValues, @Nullable String message) {
+        String val = this.requireString(path);
+        if (val == null) return null;
+
+        List<String> enumValuesList = Arrays.asList(enumValues);
+        if (!enumValuesList.contains(val)) {
+            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder.forPath(this.joinPath(path));
+            Optional<String> concatenatedValues = enumValuesList.stream().reduce((acc, element) -> acc.concat(", " + element));
+            violationBuilder.message(message != null ? message : String.format("`{path}` must be one of: %s.", concatenatedValues.orElse("")));
+
+            @Nullable String defaultValue = null;
+            if(defaults != null) {
+                defaultValue = defaults.getString(path);
+                violationBuilder.defaultValue(defaultValue);
+            }
+            this.generateViolation(violationBuilder.toString());
+
+            return defaultValue;
+        }
+
         return val;
     }
 
-    public String requireStringEnum(String path, String[] allowedValues) throws ConfigurationValidationException {
-        return this.requireStringEnum(path, allowedValues, null);
-    }
-    public String requireStringEnum(String path, String[] allowedValues, @Nullable String message) throws ConfigurationValidationException {
-        String val = this.requireString(path).trim();
-        List<String> allowedValuesList = Arrays.asList(allowedValues);
-        if (!allowedValuesList.contains(val)) {
-            if (message != null) throw new ConfigurationValidationException(message, this.joinPath(path));
-            else throw new ConfigurationValidationException(
-                String.format(
-                    "`{path}` must be one of: %s.",
-                    allowedValuesList.stream().reduce((acc, element) -> acc.concat(", " + element))
-                ),
-                this.joinPath(path)
-            );
-        }
-        return val;
-    }
-
-    public int requireInt(String path) throws ConfigurationValidationException {
+    public int requireInt(String path) {
         return this.requireInt(path, null);
     }
 
-    public int requireInt(String path, @Nullable String message) throws ConfigurationValidationException {
+    public int requireInt(String path, @Nullable String message) {
         String val = this.requireString(path);
+        if (val == null) return 0;
+
         try {
             return Integer.parseInt(val);
         } catch (NumberFormatException e) {
-            if (message != null) throw new ConfigurationValidationException(message, this.joinPath(path));
-            else throw new ConfigurationValidationException(Integer.class, this.joinPath(path));
+            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
+                .forPath(this.joinPath(path))
+                .expectedType(Integer.class)
+                .message(message);
+
+            if(defaults != null) {
+                int defaultVal = defaults.getInt(path);
+                violationBuilder.defaultValue(defaultVal);
+                this.generateViolation(violationBuilder.toString());
+                return defaultVal;
+            }
+
+            this.generateViolation(violationBuilder.toString());
+            return 0;
         }
     }
 
-    public double requireDouble(String path) throws ConfigurationValidationException {
+    public double requireDouble(String path) {
         return this.requireDouble(path, null);
     }
 
-    public double requireDouble(String path, @Nullable String message) throws ConfigurationValidationException {
+    public double requireDouble(String path, @Nullable String message) {
         String val = this.requireString(path);
+        if (val == null) return 0;
+
         try {
             return Double.parseDouble(val);
-        } catch (NumberFormatException e) {
-            if (message != null) throw new ConfigurationValidationException(message, this.joinPath(path));
-            else throw new ConfigurationValidationException(Double.class, this.joinPath(path));
+        } catch (NumberFormatException | NullPointerException e) {
+            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
+                .forPath(this.joinPath(path))
+                .expectedType(Double.class)
+                .message(message);
+
+            if(defaults != null) {
+                int defaultVal = defaults.getInt(path);
+                violationBuilder.defaultValue(defaultVal);
+                this.generateViolation(violationBuilder.toString());
+                return defaultVal;
+            }
+
+            this.generateViolation(violationBuilder.toString());
+            return 0;
         }
     }
 
-    public boolean requireBoolean(String path) throws ConfigurationValidationException {
+    public boolean requireBoolean(String path) {
         return this.requireBoolean(path, null);
     }
 
-    public boolean requireBoolean(String path, @Nullable String message) throws ConfigurationValidationException {
-        String val = this.requireString(path).trim().toLowerCase();
+    public boolean requireBoolean(String path, @Nullable String message) {
+        String val = this.requireString(path);
+        if (val == null) return false;
+        else val = val.toLowerCase();
+
         List<String> allowedValues = Arrays.asList("true", "false");
         if (!allowedValues.contains(val)) {
-            if (message != null) throw new ConfigurationValidationException(message, this.joinPath(path));
-            else throw new ConfigurationValidationException(Boolean.class, this.joinPath(path));
+            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
+                .forPath(this.joinPath(path))
+                .expectedType(Boolean.class)
+                .message(message);
+
+            if(defaults != null) {
+                boolean defaultVal = defaults.getBoolean(path);
+                violationBuilder.defaultValue(defaultVal);
+                this.generateViolation(violationBuilder.toString());
+                return defaultVal;
+            }
+
+            this.generateViolation(violationBuilder.toString());
+            return false;
         }
         return Boolean.parseBoolean(val);
     }
 
     private String joinPath(String path) {
-        return String.format("%s.%s", this.section.getCurrentPath(), path).replaceFirst(".", "");
+        return String.format("%s.%s", this.config.getCurrentPath(), path).replaceFirst(".", "");
+    }
+
+    private void generateViolation(String violationMessage) {
+        this.violations.add(violationMessage);
     }
 
 }
