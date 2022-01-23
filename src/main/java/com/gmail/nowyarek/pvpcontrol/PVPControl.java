@@ -1,5 +1,6 @@
 package com.gmail.nowyarek.pvpcontrol;
 
+import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsModule;
 import com.gmail.nowyarek.pvpcontrol.components.injector.InjectorConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.logging.LoggingModule;
@@ -29,6 +30,7 @@ public class PVPControl extends JavaPlugin implements EventsSource {
             new PluginModule(),
             new LoggingModule(),
             new TaskChainModule(),
+            new ConfigurationModule(),
             new SettingsModule()
         );
 

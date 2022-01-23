@@ -31,12 +31,12 @@ PVP:
 
 Commands:
   # Should all commands be blocked during PVP?
-  blockAllCommands: false
+  blockAll: false
   # If `BlockAllCommands` is set to TRUE then you can define below commands that will be AVAILABLE during PVP.
   # If `BlockAllCommands` option is set to FALSE then this option is ignored.
   # You don't need to care about the case sensitiveness of commands.
   # Example: - msg
-  commandsWhitelist:
+  whitelist:
     - msg
     - tell
     - whisper
@@ -44,7 +44,7 @@ Commands:
   # If `BlockAllCommands` option is set to FALSE you can define below commands that will be BLOCKED during PVP.
   # You don't need to care about the case sensitiveness of commands.
   # Example: - spawn
-  commandsBlacklist:
+  blacklist:
     - spawn
     - tpa
     - tpayes
@@ -57,13 +57,13 @@ Commands:
   # All commands that will be executed in console when player log out during PVP. You can use %player% variable.
   # Commands should be written without a preceding slash "/"
   # Example: - eco set %player% 0
-  commandsExecutedWhenLogoutInPVP: []
+  executedWhenLogoutDuringPVP: []
 
-OtherPlugins:
+Integrations:
   # Options below works only when supported version of EssentialsX is installed on the server.
   EssentialsX:
     # Turn off God Mode on hit and enter PVP mode
-    disableEssentialsGodModeOnHit: false
+    disableGodModeOnHit: false
 
 # Not enough features? Let me know what you want! Write private message to me on spigot @IdkMan
 # or describe your problem on discussion page of this plugin.

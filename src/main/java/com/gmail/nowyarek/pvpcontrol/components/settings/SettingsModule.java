@@ -6,6 +6,7 @@ public class SettingsModule extends AbstractModule {
 
     @Override
     public void configure() {
+        bind(ViolationsProcessorFactory.class);
         bind(Settings.class).asEagerSingleton();
     }
 

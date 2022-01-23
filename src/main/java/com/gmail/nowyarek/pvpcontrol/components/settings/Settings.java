@@ -1,9 +1,9 @@
 package com.gmail.nowyarek.pvpcontrol.components.settings;
 
 import com.gmail.nowyarek.pvpcontrol.PVPControl;
+import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigFactory;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigInitializationException;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigWithDefaults;
-import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
 import com.google.common.eventbus.Subscribe;
 
@@ -16,16 +16,17 @@ import java.util.stream.Stream;
 
 @Singleton
 public class Settings {
-    private final int CURRENT_VERSION = 1;
     private final ConfigWithDefaults config;
-    private final PluginLogger logger;
     public GeneralSettings General;
     public PVPSettings PVP;
+    public CommandsSettings Commands;
+    public IntegrationsSettings Integrations;
+    public ViolationsProcessorFactory violationsProcessorFactory;
 
     @Inject
-    Settings(PVPControl plugin, PluginLogger logger) {
-        this.config = new ConfigWithDefaults(plugin, logger, "settings.yml");
-        this.logger = logger;
+    Settings(PVPControl plugin, ConfigFactory configFactory, ViolationsProcessorFactory violationsProcessorFactory) {
+        this.config = configFactory.createConfigWithDefaults("settings.yml");
+        this.violationsProcessorFactory = violationsProcessorFactory;
         plugin.getEventBus().register(this);
     }
 
@@ -46,49 +47,21 @@ public class Settings {
     private void initializeSections() {
         this.General = new GeneralSettings(config.configuration, config.defaultsConfiguration);
         this.PVP = new PVPSettings(config.configuration, config.defaultsConfiguration);
+        this.Commands = new CommandsSettings(config.configuration, config.defaultsConfiguration);
+        this.Integrations = new IntegrationsSettings(config.configuration, config.defaultsConfiguration);
 
-        List<String> violations = Stream.of(this.General, this.PVP)
+        List<String> violations = Stream.of(General, PVP, Commands, Integrations)
             .map((SettingsSection section) -> section.init().getViolations())
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
 
-        if (this.General.getConfigVersion() != this.CURRENT_VERSION) {
-            this.logger.warn("");
-        }
-
-        this.processViolations(violations);
+        ViolationsProcessor violationsProcessor = this.violationsProcessorFactory.create(
+            this.General.getConfigVersion(),
+            this.config.defaultsConfiguration.getInt("General.configVersion")
+        );
+        violationsProcessor.processViolations(violations);
     }
 
-    private void processViolations(List<String> violations) {
-        int MAX_VIOLATIONS_IN_CONSOLE = 10;
 
-        if (this.General.getConfigVersion() != this.CURRENT_VERSION) {
-            this.logger.warn(
-                String.format(
-                    "You are running PVPControl with an outdated config (vesion %s). " +
-                        "Please follow the guidelines presented below to adjust your config to newest version (version %s).",
-                    this.General.getConfigVersion(),
-                    this.CURRENT_VERSION
-                )
-            );
-
-            violations.add(0, String.format("Update `General.configVersion` to %s.", this.CURRENT_VERSION));
-            MAX_VIOLATIONS_IN_CONSOLE++;
-        } else if (violations.size() > 0)
-            this.logger.warn(
-                String.format(
-                    "There was %s during validation of `settings.yml` configuration file.",
-                    violations.size() == 1 ? "an issue" : "several issues"
-                )
-            );
-
-        for (int i = 0; i < MAX_VIOLATIONS_IN_CONSOLE && i < violations.size(); i++) {
-            String violation = violations.get(i);
-            this.logger.warn(String.format("- %s", violation));
-        }
-
-        if (violations.size() > MAX_VIOLATIONS_IN_CONSOLE)
-            this.logger.warn(String.format("... and %s more.", violations.size() - MAX_VIOLATIONS_IN_CONSOLE));
-    }
 
 }

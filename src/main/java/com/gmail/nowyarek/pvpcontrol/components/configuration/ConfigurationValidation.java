@@ -24,6 +24,10 @@ public class ConfigurationValidation {
         return ImmutableList.<String>builder().addAll(this.violations).build();
     }
 
+    public void mergeViolations(ImmutableList<String> newViolations) {
+        this.violations.addAll(newViolations);
+    }
+
     @Nullable
     public String requireString(String path) {
         return this.requireString(path, null);
@@ -52,6 +56,33 @@ public class ConfigurationValidation {
     }
 
     @Nullable
+    public List<String> requireStringList(String path) {
+        return this.requireStringList(path, null);
+    }
+
+    @Nullable
+    public List<String> requireStringList(String path, String message) {
+        ViolationMessageBuilder violationBuilder = ViolationMessageBuilder.forPath(this.joinPath(path));
+
+        if(!config.isList(path)) {
+            violationBuilder.expectedType(List.class);
+
+            Object val = config.get(path);
+            if(val != null)
+                violationBuilder.actualValue(val);
+
+            if(defaults != null) {
+                List<String> defaultVal = defaults.getStringList(path);
+                violationBuilder.defaultValue(String.format("<list with %s elements>", defaultVal.size()));
+            }
+
+            this.generateViolation(violationBuilder.toString());
+        }
+
+        return config.getStringList(path);
+    }
+
+    @Nullable
     public String requireStringEnum(String path, String[] enumValues) {
         return this.requireStringEnum(path, enumValues, null);
     }
@@ -63,9 +94,16 @@ public class ConfigurationValidation {
 
         List<String> enumValuesList = Arrays.asList(enumValues);
         if (!enumValuesList.contains(val)) {
-            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder.forPath(this.joinPath(path));
+            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
+                .forPath(this.joinPath(path))
+                .actualValue(val);
+
             Optional<String> concatenatedValues = enumValuesList.stream().reduce((acc, element) -> acc.concat(", " + element));
-            violationBuilder.message(message != null ? message : String.format("`{path}` must be one of: %s.", concatenatedValues.orElse("")));
+            violationBuilder.message(
+                message != null
+                    ? message
+                    : String.format("`{path}` must be one of: %s. Instead received: `{actualValue}`.", concatenatedValues.orElse(""))
+            );
 
             @Nullable String defaultValue = null;
             if(defaults != null) {
@@ -94,6 +132,7 @@ public class ConfigurationValidation {
             ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
                 .forPath(this.joinPath(path))
                 .expectedType(Integer.class)
+                .actualValue(val)
                 .message(message);
 
             if(defaults != null) {
@@ -122,6 +161,7 @@ public class ConfigurationValidation {
             ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
                 .forPath(this.joinPath(path))
                 .expectedType(Double.class)
+                .actualValue(val)
                 .message(message);
 
             if(defaults != null) {
@@ -150,6 +190,7 @@ public class ConfigurationValidation {
             ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
                 .forPath(this.joinPath(path))
                 .expectedType(Boolean.class)
+                .actualValue(val)
                 .message(message);
 
             if(defaults != null) {
