@@ -4,7 +4,6 @@ import com.google.inject.Stage;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PluginStageDetector implements Supplier<Stage> {
@@ -24,8 +23,7 @@ public class PluginStageDetector implements Supplier<Stage> {
         try {
             return Stage.valueOf(stageStringValue.toUpperCase());
         } catch (IllegalArgumentException e) {
-            logger.log(
-                Level.WARNING,
+            logger.warning(
                 String.format("Unable to determine application stage based on `JAVA_ENV=%s` variable.", stageStringValue)
             );
             return Stage.DEVELOPMENT;

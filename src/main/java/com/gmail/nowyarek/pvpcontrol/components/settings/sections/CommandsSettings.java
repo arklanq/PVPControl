@@ -1,6 +1,7 @@
-package com.gmail.nowyarek.pvpcontrol.components.settings;
+package com.gmail.nowyarek.pvpcontrol.components.settings.sections;
 
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
+import com.gmail.nowyarek.pvpcontrol.components.settings.AbstractSettingsSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;

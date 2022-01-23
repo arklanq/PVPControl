@@ -1,5 +1,6 @@
 package com.gmail.nowyarek.pvpcontrol.components.settings;
 
+import com.gmail.nowyarek.pvpcontrol.components.settings.sections.Settings;
 import com.google.inject.AbstractModule;
 
 public class SettingsModule extends AbstractModule {

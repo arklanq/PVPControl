@@ -4,7 +4,7 @@ import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 
 import java.util.List;
 
-class ViolationsProcessor {
+public class ViolationsProcessor {
     private final PluginLogger logger;
     private final int configVersion;
     private final int defaultConfigVersion;
@@ -15,7 +15,7 @@ class ViolationsProcessor {
         this.defaultConfigVersion = defaultConfigVersion;
     }
 
-    void processViolations(List<String> violations) {
+    public void process(List<String> violations) {
         int MAX_VIOLATIONS_IN_CONSOLE = 10;
 
         if (this.configVersion != this.defaultConfigVersion) {
@@ -40,7 +40,7 @@ class ViolationsProcessor {
 
         for (int i = 0; i < MAX_VIOLATIONS_IN_CONSOLE && i < violations.size(); i++) {
             String violation = violations.get(i);
-            this.logger.warn(String.format("- %s", violation));
+            this.logger.warn("- " + violation);
         }
 
         if (violations.size() > MAX_VIOLATIONS_IN_CONSOLE)

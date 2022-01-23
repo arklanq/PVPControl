@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ConfigWithDefaults extends ConfigBase {
     public YamlConfiguration defaultsConfiguration;
-    public AtomicBoolean isConfigFileCorrupted = new AtomicBoolean(false);
+    public final AtomicBoolean isConfigFileCorrupted = new AtomicBoolean(false);
 
     public ConfigWithDefaults(JavaPlugin plugin, PluginLogger logger, String fileName) {
         super(plugin, logger, fileName);

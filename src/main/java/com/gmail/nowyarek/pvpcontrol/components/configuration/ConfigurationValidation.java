@@ -1,5 +1,6 @@
 package com.gmail.nowyarek.pvpcontrol.components.configuration;
 
+import com.gmail.nowyarek.pvpcontrol.utils.ConfigurationSectionUtils;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -207,7 +208,7 @@ public class ConfigurationValidation {
     }
 
     private String joinPath(String path) {
-        return String.format("%s.%s", this.config.getCurrentPath(), path).replaceFirst(".", "");
+        return ConfigurationSectionUtils.joinPath(this.config.getCurrentPath(), path);
     }
 
     private void generateViolation(String violationMessage) {
