@@ -35,7 +35,7 @@ public class ConfigurationValidation {
         ViolationMessageBuilder violationBuilder = ViolationMessageBuilder.forPath(this.joinPath(path));
 
         if (val == null) {
-            violationBuilder.expectedType(String.class).message(message);
+            violationBuilder.message(message);
 
             if(defaults != null) {
                 String defaultVal = defaults.getString(path);

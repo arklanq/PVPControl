@@ -16,9 +16,11 @@ import java.util.stream.Stream;
 
 @Singleton
 public class Settings {
+    private final int CURRENT_VERSION = 1;
     private final ConfigWithDefaults config;
     private final PluginLogger logger;
     public GeneralSettings General;
+    public PVPSettings PVP;
 
     @Inject
     Settings(PVPControl plugin, PluginLogger logger) {
@@ -43,17 +45,36 @@ public class Settings {
 
     private void initializeSections() {
         this.General = new GeneralSettings(config.configuration, config.defaultsConfiguration);
+        this.PVP = new PVPSettings(config.configuration, config.defaultsConfiguration);
 
-        List<String> violations = Stream.of(this.General)
+        List<String> violations = Stream.of(this.General, this.PVP)
             .map((SettingsSection section) -> section.init().getViolations())
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
+
+        if (this.General.getConfigVersion() != this.CURRENT_VERSION) {
+            this.logger.warn("");
+        }
 
         this.processViolations(violations);
     }
 
     private void processViolations(List<String> violations) {
-        if (violations.size() > 0)
+        int MAX_VIOLATIONS_IN_CONSOLE = 10;
+
+        if (this.General.getConfigVersion() != this.CURRENT_VERSION) {
+            this.logger.warn(
+                String.format(
+                    "You are running PVPControl with an outdated config (vesion %s). " +
+                        "Please follow the guidelines presented below to adjust your config to newest version (version %s).",
+                    this.General.getConfigVersion(),
+                    this.CURRENT_VERSION
+                )
+            );
+
+            violations.add(0, String.format("Update `General.configVersion` to %s.", this.CURRENT_VERSION));
+            MAX_VIOLATIONS_IN_CONSOLE++;
+        } else if (violations.size() > 0)
             this.logger.warn(
                 String.format(
                     "There was %s during validation of `settings.yml` configuration file.",
@@ -61,13 +82,13 @@ public class Settings {
                 )
             );
 
-        for (int i = 0; i < 3 && i < violations.size(); i++) {
+        for (int i = 0; i < MAX_VIOLATIONS_IN_CONSOLE && i < violations.size(); i++) {
             String violation = violations.get(i);
             this.logger.warn(String.format("- %s", violation));
         }
 
-        if (violations.size() > 3)
-            this.logger.warn(String.format("... and %s more.", violations.size() - 3));
+        if (violations.size() > MAX_VIOLATIONS_IN_CONSOLE)
+            this.logger.warn(String.format("... and %s more.", violations.size() - MAX_VIOLATIONS_IN_CONSOLE));
     }
 
 }

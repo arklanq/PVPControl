@@ -1,12 +1,15 @@
 package com.gmail.nowyarek.pvpcontrol.components.configuration;
 
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 public class ConfigBase {
     protected final JavaPlugin plugin;
@@ -33,7 +36,11 @@ public class ConfigBase {
             if (!configFile.exists())
                 plugin.saveResource(this.fileName, false);
 
-            configuration = YamlConfiguration.loadConfiguration(configFile);
+            try {
+                configuration = this.loadConfiguration(configFile);
+            } catch (Exception e) {
+                throw new CompletionException(e);
+            }
 
             return null;
         });
@@ -42,6 +49,12 @@ public class ConfigBase {
     // Alias
     public void reload() {
         this.initialize();
+    }
+
+    private YamlConfiguration loadConfiguration(File file) throws IOException, InvalidConfigurationException {
+        YamlConfiguration config = new YamlConfiguration();
+        config.load(file);
+        return config;
     }
 
 }

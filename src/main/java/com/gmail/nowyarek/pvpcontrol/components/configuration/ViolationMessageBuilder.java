@@ -48,7 +48,7 @@ public class ViolationMessageBuilder {
             violationMessage = String.format("`%s` must be of type `%s`.", path, this.formatExpectedTypeToBeHumanReadable());
 
         } else {
-            violationMessage = String.format("Invalid value provided at %s.", path);
+            violationMessage = String.format("Invalid or missing value: %s.", path);
         }
 
         if (defaultValue != null)

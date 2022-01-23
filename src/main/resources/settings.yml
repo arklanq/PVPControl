@@ -9,7 +9,7 @@ General:
   # Here you can change language of the plugin, currenty supported languages: EN, PL
   # If you want to introduce your own language contact me on SpigotMC (https://www.spigotmc.org/members/idkman.257368/)
   language: EN
-  # Don't ever change this!
+  # This number specifies the version of the configuration that will change with new updates.
   configVersion: 1
 
 PVP:
@@ -19,17 +19,15 @@ PVP:
   turnOffFlyOnPVP: true
   # Disable invisibility potion. Doesn't disable vanish.
   disableInvisibilityOnPVP: false
-  # Should we block any teleport commands, like */tpa <Player>*?
-  blockTeleportCommandsDuringPVP: true
   # Should we block chorus fruit teleport?
-  blockChorusFruitTeleport: true
+  blockChorusFruitsTeleport: true
   # Should we block ender pearl teleport?
-  blockEnderPeralTeleport: true
+  blockEnderPeralsTeleport: true
   # Should player be killed and items dropped on the ground when logging out during PVP?
-  killWhenLogoutOnPVP: true
+  killWhenLogoutDuringPVP: true
   # Should we broadcast info to all players, that the player log out during PVP?
   # This option will be ignored if `KillWhenLogoutOnPVP` option is set to FALSE.
-  broadcastPlayerLoggingOnPVP: true
+  broadcastPlayerKilledInfo: true
 
 Commands:
   # Should all commands be blocked during PVP?
