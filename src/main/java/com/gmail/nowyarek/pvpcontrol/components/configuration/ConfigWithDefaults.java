@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
@@ -16,8 +17,8 @@ public class ConfigWithDefaults extends ConfigBase {
     public YamlConfiguration defaultsConfiguration;
     public final AtomicBoolean isConfigFileCorrupted = new AtomicBoolean(false);
 
-    public ConfigWithDefaults(JavaPlugin plugin, PluginLogger logger, String fileName) {
-        super(plugin, logger, fileName);
+    public ConfigWithDefaults(JavaPlugin plugin, PluginLogger logger, File dataFolder, String fileName) {
+        super(plugin, logger, dataFolder, fileName);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ConfigWithDefaults extends ConfigBase {
                     return null;
                 }
 
-                throw new RuntimeException("Forwarded exception from `exceptionally` clause.", e);
+                throw new CompletionException(e);
             })
             .thenCompose((Void value) -> this.initializeDefaults());
     }
@@ -46,7 +47,7 @@ public class ConfigWithDefaults extends ConfigBase {
 
     private YamlConfiguration loadDefaultConfiguration(String internalFilePath) {
         InputStream is = getClass().getResourceAsStream(internalFilePath);
-        Objects.requireNonNull(is, "InputStream to a config file resource is null.");
+        Objects.requireNonNull(is, "InputStream to a built-in resource (config file) is null.");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         return YamlConfiguration.loadConfiguration(br);
     }

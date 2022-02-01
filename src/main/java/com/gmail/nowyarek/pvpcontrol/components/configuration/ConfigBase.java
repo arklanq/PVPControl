@@ -18,10 +18,10 @@ public class ConfigBase {
     public final String fileName;
     public FileConfiguration configuration;
 
-    public ConfigBase(JavaPlugin plugin, PluginLogger logger, String fileName) {
+    public ConfigBase(JavaPlugin plugin, PluginLogger logger, File dataFolder, String fileName) {
         this.plugin = plugin;
         this.logger = logger;
-        this.dataFolder = plugin.getDataFolder();
+        this.dataFolder = dataFolder;
         this.fileName = fileName;
     }
 

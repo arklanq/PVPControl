@@ -1,7 +1,6 @@
-package com.gmail.nowyarek.pvpcontrol.components.settings.sections;
+package com.gmail.nowyarek.pvpcontrol.components.settings;
 
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
-import com.gmail.nowyarek.pvpcontrol.components.settings.AbstractSettingsSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class EssentialsXSettings extends AbstractSettingsSection {
@@ -12,7 +11,7 @@ public class EssentialsXSettings extends AbstractSettingsSection {
     }
 
     @Override
-    public ConfigurationValidation init() {
+    ConfigurationValidation init() {
         ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
 
         this.disableGodModeOnHit = configuration.requireBoolean("Integrations.EssentialsX.disableGodModeOnHit");

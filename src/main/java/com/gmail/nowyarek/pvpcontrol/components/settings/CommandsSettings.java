@@ -1,7 +1,6 @@
-package com.gmail.nowyarek.pvpcontrol.components.settings.sections;
+package com.gmail.nowyarek.pvpcontrol.components.settings;
 
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
-import com.gmail.nowyarek.pvpcontrol.components.settings.AbstractSettingsSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class CommandsSettings extends AbstractSettingsSection {
     }
 
     @Override
-    public ConfigurationValidation init() {
+    ConfigurationValidation init() {
         ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
 
         this.blockAll = configuration.requireBoolean("Commands.blockAll");

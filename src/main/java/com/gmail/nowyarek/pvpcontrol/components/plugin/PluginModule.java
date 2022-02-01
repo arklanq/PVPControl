@@ -5,12 +5,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class PluginModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(PluginEnableEventListener.class);
-        bind(PluginDisableEventListener.class);
+        bind(PluginEnabledEventListener.class);
+        bind(PluginDisabledEventListener.class);
     }
 
     @Provides
@@ -22,6 +24,12 @@ public class PluginModule extends AbstractModule {
     @PluginVersion
     public String providePluginVersion(PVPControl plugin) {
         return plugin.getDescription().getVersion();
+    }
+
+    @Provides
+    @PluginDataFolder
+    public File providePluginDataFolder(PVPControl plugin) {
+        return plugin.getDataFolder();
     }
 
 }

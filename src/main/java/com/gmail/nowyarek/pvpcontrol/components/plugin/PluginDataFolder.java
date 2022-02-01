@@ -10,4 +10,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Qualifier
 @Target({ PARAMETER, METHOD, FIELD })
 @Retention(RUNTIME)
-public @interface PluginVersion { }
+public @interface PluginDataFolder { }

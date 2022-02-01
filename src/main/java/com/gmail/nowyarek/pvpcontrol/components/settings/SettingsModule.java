@@ -1,14 +1,16 @@
 package com.gmail.nowyarek.pvpcontrol.components.settings;
 
-import com.gmail.nowyarek.pvpcontrol.components.settings.sections.Settings;
 import com.google.inject.AbstractModule;
+import com.google.inject.multibindings.OptionalBinder;
 
 public class SettingsModule extends AbstractModule {
 
     @Override
     public void configure() {
         bind(ViolationsProcessorFactory.class);
-        bind(Settings.class).asEagerSingleton();
+        bind(SettingsConstructor.class);
+        bind(SettingsProvider.class).asEagerSingleton();
+        OptionalBinder.newOptionalBinder(binder(), Settings.class).setBinding().toProvider(SettingsProvider.class);
     }
 
 }

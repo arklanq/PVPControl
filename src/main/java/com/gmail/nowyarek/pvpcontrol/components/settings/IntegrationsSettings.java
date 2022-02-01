@@ -1,18 +1,17 @@
-package com.gmail.nowyarek.pvpcontrol.components.settings.sections;
+package com.gmail.nowyarek.pvpcontrol.components.settings;
 
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
-import com.gmail.nowyarek.pvpcontrol.components.settings.AbstractSettingsSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class IntegrationsSettings extends AbstractSettingsSection {
-    public EssentialsXSettings EssentialsX;
+    private EssentialsXSettings EssentialsX;
 
     IntegrationsSettings(FileConfiguration config, FileConfiguration defaultConfig) {
         super(config, defaultConfig);
     }
 
     @Override
-    public ConfigurationValidation init() {
+    ConfigurationValidation init() {
         ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
 
         this.EssentialsX = new EssentialsXSettings(this.config, this.defaultConfig);
@@ -21,5 +20,8 @@ public class IntegrationsSettings extends AbstractSettingsSection {
         return configuration;
     }
 
+    public EssentialsXSettings EssentialsX() {
+        return EssentialsX;
+    }
 
 }
