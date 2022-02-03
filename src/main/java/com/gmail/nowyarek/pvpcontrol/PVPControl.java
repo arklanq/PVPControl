@@ -5,6 +5,7 @@ import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationModul
 import com.gmail.nowyarek.pvpcontrol.components.injector.InjectorConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.l10n.LocalizationModule;
 import com.gmail.nowyarek.pvpcontrol.components.logging.LoggingModule;
+import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.*;
 import com.gmail.nowyarek.pvpcontrol.components.resources.ResourcesModule;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsModule;
@@ -42,18 +43,13 @@ public class PVPControl extends JavaPlugin implements EventsSource {
             return;
         }
 
+        this.guiceInjector.getInstance(PluginLogger.class).debug("Guice injector created");
+
         // Enable.
         this.eventBus.register(guiceInjector.getInstance(PluginEnableEventListener.class));
         this.eventBus.post(new PluginEnableEvent(this));
 
-        /*
-        try {
-            System.out.printf("Built-in languages: %s.%n", this.guiceInjector.getInstance(LanguagesDetector.class).detectBuiltInLanguages().get());
-            System.out.printf("External languages: %s.%n", this.guiceInjector.getInstance(LanguagesDetector.class).detectExternalLanguages().get());
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        */
+        this.guiceInjector.getInstance(PluginLogger.class).debug("PluginEnableEvent posted, plugin is fully enabled.");
     }
 
     @Override
@@ -62,6 +58,7 @@ public class PVPControl extends JavaPlugin implements EventsSource {
         if(this.guiceInjector != null) {
             this.eventBus.register(guiceInjector.getInstance(PluginDisableEventListener.class));
             this.eventBus.post(new PluginDisableEvent(this));
+            this.guiceInjector.getInstance(PluginLogger.class).debug("PluginDisableEvent posted, plugin is fully disabled.");
         }
     }
 

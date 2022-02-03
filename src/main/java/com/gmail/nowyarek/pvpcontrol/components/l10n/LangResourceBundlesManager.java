@@ -27,10 +27,8 @@ public class LangResourceBundlesManager {
     private final File dataFolder;
     private final Locale locale;
 
-    volatile Optional<ResourceBundle>
-        externalResourceBundle = Optional.empty(),
-        internalResourceBundle = Optional.empty(),
-        defaultResourceBundle = Optional.empty();
+    volatile Optional<ResourceBundle> externalResourceBundle = Optional.empty(), internalResourceBundle = Optional.empty();
+    volatile ResourceBundle defaultResourceBundle;
 
     @Inject @Blocking
     public LangResourceBundlesManager(
@@ -48,17 +46,29 @@ public class LangResourceBundlesManager {
         this.dataFolder = dataFolder;
         this.locale = locale;
 
-        this.initialize();
+        this.initializeSync();
+    }
+
+    public CompletableFuture<Void> reinitialize() {
+        return this.initializeAsync();
+    }
+
+    private CompletableFuture<Void> initializeAsync() {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                this.externalResourceBundle = this.createExternalResourceBundle().get();
+                this.internalResourceBundle = this.createInternalResourceBundle().get();
+                this.defaultResourceBundle = this.createDefaultResourceBundle().get();
+            } catch(Exception e) {
+                throw new CompletionException(e);
+            }
+        });
     }
 
     @Blocking
-    protected void initialize() {
+    private void initializeSync() {
         try {
-            this.externalResourceBundle = this.createExternalResourceBundle().get();
-            this.internalResourceBundle = this.createInternalResourceBundle().get();
-
-            if(!this.internalResourceBundle.isPresent())
-                this.defaultResourceBundle = this.createDefaultResourceBundle().get();
+            this.initializeAsync().get();
         } catch (Exception e) {
             e.printStackTrace();
             this.plugin.onDisable();
@@ -94,14 +104,14 @@ public class LangResourceBundlesManager {
         });
     }
 
-    private Future<Optional<ResourceBundle>> createDefaultResourceBundle() {
+    private Future<ResourceBundle> createDefaultResourceBundle() {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 String bundleName = "lang.en";
                 Optional<ResourceBundle> resourceBundle = ResourceBundleConstructor.constructInternalResourceBundle(bundleName, this.locale).get();
                 checkState(resourceBundle.isPresent(), String.format("Default translations ResourceBundle (%s) must be available.", defaultLanguageCode));
                 logger.debug(String.format("Default translations ResourceBundle (%s) loaded.", defaultLanguageCode));
-                return resourceBundle;
+                return resourceBundle.get();
             } catch (Exception e) {
                 throw new CompletionException(e);
             }

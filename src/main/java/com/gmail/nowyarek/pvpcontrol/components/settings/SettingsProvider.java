@@ -25,16 +25,12 @@ public class SettingsProvider implements Provider<Settings>, EventsSource {
         this.logger = logger;
         this.settingsConstructor = settingsConstructor;
 
-        this.initialize();
+        this.initializeSync();
     }
 
     @Override
     public Settings get() {
         return this.settings;
-    }
-
-    public CompletableFuture<Settings> reload() {
-        return this.load();
     }
 
     /**
@@ -48,19 +44,22 @@ public class SettingsProvider implements Provider<Settings>, EventsSource {
         return this.eventBus;
     }
 
-    private CompletableFuture<Settings> load() {
-        return this.settingsConstructor.construct().thenApply((Settings settings) -> {
+    public CompletableFuture<Void> reinitialize() {
+        return this.initializeAsync();
+    }
+
+    private CompletableFuture<Void> initializeAsync() {
+        return this.settingsConstructor.construct().thenAccept((Settings settings) -> {
             this.logger.debug("Settings object constructed.");
             this.eventBus.post(new SettingsLoadEvent(settings));
             this.settings = settings;
-            return settings;
         });
     }
 
     @Blocking
-    private void initialize() {
+    private void initializeSync() {
         try {
-            this.load().get();
+            this.initializeAsync().get();
         } catch (Exception e) {
             e.printStackTrace();
             this.plugin.onDisable();

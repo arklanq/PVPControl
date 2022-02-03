@@ -22,8 +22,9 @@ public class LocalizationModule extends AbstractModule {
         bind(DefaultResourceBundleProvider.class);
         OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, DefaultLangResourceBundle.class)).setBinding().toProvider(DefaultResourceBundleProvider.class);
 
-        bind(LanguagesDetector.class);
         bind(Localization.class);
+        bind(LanguagesDetector.class);
+        bind(LanguagesManager.class).asEagerSingleton();
     }
 
     /**
@@ -32,7 +33,7 @@ public class LocalizationModule extends AbstractModule {
     @Provides
     @LanguageCode
     public String provideLanguageCode(Settings settings) {
-        return settings.General().getLanguage().toLowerCase();
+        return settings.General().getLanguage();
     }
 
     /**

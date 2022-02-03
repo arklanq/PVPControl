@@ -7,15 +7,14 @@ import javax.inject.Provider;
 import java.util.*;
 
 public class Localization {
-    private final Provider<Optional<ResourceBundle>> externalRB;
-    private final Provider<Optional<ResourceBundle>> internalRB;
-    private final Provider<Optional<ResourceBundle>> defaultRB;
+    private final Provider<Optional<ResourceBundle>> externalRB, internalRB;
+    private final Provider<ResourceBundle> defaultRB;
 
     @Inject
     Localization(
         @ExternalLangResourceBundle Provider<Optional<ResourceBundle>> externalRB,
         @InternalLangResourceBundle Provider<Optional<ResourceBundle>> internalRB,
-        @DefaultLangResourceBundle Provider<Optional<ResourceBundle>> defaultRB
+        @DefaultLangResourceBundle Provider<ResourceBundle> defaultRB
     ) {
         this.externalRB = externalRB;
         this.internalRB = internalRB;
@@ -29,10 +28,13 @@ public class Localization {
     public String t(String key, StringVariable ...variables) {
         HashMap<String, String> variablesHashMap = Arrays.stream(variables).reduce(
             new HashMap<>(),
-            (HashMap<String, String> hashMap, StringVariable variable) -> variable.toHashMap(),
-            (HashMap<String, String> hashMap, HashMap<String, String> variableHashMap) -> {
-                hashMap.putAll(variableHashMap);
+            (HashMap<String, String> hashMap, StringVariable variable) -> {
+                hashMap.putAll(variable.toHashMap());
                 return hashMap;
+            },
+            (HashMap<String, String> hashMapA, HashMap<String, String> hashMapB) -> {
+                hashMapA.putAll(hashMapB);
+                return hashMapA;
             }
         );
 
@@ -54,20 +56,18 @@ public class Localization {
     }
 
     public String getString(String key) {
-        Optional<ResourceBundle>
-            externalTranslations = externalRB.get(),
-            builtInTranslations = internalRB.get(),
-            defaultTranslations = defaultRB.get();
+        Optional<ResourceBundle> externalTranslations = externalRB.get(), internalTranslations = internalRB.get();
+        ResourceBundle defaultTranslations = defaultRB.get();
 
         try {
             if(externalTranslations.isPresent() && externalTranslations.get().containsKey(key))
                 return externalTranslations.get().getString(key);
 
-            if(builtInTranslations.isPresent() && builtInTranslations.get().containsKey(key))
-                return builtInTranslations.get().getString(key);
+            if(internalTranslations.isPresent() && internalTranslations.get().containsKey(key))
+                return internalTranslations.get().getString(key);
 
-            if(defaultTranslations.isPresent() && defaultTranslations.get().containsKey(key))
-                return defaultTranslations.get().getString(key);
+            if(defaultTranslations.containsKey(key))
+                return defaultTranslations.getString(key);
 
             throw new MissingResourceException(String.format("Could not find the translation for key: %s.", key), "lang.en", key);
         } catch(MissingResourceException e) {

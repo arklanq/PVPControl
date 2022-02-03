@@ -3,6 +3,7 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 import com.gmail.nowyarek.pvpcontrol.utils.StringVariable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LocalizedMessageBuilder {
     private final Localization localization;

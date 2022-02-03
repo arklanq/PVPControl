@@ -1,34 +1,33 @@
 package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
+import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDataFolder;
 import com.gmail.nowyarek.pvpcontrol.utils.JarResourcesUtils;
 import com.google.common.collect.ImmutableList;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class LanguagesDetector {
     private final File dataFolder;
+    private final PluginLogger logger;
+    private final Localization localization;
+    private final Pattern validFileNamePattern = Pattern.compile("^\\w{2}.properties$");
 
     @Inject
-    public LanguagesDetector(@PluginDataFolder File dataFolder) {
+    public LanguagesDetector(@PluginDataFolder File dataFolder, PluginLogger logger, Localization localization) {
         this.dataFolder = dataFolder;
-    }
-
-    public CompletableFuture<ImmutableList<String>> detectBuiltInLanguages() {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                String[] filesListing = JarResourcesUtils.getJarResourcesListing("/lang", false);
-                String[] langCodes = this.convertFileNamesToLanguagesCodes(filesListing);
-                return ImmutableList.copyOf(langCodes);
-            } catch(Exception e) {
-                throw new CompletionException(e);
-            }
-        });
+        this.logger = logger;
+        this.localization = localization;
     }
 
     public CompletableFuture<ImmutableList<String>> detectExternalLanguages() {
@@ -39,9 +38,38 @@ public class LanguagesDetector {
             if (!langDir.exists() || !langDir.isDirectory()) return ImmutableList.of();
 
             String[] filesListing = this.convertFilesToFileNames(Objects.requireNonNull(langDir.listFiles()));
-            //TODO: Filter out files based on regexp pattern and warn user about files found that do not conform to this regexp
-            String[] langCodes = this.convertFileNamesToLanguagesCodes(filesListing);
+            List<String> validFilesNames = new ArrayList<>(), invalidFilesNames = new ArrayList<>();
+            for (String fileName : filesListing) {
+                if (validFileNamePattern.matcher(fileName).matches()) validFilesNames.add(fileName);
+                else invalidFilesNames.add(fileName);
+            }
+
+            System.out.println(invalidFilesNames);
+
+            if (invalidFilesNames.size() > 0) {
+                this.logger.warn(
+                    this.localization.builder("localization.detected_invalid_custom_translations")
+                        .addVariable("%directory%", "PVPControl/lang")
+                        .addVariable("%invalid_translations_files%", String.join(", ", invalidFilesNames))
+                        .addVariable("%link%", "https://blabla")
+                        .toString()
+                );
+            }
+
+            List<String> langCodes = this.convertFileNamesToLanguagesCodes(validFilesNames);
             return ImmutableList.copyOf(langCodes);
+        });
+    }
+
+    public CompletableFuture<ImmutableList<String>> detectInternalLanguages() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String[] filesListing = JarResourcesUtils.getJarResourcesListing("/lang", false);
+                List<String> langCodes = this.convertFileNamesToLanguagesCodes(Arrays.asList(filesListing));
+                return ImmutableList.copyOf(langCodes);
+            } catch (Exception e) {
+                throw new CompletionException(e);
+            }
         });
     }
 
@@ -49,8 +77,10 @@ public class LanguagesDetector {
         return Arrays.stream(files).map(File::getName).toArray(String[]::new);
     }
 
-    private String[] convertFileNamesToLanguagesCodes(String[] fileNames) {
-        return Arrays.stream(fileNames).map((String fileName) -> fileName.endsWith(".properties") ? fileName.substring(0, fileName.indexOf(".properties")) : fileName).toArray(String[]::new);
+    private List<String> convertFileNamesToLanguagesCodes(Iterable<String> fileNames) {
+        return StreamSupport.stream(fileNames.spliterator(), false)
+            .map((String fileName) -> fileName.substring(0, fileName.indexOf(".properties")))
+            .collect(Collectors.toList());
     }
 
 }
