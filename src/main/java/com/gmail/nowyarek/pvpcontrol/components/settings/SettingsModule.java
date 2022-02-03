@@ -7,10 +7,10 @@ public class SettingsModule extends AbstractModule {
 
     @Override
     public void configure() {
-        bind(ViolationsProcessorFactory.class);
+        bind(ViolationsProcessor.class);
         bind(SettingsConstructor.class);
         bind(SettingsProvider.class).asEagerSingleton();
-        OptionalBinder.newOptionalBinder(binder(), Settings.class).setBinding().toProvider(SettingsProvider.class);
+        bind(Settings.class).toProvider(SettingsProvider.class);
     }
 
 }

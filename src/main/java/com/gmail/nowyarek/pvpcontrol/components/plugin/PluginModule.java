@@ -11,8 +11,8 @@ public class PluginModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(PluginEnabledEventListener.class);
-        bind(PluginDisabledEventListener.class);
+        bind(PluginEnableEventListener.class);
+        bind(PluginDisableEventListener.class);
     }
 
     @Provides

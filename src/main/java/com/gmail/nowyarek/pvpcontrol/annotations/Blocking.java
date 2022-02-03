@@ -6,6 +6,6 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.CLASS;
 
-@Target({ METHOD })
+@Target({ METHOD, CONSTRUCTOR })
 @Retention(CLASS)
 public @interface Blocking {}

@@ -8,17 +8,17 @@ import java.util.*;
 
 public class Localization {
     private final Provider<Optional<ResourceBundle>> externalRB;
-    private final Provider<Optional<ResourceBundle>> builtInRB;
-    private final Provider<ResourceBundle> defaultRB;
+    private final Provider<Optional<ResourceBundle>> internalRB;
+    private final Provider<Optional<ResourceBundle>> defaultRB;
 
     @Inject
     Localization(
         @ExternalLangResourceBundle Provider<Optional<ResourceBundle>> externalRB,
-        @BuiltInLangResourceBundle Provider<Optional<ResourceBundle>> builtInRB,
-        @DefaultLangResourceBundle Provider<ResourceBundle> defaultRB
+        @InternalLangResourceBundle Provider<Optional<ResourceBundle>> internalRB,
+        @DefaultLangResourceBundle Provider<Optional<ResourceBundle>> defaultRB
     ) {
         this.externalRB = externalRB;
-        this.builtInRB = builtInRB;
+        this.internalRB = internalRB;
         this.defaultRB = defaultRB;
     }
 
@@ -54,8 +54,10 @@ public class Localization {
     }
 
     public String getString(String key) {
-        Optional<ResourceBundle> externalTranslations = externalRB.get(), builtInTranslations = builtInRB.get();
-        ResourceBundle defaultTranslations = defaultRB.get();
+        Optional<ResourceBundle>
+            externalTranslations = externalRB.get(),
+            builtInTranslations = internalRB.get(),
+            defaultTranslations = defaultRB.get();
 
         try {
             if(externalTranslations.isPresent() && externalTranslations.get().containsKey(key))
@@ -64,7 +66,10 @@ public class Localization {
             if(builtInTranslations.isPresent() && builtInTranslations.get().containsKey(key))
                 return builtInTranslations.get().getString(key);
 
-            return defaultTranslations.getString(key);
+            if(defaultTranslations.isPresent() && defaultTranslations.get().containsKey(key))
+                return defaultTranslations.get().getString(key);
+
+            throw new MissingResourceException(String.format("Could not find the translation for key: %s.", key), "lang.en", key);
         } catch(MissingResourceException e) {
             throw new MissingTranslationException(key);
         }

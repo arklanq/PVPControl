@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ConfigurationValidation {
     private final ConfigurationSection config;
@@ -42,7 +44,7 @@ public class ConfigurationValidation {
         if (val == null) {
             violationBuilder.message(message);
 
-            if(defaults != null) {
+            if (defaults != null) {
                 String defaultVal = defaults.getString(path);
                 violationBuilder.defaultValue(defaultVal);
                 this.generateViolation(violationBuilder.toString());
@@ -57,6 +59,45 @@ public class ConfigurationValidation {
     }
 
     @Nullable
+    public String requireStringMatchingPattern(String path, Pattern pattern) {
+        return this.requireStringMatchingPattern(path, pattern, null);
+    }
+
+    @Nullable
+    public String requireStringMatchingPattern(String path, Pattern pattern, @Nullable String message) {
+        String val = this.requireString(path, null);
+        if (val == null) return null;
+
+        Matcher matcher = pattern.matcher(val);
+        if (!matcher.matches()) {
+            ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
+                .forPath(this.joinPath(path))
+                .actualValue(val);
+
+            @Nullable String defaultVal = null;
+            if (defaults != null) {
+                defaultVal = defaults.getString(path);
+                violationBuilder.defaultValue(defaultVal);
+            }
+
+            violationBuilder.message(
+                message != null
+                    ? message
+                    : String.format(
+                    "`{path}` should match the pattern: %s. Instead received: `{actualValue}`.",
+                    pattern
+                )
+            );
+
+            this.generateViolation(violationBuilder.toString());
+
+            return defaultVal;
+        }
+
+        return val;
+    }
+
+    @Nullable
     public List<String> requireStringList(String path) {
         return this.requireStringList(path, null);
     }
@@ -65,14 +106,14 @@ public class ConfigurationValidation {
     public List<String> requireStringList(String path, String message) {
         ViolationMessageBuilder violationBuilder = ViolationMessageBuilder.forPath(this.joinPath(path));
 
-        if(!config.isList(path)) {
+        if (!config.isList(path)) {
             violationBuilder.expectedType(List.class);
 
             Object val = config.get(path);
-            if(val != null)
+            if (val != null)
                 violationBuilder.actualValue(val);
 
-            if(defaults != null) {
+            if (defaults != null) {
                 List<String> defaultVal = defaults.getStringList(path);
                 violationBuilder.defaultValue(String.format("<list with %s elements>", defaultVal.size()));
             }
@@ -107,7 +148,7 @@ public class ConfigurationValidation {
             );
 
             @Nullable String defaultValue = null;
-            if(defaults != null) {
+            if (defaults != null) {
                 defaultValue = defaults.getString(path);
                 violationBuilder.defaultValue(defaultValue);
             }
@@ -136,7 +177,7 @@ public class ConfigurationValidation {
                 .actualValue(val)
                 .message(message);
 
-            if(defaults != null) {
+            if (defaults != null) {
                 int defaultVal = defaults.getInt(path);
                 violationBuilder.defaultValue(defaultVal);
                 this.generateViolation(violationBuilder.toString());
@@ -165,7 +206,7 @@ public class ConfigurationValidation {
                 .actualValue(val)
                 .message(message);
 
-            if(defaults != null) {
+            if (defaults != null) {
                 int defaultVal = defaults.getInt(path);
                 violationBuilder.defaultValue(defaultVal);
                 this.generateViolation(violationBuilder.toString());
@@ -194,7 +235,7 @@ public class ConfigurationValidation {
                 .actualValue(val)
                 .message(message);
 
-            if(defaults != null) {
+            if (defaults != null) {
                 boolean defaultVal = defaults.getBoolean(path);
                 violationBuilder.defaultValue(defaultVal);
                 this.generateViolation(violationBuilder.toString());

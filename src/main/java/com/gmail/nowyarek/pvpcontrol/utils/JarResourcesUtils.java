@@ -12,20 +12,23 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class ResourcesUtils {
+public class JarResourcesUtils {
 
-    public static String[] getJarResourceListing(String path, boolean recursive) throws IOException {
+    public static String[] getJarResourcesListing(String path, boolean recursive) throws IOException {
         String pathWithoutPrecedingSlash = path.startsWith("/") ? path.substring(1) : path;
-        URL dirURL = ResourcesUtils.class.getResource(path);
+        URL dirURL = JarResourcesUtils.class.getResource(path);
         Objects.requireNonNull(
             dirURL,
             String.format("Resource for path `%s` was not found or we don't have adequate privileges to get the resource.", path)
         );
-        String dirPath = dirURL.getPath();
 
-        Verify.verify(dirURL.getProtocol().equals("jar"), "URL protocol is different than `jar`.");
+        Verify.verify(
+            dirURL.getProtocol().equals("jar"),
+            String.format("URL pointing to resource file: `%s` has invalid protocol: `%s`, expected `jar`.", path, dirURL.getProtocol())
+        );
 
-        String jarPath = dirPath.substring(5, dirPath.indexOf("!")); // Strip out only the JAR file
+        String absolutePath = dirURL.getPath();
+        String jarPath = absolutePath.substring(5, absolutePath.indexOf("!")); // Strip out only the JAR file
 
         try (JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"))) {
             Enumeration<JarEntry> entries = jar.entries(); // Gives all entries in the jar file
@@ -38,8 +41,8 @@ public class ResourcesUtils {
                 if (name.startsWith(pathWithoutPrecedingSlash)) {
                     String entry = name.substring(pathWithoutPrecedingSlash.length());
 
-                    if(entry.charAt(entry.length() - 1) != '/') {
-                        if(!recursive && entry.lastIndexOf("/") != 0)
+                    if (entry.charAt(entry.length() - 1) != '/') {
+                        if (!recursive && entry.lastIndexOf("/") != 0)
                             continue;
 
                         listingSet.add(entry.substring(1));

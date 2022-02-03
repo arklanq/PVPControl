@@ -7,36 +7,37 @@ import com.google.inject.Provides;
 import com.google.inject.multibindings.OptionalBinder;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LocalizationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(ResourceBundleConstructor.class);
-        bind(ExternalResourceBundleProvider.class).asEagerSingleton();
-        bind(BuiltInResourceBundleProvider.class).asEagerSingleton();
-        bind(DefaultResourceBundleProvider.class).asEagerSingleton();
-        bind(LanguagesDetector.class);
+        bind(LangResourceBundlesManager.class).asEagerSingleton();
 
+        bind(ExternalResourceBundleProvider.class);
         OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, ExternalLangResourceBundle.class)).setBinding().toProvider(ExternalResourceBundleProvider.class);
-        OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, BuiltInLangResourceBundle.class)).setBinding().toProvider(BuiltInResourceBundleProvider.class);
-        bind(Key.get(ResourceBundle.class, DefaultLangResourceBundle.class)).toProvider(DefaultResourceBundleProvider.class);
+        bind(InternalResourceBundleProvider.class);
+        OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, InternalLangResourceBundle.class)).setBinding().toProvider(InternalResourceBundleProvider.class);
+        bind(DefaultResourceBundleProvider.class);
+        OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, DefaultLangResourceBundle.class)).setBinding().toProvider(DefaultResourceBundleProvider.class);
 
+        bind(LanguagesDetector.class);
         bind(Localization.class);
     }
 
     /**
-     * @return ISO 639 alpha-2 or alpha-3 language code
+     * @return ISO 639 alpha-2 language code
      */
     @Provides
     @LanguageCode
-    public String provideLanguageCode(Optional<Settings> settings) {
-        if(!settings.isPresent()) throw new IllegalStateException("Settings object is not constructed yet.");
-        return settings.get().General().getLanguage().toLowerCase();
+    public String provideLanguageCode(Settings settings) {
+        return settings.General().getLanguage().toLowerCase();
     }
 
+    /**
+     * @return ISO 639 alpha-2 language code
+     */
     @Provides
     @DefaultLanguageCode
     public String provideDefaultLanguageCode() {

@@ -10,4 +10,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Qualifier
 @Target({ PARAMETER, METHOD, FIELD })
 @Retention(RUNTIME)
-@interface BuiltInLangResourceBundle {}
+@interface ExternalLangResourceBundle {}
+
+@Qualifier
+@Target({ PARAMETER, METHOD, FIELD })
+@Retention(RUNTIME)
+@interface InternalLangResourceBundle {}
+
+@Qualifier
+@Target({ PARAMETER, METHOD, FIELD })
+@Retention(RUNTIME)
+@interface DefaultLangResourceBundle {}

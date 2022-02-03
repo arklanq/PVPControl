@@ -7,18 +7,18 @@ import com.google.inject.Inject;
 
 import java.util.EventListener;
 
-public class PluginDisabledEventListener implements EventListener {
+public class PluginDisableEventListener implements EventListener {
     private final PluginLogger logger;
     private final Localization localization;
 
     @Inject
-    public PluginDisabledEventListener(PluginLogger logger, Localization localization) {
+    public PluginDisableEventListener(PluginLogger logger, Localization localization) {
         this.logger = logger;
         this.localization = localization;
     }
 
     @Subscribe
-    public void onEvent(PluginDisabledEvent e) {
+    public void onEvent(PluginDisableEvent e) {
         logger.info(localization.t("plugin.disabled"));
     }
 

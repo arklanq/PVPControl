@@ -9,20 +9,20 @@ import com.google.inject.Stage;
 
 import java.util.EventListener;
 
-public class PluginEnabledEventListener implements EventListener {
+public class PluginEnableEventListener implements EventListener {
     private final Stage stage;
     private final PluginLogger logger;
     private final Localization localization;
 
     @Inject
-    public PluginEnabledEventListener(Stage stage, PluginLogger logger, Localization localization) {
+    public PluginEnableEventListener(Stage stage, PluginLogger logger, Localization localization) {
         this.stage = stage;
         this.logger = logger;
         this.localization = localization;
     }
 
     @Subscribe
-    public void onEvent(PluginEnabledEvent e) {
+    public void onEvent(PluginEnableEvent e) {
         logger.info(localization.t("plugin.enabled", new StringVariable("%mode%", stage.toString())));
     }
 
