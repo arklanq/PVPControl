@@ -3,10 +3,12 @@
 
 ### IDE ###
 /.idea
+*.iml
 
 ### Gradle ###
-/.gradle
-/build
+.gradle
+/projects/*/build
+/buildSrc/build
 
 ### Environment variables ###
 /.env

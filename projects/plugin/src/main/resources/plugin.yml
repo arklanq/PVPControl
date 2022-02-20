@@ -1,0 +1,33 @@
+name: "PvPControl"
+main: "com.gmail.nowyarek.pvpcontrol.PvPControlPlugin"
+version: "@PLUGIN_VERSION@"
+author: "IdkMan2"
+api-version: "1.18"
+
+commands:
+  plexi:
+    description: "Main command of PVPControl."
+    aliases: ["pleximc"]
+    permission: "pleximc.commands.all"
+
+permissions:
+  pleximc.admin:
+    default: "op"
+    description: "Grants all admin specific privileges."
+    children:
+      pleximc.commands.*: true
+  pleximc.commands.*:
+    description: "Grants all privileges for whole /plexi command."
+    children:
+      pleximc.commands.start.help: true
+      pleximc.commands.start: true
+      pleximc.commands.terminate: true
+      pleximc.commands.terminate.all: true
+  pleximc.commands.start.help:
+    description: "Allows to use `/plexi help` command."
+  pleximc.commands.start:
+    description: "Allows to use `/plexi start` command."
+  pleximc.commands.terminate:
+    description: "Allows to use `/plexi terminate` command."
+  pleximc.commands.terminate.all:
+    description: "Allows to use `/plexi terminate all` command."
