@@ -9,7 +9,7 @@ public class CommandsSettings extends AbstractSettingsSection {
     private boolean blockAll;
     private List<String> whitelist;
     private List<String> blacklist;
-    private List<String> executedWhenLogoutDuringPVP;
+    private List<String> executedWhenLogout;
 
     CommandsSettings(FileConfiguration config, FileConfiguration defaultConfig) {
         super(config, defaultConfig);
@@ -22,7 +22,7 @@ public class CommandsSettings extends AbstractSettingsSection {
         this.blockAll = configuration.requireBoolean("Commands.blockAll");
         this.whitelist = configuration.requireStringList("Commands.whitelist");
         this.blacklist = configuration.requireStringList("Commands.blacklist");
-        this.executedWhenLogoutDuringPVP = configuration.requireStringList("Commands.executedWhenLogoutDuringPVP");
+        this.executedWhenLogout = configuration.requireStringList("Commands.executedWhenLogout");
 
         return configuration;
     }
@@ -31,31 +31,15 @@ public class CommandsSettings extends AbstractSettingsSection {
         return blockAll;
     }
 
-    public void setAllBlocked(boolean blockAll) {
-        this.blockAll = blockAll;
-    }
-
     public List<String> getWhitelist() {
         return whitelist;
-    }
-
-    public void setWhitelist(List<String> whitelist) {
-        this.whitelist = whitelist;
     }
 
     public List<String> getBlacklist() {
         return blacklist;
     }
 
-    public void setBlacklist(List<String> blacklist) {
-        this.blacklist = blacklist;
-    }
-
-    public List<String> getExecutedWhenLogoutDuringPVP() {
-        return executedWhenLogoutDuringPVP;
-    }
-
-    public void setExecutedWhenLogoutDuringPVP(List<String> executedWhenLogoutDuringPVP) {
-        this.executedWhenLogoutDuringPVP = executedWhenLogoutDuringPVP;
+    public List<String> getExecutedWhenLogout() {
+        return executedWhenLogout;
     }
 }

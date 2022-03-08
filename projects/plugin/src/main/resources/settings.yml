@@ -13,36 +13,50 @@ General:
   # This number specifies the version of the configuration that will change with new updates.
   configVersion: 1
 
-PVP:
-  # How long PVP mode should be?
-  timeInPVPMode: 15
-  # Turn off `fly` on pvp. The PVP mode will also be turned on if you hit another player from the bow.
-  turnOffFlyOnPVP: true
+PvP:
+  # How long PvP mode should last (in seconds)?
+  combatDuration: 15
+  # Turn off `fly` on PvP. The PVP mode will also be turned on if you hit another player from the bow.
+  disableFly: true
   # Disable invisibility potion. Doesn't disable vanish.
-  disableInvisibilityOnPVP: false
+  disableInvisibility: false
   # Should we block chorus fruit teleport?
   blockChorusFruitsTeleport: true
   # Should we block ender pearl teleport?
   blockEnderPeralsTeleport: true
   # Should player be killed and items dropped on the ground when logging out during PVP?
-  killWhenLogoutDuringPVP: true
-  # Should we broadcast info to all players, that the player log out during PVP?
-  # This option will be ignored if `KillWhenLogoutOnPVP` option is set to FALSE.
+  killOnLogout: true
+  # Should we broadcast info to all players, that the player logged out during PVP (shame on them)?
+  # This option will be ignored if `killWhenLogoutDuringPVP` option is set to FALSE.
+  # You can further customize the error message in the translations file.
   broadcastPlayerKilledInfo: true
+  # Specify if the specified entities should trigger PvP mode
+  Damager:
+    projectiles: true
+    NPCs: true
+  # Configuration for the boss-bar
+  Bossbar:
+    # Available styles: SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID
+    style: SEGMENTED_10
+    # Available colors: BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW
+    color: RED
+    # Part of the PvP mode duration when the bar should remain full.
+    # Should be greater or equal 0, but not higher than `PvP.combatDuration` option
+    idleThreshold: 0
 
 Commands:
   # Should all commands be blocked during PVP?
   blockAll: false
-  # If `BlockAllCommands` is set to TRUE then you can define below commands that will be AVAILABLE during PVP.
-  # If `BlockAllCommands` option is set to FALSE then this option is ignored.
+  # If `blockAll` is set to TRUE then you can define below commands that will be AVAILABLE during PvP.
+  # If `blockAll` option is set to FALSE then this option is ignored.
   # You don't need to care about the case sensitiveness of commands.
   # Example: - msg
   whitelist:
     - msg
     - tell
     - whisper
-  # If `BlockAllCommands` is set to TRUE then this option is ignored.
-  # If `BlockAllCommands` option is set to FALSE you can define below commands that will be BLOCKED during PVP.
+  # If `blockAll` is set to TRUE then this option is ignored.
+  # If `blockAll` option is set to FALSE then you can define below commands that will be BLOCKED during PVP.
   # You don't need to care about the case sensitiveness of commands.
   # Example: - spawn
   blacklist:
@@ -55,15 +69,16 @@ Commands:
     - tpdeny
     - tp
     - teleport
+    - warp
   # All commands that will be executed in console when player log out during PVP. You can use %player% variable.
   # Commands should be written without a preceding slash "/"
   # Example: - eco set %player% 0
-  executedWhenLogoutDuringPVP: []
+  executedWhenLogout: []
 
 Integrations:
   # Options below works only when supported version of EssentialsX is installed on the server.
   EssentialsX:
-    # Turn off God Mode on hit and enter PVP mode
+    # Turn off God Mode on hit and start PvP mode
     disableGodModeOnHit: false
 
 # Not enough features? Let me know what you want! Write private message to me on spigot @IdkMan

@@ -49,7 +49,7 @@ public class LanguagesDetector {
             if (invalidFilesNames.size() > 0) {
                 this.logger.warn(
                     this.localization.builder("localization.detected_invalid_custom_translations")
-                        .addVariable("%directory%", "PVPControl/lang")
+                        .addVariable("%directory%", "PvPControl/lang")
                         .addVariable("%invalid_translations_files%", String.join(", ", invalidFilesNames))
                         .addVariable("%link%", "https://blabla")
                         .toString()

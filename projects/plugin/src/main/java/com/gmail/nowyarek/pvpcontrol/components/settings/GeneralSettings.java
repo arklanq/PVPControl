@@ -34,15 +34,7 @@ public class GeneralSettings extends AbstractSettingsSection {
         return language;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public int getConfigVersion() {
         return configVersion;
-    }
-
-    public void setConfigVersion(int configVersion) {
-        this.configVersion = configVersion;
     }
 }

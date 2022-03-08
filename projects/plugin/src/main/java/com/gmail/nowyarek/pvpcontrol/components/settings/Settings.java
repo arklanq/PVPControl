@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 @Singleton
 public class Settings extends AbstractSettingsSection {
     private GeneralSettings General;
-    private PVPSettings PVP;
+    private PvPSettings PvP;
     private CommandsSettings Commands;
     private IntegrationsSettings Integrations;
 
@@ -22,11 +22,11 @@ public class Settings extends AbstractSettingsSection {
         ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
 
         this.General = new GeneralSettings(this.config, this.defaultConfig);
-        this.PVP = new PVPSettings(this.config, this.defaultConfig);
+        this.PvP = new PvPSettings(this.config, this.defaultConfig);
         this.Commands = new CommandsSettings(this.config, this.defaultConfig);
         this.Integrations = new IntegrationsSettings(this.config, this.defaultConfig);
 
-        Stream.of(General, PVP, Commands, Integrations)
+        Stream.of(General, PvP, Commands, Integrations)
             .map(AbstractSettingsSection::init)
             .map(ConfigurationValidation::getViolations)
             .forEach(configuration::mergeViolations);
@@ -38,8 +38,8 @@ public class Settings extends AbstractSettingsSection {
         return General;
     }
 
-    public PVPSettings PVP() {
-        return PVP;
+    public PvPSettings PvP() {
+        return PvP;
     }
 
     public CommandsSettings Commands() {

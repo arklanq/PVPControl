@@ -26,7 +26,7 @@ public class ConfigWithDefaults extends ConfigBase {
         return super.initialize()
             .exceptionally((Throwable e) -> {
                 if (e instanceof CompletionException) {
-                    logger.error("File `settings.yml` seems to be corrupted, plugin cannot read data from it. Look at the stack trace below to resolve the problem. If problem persists try to remove file `settings.yml` and let plugin generate it afresh. At the moment PVPControl will fallback to default configuration.");
+                    logger.error("File `settings.yml` seems to be corrupted, plugin cannot read data from it. Look at the stack trace below to resolve the problem. If problem persists try to remove file `settings.yml` and let plugin generate it afresh. At the moment PvPControl will fallback to default configuration.");
                     e.getCause().printStackTrace();
                     isConfigFileCorrupted.set(true);
                     return null;

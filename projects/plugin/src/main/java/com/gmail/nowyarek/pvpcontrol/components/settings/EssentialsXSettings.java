@@ -22,8 +22,4 @@ public class EssentialsXSettings extends AbstractSettingsSection {
     public boolean isDisableGodModeOnHit() {
         return disableGodModeOnHit;
     }
-
-    public void setDisableGodModeOnHit(boolean disableGodModeOnHit) {
-        this.disableGodModeOnHit = disableGodModeOnHit;
-    }
 }

@@ -2,13 +2,11 @@ package com.gmail.nowyarek.pvpcontrol.components.configuration;
 
 import com.gmail.nowyarek.pvpcontrol.utils.ConfigurationSectionUtils;
 import com.google.common.collect.ImmutableList;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,11 +45,11 @@ public class ConfigurationValidation {
             if (defaults != null) {
                 String defaultVal = defaults.getString(path);
                 violationBuilder.defaultValue(defaultVal);
-                this.generateViolation(violationBuilder.toString());
+                this.addViolation(violationBuilder.toString());
                 return defaultVal;
             }
 
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
             return null;
         }
 
@@ -89,7 +87,7 @@ public class ConfigurationValidation {
                 )
             );
 
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
 
             return defaultVal;
         }
@@ -118,7 +116,7 @@ public class ConfigurationValidation {
                 violationBuilder.defaultValue(String.format("<list with %s elements>", defaultVal.size()));
             }
 
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
         }
 
         return config.getStringList(path);
@@ -152,12 +150,27 @@ public class ConfigurationValidation {
                 defaultValue = defaults.getString(path);
                 violationBuilder.defaultValue(defaultValue);
             }
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
 
             return defaultValue;
         }
 
         return val;
+    }
+
+    public <E extends Enum<E>> E requireEnum(String path, Class<E> enumType) {
+        return this.requireEnum(path, enumType, null);
+    }
+
+    public <E extends Enum<E>> E requireEnum(String path, Class<E> enumType, @Nullable String message) {
+        return Optional
+            .ofNullable(
+                this.requireStringEnum(
+                    path,
+                    Arrays.stream(BarStyle.values()).map(Object::toString).toArray(String[]::new),
+                    message
+                )
+            ).map((String value) -> Enum.valueOf(enumType, value)).orElse(null);
     }
 
     public int requireInt(String path) {
@@ -180,11 +193,11 @@ public class ConfigurationValidation {
             if (defaults != null) {
                 int defaultVal = defaults.getInt(path);
                 violationBuilder.defaultValue(defaultVal);
-                this.generateViolation(violationBuilder.toString());
+                this.addViolation(violationBuilder.toString());
                 return defaultVal;
             }
 
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
             return 0;
         }
     }
@@ -209,11 +222,11 @@ public class ConfigurationValidation {
             if (defaults != null) {
                 int defaultVal = defaults.getInt(path);
                 violationBuilder.defaultValue(defaultVal);
-                this.generateViolation(violationBuilder.toString());
+                this.addViolation(violationBuilder.toString());
                 return defaultVal;
             }
 
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
             return 0;
         }
     }
@@ -238,11 +251,11 @@ public class ConfigurationValidation {
             if (defaults != null) {
                 boolean defaultVal = defaults.getBoolean(path);
                 violationBuilder.defaultValue(defaultVal);
-                this.generateViolation(violationBuilder.toString());
+                this.addViolation(violationBuilder.toString());
                 return defaultVal;
             }
 
-            this.generateViolation(violationBuilder.toString());
+            this.addViolation(violationBuilder.toString());
             return false;
         }
         return Boolean.parseBoolean(val);
@@ -252,8 +265,12 @@ public class ConfigurationValidation {
         return ConfigurationSectionUtils.joinPath(this.config.getCurrentPath(), path);
     }
 
-    private void generateViolation(String violationMessage) {
+    public void addViolation(String violationMessage) {
         this.violations.add(violationMessage);
+    }
+
+    public boolean removeViolation(String violationMessage) {
+        return this.violations.remove(violationMessage);
     }
 
 }

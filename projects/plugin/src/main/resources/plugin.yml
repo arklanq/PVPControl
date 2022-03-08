@@ -5,29 +5,51 @@ author: "IdkMan2"
 api-version: "1.18"
 
 commands:
-  plexi:
-    description: "Main command of PVPControl."
-    aliases: ["pleximc"]
-    permission: "pleximc.commands.all"
+  pvpc:
+    description: "Main command of PvPControl."
+    aliases: ["pvpcontrol"]
 
 permissions:
-  pleximc.admin:
-    default: "op"
-    description: "Grants all admin specific privileges."
+  pvpcontrol.privileges.admin:
+    decription: Grants all admin-specific privileges. This permission is granted automatically for OPs.
+    default: op
     children:
-      pleximc.commands.*: true
-  pleximc.commands.*:
-    description: "Grants all privileges for whole /plexi command."
+      pvpcontrol.privileges.player: true
+      pvpcontrol.commands.*: true
+      pvpcontrol.bypass.*: true
+  pvpcontrol.privileges.player:
+    description: Grants all player-specific privileges. This permission is granted automatically for everyone.
+    default: true
+  pvpcontrol.commands.*:
+    description: Grants access to all `/pvpc ...` commands
     children:
-      pleximc.commands.start.help: true
-      pleximc.commands.start: true
-      pleximc.commands.terminate: true
-      pleximc.commands.terminate.all: true
-  pleximc.commands.start.help:
-    description: "Allows to use `/plexi help` command."
-  pleximc.commands.start:
-    description: "Allows to use `/plexi start` command."
-  pleximc.commands.terminate:
-    description: "Allows to use `/plexi terminate` command."
-  pleximc.commands.terminate.all:
-    description: "Allows to use `/plexi terminate all` command."
+      pvpcontrol.commands.help: true
+      pvpcontrol.commands.reload: true
+      pvpcontrol.commands.toggle: true
+  pvpcontrol.commands.help:
+    description: Permission for `/pvpc help` command
+  pvpcontrol.commands.reload:
+    description: Permission for `/pvpc reload` command
+  pvpcontrol.commands.toggle:
+    description: Permission for `/pvpc toggle` command
+  pvpcontrol.bypass.*:
+    description: Bypass all PvP restrictions
+    children:
+      pvpcontrol.bypass.fly: true
+      pvpcontrol.bypass.commands: true
+      pvpcontrol.bypass.invisibility: true
+      pvpcontrol.bypass.teleports: true
+      pvpcontrol.bypass.chorusfruits: true
+      pvpcontrol.bypass.enderpearls: true
+  pvpcontrol.bypass.fly:
+    description: Bypasses fly restriction during PvP
+  pvpcontrol.bypass.commands:
+    description: Bypasses commands sending blockade restriction during PvP
+  pvpcontrol.bypass.invisibility:
+    description: Bypasses invisibility restriction during PvP
+  pvpcontrol.bypass.teleports:
+    description: Bypasses teleports restriction during PvP
+  pvpcontrol.bypass.chorusfruits:
+    description: Bypasses chorus fruits usage restriction during PvP
+  pvpcontrol.bypass.enderpearls:
+    description: Bypasses ender pearls usage restriction during PvP

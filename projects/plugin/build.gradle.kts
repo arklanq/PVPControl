@@ -57,7 +57,9 @@ dependencies {
     // Aikar/TaskChain
     implementation("co.aikar:taskchain-bukkit:3.7.2")
     // google/guice
-    implementation("com.google.inject:guice:5.0.1")
+    implementation("com.google.inject:guice:5.1.0")
+    // assisted-inject extension for google/guice
+    // implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     /* Optional dependencies on 3rd party plugins */
     // EssentialsX
@@ -86,6 +88,7 @@ tasks.named<ShadowJar>("shadowJar") {
         include(dependency("co.aikar:taskchain-bukkit"))
         include(dependency("co.aikar:taskchain-core"))
         include(dependency("com.google.inject:guice"))
+        // include(dependency("com.google.inject.extensions:guice-assistedinject"))
         include(dependency("aopalliance:aopalliance"))
         exclude("META-INF/**/*")
     }
