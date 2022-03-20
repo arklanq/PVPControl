@@ -1,6 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.components.combat;
 
 import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
+import com.gmail.nowyarek.pvpcontrol.components.combat.registry.CombatRegistry;
 import com.gmail.nowyarek.pvpcontrol.components.metadata.MetaData;
 import com.gmail.nowyarek.pvpcontrol.components.permissions.Permission;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDisableEvent;
@@ -9,7 +10,6 @@ import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsProvider;
 import com.gmail.nowyarek.pvpcontrol.models.EventsSource;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.google.inject.Injector;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -27,16 +27,18 @@ import java.util.concurrent.CompletableFuture;
 class EntityDamageByEntityListener implements Listener, EventListener, EventsSource {
     private final PvPControlPlugin plugin;
     private final SettingsProvider settingsProvider;
-    private final CombatManager combatManager;
+    private final CombatRegistry combatRegistry;
     private final EventBus eventBus = new EventBus();
 
     @Inject
     EntityDamageByEntityListener(
-        PvPControlPlugin plugin, SettingsProvider settingsProvider, CombatManager combatManager, Injector guiceInjector
+        PvPControlPlugin plugin,
+        SettingsProvider settingsProvider,
+        CombatRegistry combatRegistry
     ) {
         this.plugin = plugin;
         this.settingsProvider = settingsProvider;
-        this.combatManager = combatManager;
+        this.combatRegistry = combatRegistry;
 
         plugin.getEventBus().register(this);
     }
@@ -98,8 +100,8 @@ class EntityDamageByEntityListener implements Listener, EventListener, EventsSou
         if(event.isCancelled()) return;
 
         CompletableFuture.allOf(
-            this.combatManager.beginCombat(victim, damagerPlayer),
-            this.combatManager.beginCombat(damagerPlayer, victim)
+            this.combatRegistry.triggerCombat(victim, new Entity[] {damagerPlayer}),
+            this.combatRegistry.triggerCombat(damagerPlayer, new Entity[] {victim})
         ).join();
     }
 
