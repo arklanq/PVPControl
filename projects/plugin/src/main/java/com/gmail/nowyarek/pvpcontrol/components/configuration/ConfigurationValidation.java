@@ -2,7 +2,6 @@ package com.gmail.nowyarek.pvpcontrol.components.configuration;
 
 import com.gmail.nowyarek.pvpcontrol.utils.ConfigurationSectionUtils;
 import com.google.common.collect.ImmutableList;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nullable;
@@ -167,7 +166,7 @@ public class ConfigurationValidation {
             .ofNullable(
                 this.requireStringEnum(
                     path,
-                    Arrays.stream(BarStyle.values()).map(Object::toString).toArray(String[]::new),
+                    EnumSet.allOf(enumType).stream().map(Object::toString).toArray(String[]::new),
                     message
                 )
             ).map((String value) -> Enum.valueOf(enumType, value)).orElse(null);

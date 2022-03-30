@@ -3,6 +3,8 @@ package com.gmail.nowyarek.pvpcontrol;
 import com.gmail.nowyarek.pvpcontrol.components.TaskChain.TaskChainModule;
 import com.gmail.nowyarek.pvpcontrol.components.api.API_Module;
 import com.gmail.nowyarek.pvpcontrol.components.combat.CombatModule;
+import com.gmail.nowyarek.pvpcontrol.components.combat.registry.CombatRegistryModule;
+import com.gmail.nowyarek.pvpcontrol.components.commands.CommandsModule;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.injector.InjectorConfigurationModule;
 import com.gmail.nowyarek.pvpcontrol.components.l10n.LocalizationModule;
@@ -11,14 +13,14 @@ import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.*;
 import com.gmail.nowyarek.pvpcontrol.components.resources.ResourcesModule;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsModule;
-import com.gmail.nowyarek.pvpcontrol.models.EventsSource;
+import com.gmail.nowyarek.pvpcontrol.models.EventSource;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PvPControlPlugin extends JavaPlugin implements EventsSource {
+public class PvPControlPlugin extends JavaPlugin implements EventSource {
     private final EventBus eventBus = new EventBus();
     private Injector guiceInjector;
 
@@ -38,7 +40,9 @@ public class PvPControlPlugin extends JavaPlugin implements EventsSource {
                 new SettingsModule(),
                 new ResourcesModule(),
                 new LocalizationModule(),
+                new CombatRegistryModule(),
                 new CombatModule(),
+                new CommandsModule(),
                 new API_Module()
             );
         } catch(Exception e) {

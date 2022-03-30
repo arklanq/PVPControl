@@ -22,7 +22,17 @@ public class Localization {
     }
 
     public String t(String key) {
-        return this.getString(key);
+        return this.getString(key).replaceAll("&", "§");
+    }
+
+    public String t(String key, HashMap<String, String> variables) {
+        String translated = this.t(key);
+
+        for(String variablePattern : variables.keySet()) {
+            translated = translated.replaceAll(variablePattern, variables.get(variablePattern));
+        }
+
+        return translated;
     }
 
     public String t(String key, StringVariable ...variables) {
@@ -39,16 +49,6 @@ public class Localization {
         );
 
         return this.t(key, variablesHashMap);
-    }
-
-    public String t(String key, HashMap<String, String> variables) {
-        String translated = this.getString(key);
-
-        for(String variablePattern : variables.keySet()) {
-            translated = translated.replaceAll(variablePattern, variables.get(variablePattern));
-        }
-
-        return translated;
     }
 
     public LocalizedMessageBuilder builder(String pattern) {

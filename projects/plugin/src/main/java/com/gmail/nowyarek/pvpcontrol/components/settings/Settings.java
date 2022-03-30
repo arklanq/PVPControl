@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public class Settings extends AbstractSettingsSection {
     private GeneralSettings General;
     private PvPSettings PvP;
+    private FeaturesSettings Features;
     private CommandsSettings Commands;
     private IntegrationsSettings Integrations;
 
@@ -23,10 +24,11 @@ public class Settings extends AbstractSettingsSection {
 
         this.General = new GeneralSettings(this.config, this.defaultConfig);
         this.PvP = new PvPSettings(this.config, this.defaultConfig);
+        this.Features = new FeaturesSettings(this.config, this.defaultConfig);
         this.Commands = new CommandsSettings(this.config, this.defaultConfig);
         this.Integrations = new IntegrationsSettings(this.config, this.defaultConfig);
 
-        Stream.of(General, PvP, Commands, Integrations)
+        Stream.of(General, PvP, Features, Commands, Integrations)
             .map(AbstractSettingsSection::init)
             .map(ConfigurationValidation::getViolations)
             .forEach(configuration::mergeViolations);
@@ -40,6 +42,10 @@ public class Settings extends AbstractSettingsSection {
 
     public PvPSettings PvP() {
         return PvP;
+    }
+
+    public FeaturesSettings Features() {
+        return Features;
     }
 
     public CommandsSettings Commands() {

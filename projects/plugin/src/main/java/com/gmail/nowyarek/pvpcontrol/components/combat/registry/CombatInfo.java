@@ -1,4 +1,4 @@
-package com.gmail.nowyarek.pvpcontrol.components.combat;
+package com.gmail.nowyarek.pvpcontrol.components.combat.registry;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Map;
 
-public class CombatInfo implements Cloneable {
-    private long startTimestamp, endTimestamp;
-    private ImmutableMap<Entity, Long> aggressors;
+public class CombatInfo {
+    private final long startTimestamp, endTimestamp;
+    private final ImmutableMap<Entity, Long> aggressors;
 
     CombatInfo(long startTimestamp, long endTimestamp, Map<Entity, Long> aggressors) {
         this.startTimestamp = startTimestamp;
@@ -42,21 +42,6 @@ public class CombatInfo implements Cloneable {
 
     public ImmutableList<Entity> getAggressorsList() {
         return this.aggressors.keySet().asList();
-    }
-
-    @Override
-    public CombatInfo clone() {
-        try {
-            CombatInfo clone = (CombatInfo) super.clone();
-
-            clone.startTimestamp = this.startTimestamp;
-            clone.endTimestamp = this.endTimestamp;
-            clone.aggressors = this.aggressors;
-
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
     }
 
     @Override
