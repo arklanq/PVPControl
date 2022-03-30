@@ -2,7 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.models;
 
 import com.google.common.eventbus.EventBus;
 
-public interface EventsSource {
+public interface EventSource {
 
     EventBus getEventBus();
 

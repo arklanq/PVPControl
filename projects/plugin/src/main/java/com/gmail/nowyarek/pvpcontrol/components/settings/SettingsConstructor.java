@@ -45,7 +45,7 @@ public class SettingsConstructor {
         if (configVersion != defaultConfigVersion) {
             this.logger.warn(
                 String.format(
-                    "You are running PvPControl with an outdated config (vesion %s). " +
+                    "You are running PvPControl with an outdated/invalid config (version %s). " +
                         "Please follow the guidelines presented below to adjust your config to newest version (version %s).",
                     configVersion,
                     defaultConfigVersion

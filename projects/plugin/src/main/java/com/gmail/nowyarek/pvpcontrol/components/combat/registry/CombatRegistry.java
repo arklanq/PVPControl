@@ -1,6 +1,6 @@
 package com.gmail.nowyarek.pvpcontrol.components.combat.registry;
 
-import com.gmail.nowyarek.pvpcontrol.models.EventsSource;
+import com.gmail.nowyarek.pvpcontrol.models.EventSource;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.eventbus.EventBus;
@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
-public class CombatRegistry implements EventsSource {
+public class CombatRegistry implements EventSource {
     private final EventBus eventBus = new EventBus();
     private final ConcurrentHashMap<Player, CombatInfo> combatInfoMap = new ConcurrentHashMap<>();
     private final StartCombatImplementation startCombatImplementation;

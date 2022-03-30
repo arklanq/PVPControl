@@ -20,9 +20,13 @@ PvP:
   disableFly: true
   # Disable invisibility potion. Doesn't disable vanish.
   disableInvisibility: false
+  # Should we block all kinds of teleports? Including teleports caused by commands, items, and even 3rd party plugins.
+  blockAnyKindOfTeleport: true
   # Should we block chorus fruit teleport?
+  # This option will be ignored if `blockAnyKindOfTeleport` option is set to TRUE.
   blockChorusFruitsTeleport: true
   # Should we block ender pearl teleport?
+  # This option will be ignored if `blockAnyKindOfTeleport` option is set to TRUE.
   blockEnderPeralsTeleport: true
   # Should player be killed and items dropped on the ground when logging out during PVP?
   killOnLogout: true
@@ -32,10 +36,20 @@ PvP:
   broadcastPlayerKilledInfo: true
   # Specify if the specified entities should trigger PvP mode
   Damager:
+    # Shall arrows and other projectiles trigger PvP mode?
     projectiles: true
+    # Shall NPCs be treated on the same basis as players?
     NPCs: true
-  # Configuration for the boss-bar
+
+Features:
+  # Configuration for the OP's protection feature
+  AdminProtection:
+    # Enable OP's protection automatically when OP joins the server. Can be then disabled with `/pvp toggle` command.
+    enabledByDefault: true
+  # Configuration for the boss-bar effect
   Bossbar:
+    # Enable / disable bossbar feature
+    enabled: true
     # Available styles: SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID
     style: SEGMENTED_10
     # Available colors: BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW

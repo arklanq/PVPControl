@@ -3,7 +3,7 @@ package com.gmail.nowyarek.pvpcontrol.components.settings;
 import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
 import com.gmail.nowyarek.pvpcontrol.annotations.Blocking;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
-import com.gmail.nowyarek.pvpcontrol.models.EventsSource;
+import com.gmail.nowyarek.pvpcontrol.models.EventSource;
 import com.google.common.eventbus.EventBus;
 
 import javax.inject.Inject;
@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import java.util.concurrent.CompletableFuture;
 
 @Singleton
-public class SettingsProvider implements Provider<Settings>, EventsSource {
+public class SettingsProvider implements Provider<Settings>, EventSource {
     private final EventBus eventBus = new EventBus();
     private final PvPControlPlugin plugin;
     private final PluginLogger logger;

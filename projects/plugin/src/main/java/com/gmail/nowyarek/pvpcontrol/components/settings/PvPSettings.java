@@ -14,7 +14,6 @@ public class PvPSettings extends AbstractSettingsSection {
     private boolean killOnLogout;
     private boolean broadcastPlayerKilledInfo;
     private DamagerSettings Damager;
-    private BossbarSettings Bossbar;
 
     PvPSettings(FileConfiguration config, FileConfiguration defaultConfig) {
         super(config, defaultConfig);
@@ -34,9 +33,8 @@ public class PvPSettings extends AbstractSettingsSection {
         this.broadcastPlayerKilledInfo = configuration.requireBoolean("PvP.broadcastPlayerKilledInfo");
 
         this.Damager = new DamagerSettings(this.config, this.defaultConfig);
-        this.Bossbar = new BossbarSettings(this.config, this.defaultConfig, this.combatDuration);
 
-        Stream.of(Damager, Bossbar)
+        Stream.of(Damager)
             .map(AbstractSettingsSection::init)
             .map(ConfigurationValidation::getViolations)
             .forEach(configuration::mergeViolations);
@@ -46,10 +44,6 @@ public class PvPSettings extends AbstractSettingsSection {
 
     public DamagerSettings Damager() {
         return Damager;
-    }
-
-    public BossbarSettings Bossbar() {
-        return Bossbar;
     }
 
     public int getCombatDuration() {

@@ -1,15 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.components.combat;
 
-import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
 import com.gmail.nowyarek.pvpcontrol.components.combat.registry.CombatRegistry;
-import com.gmail.nowyarek.pvpcontrol.components.metadata.MetaData;
-import com.gmail.nowyarek.pvpcontrol.components.permissions.Permission;
-import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDisableEvent;
-import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsProvider;
-import com.gmail.nowyarek.pvpcontrol.models.EventsSource;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -18,38 +10,36 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import java.util.EventListener;
 import java.util.concurrent.CompletableFuture;
 
-class EntityDamageByEntityListener implements Listener, EventListener, EventsSource {
-    private final PvPControlPlugin plugin;
+class EntityDamageByEntityListener implements Listener {
+    private final JavaPlugin plugin;
     private final SettingsProvider settingsProvider;
     private final CombatRegistry combatRegistry;
-    private final EventBus eventBus = new EventBus();
+    private final CombatEventSource combatEventSource;
 
     @Inject
     EntityDamageByEntityListener(
-        PvPControlPlugin plugin,
+        JavaPlugin plugin,
         SettingsProvider settingsProvider,
-        CombatRegistry combatRegistry
+        CombatRegistry combatRegistry,
+        CombatEventSource combatEventSource
     ) {
         this.plugin = plugin;
         this.settingsProvider = settingsProvider;
         this.combatRegistry = combatRegistry;
-
-        plugin.getEventBus().register(this);
+        this.combatEventSource = combatEventSource;
     }
 
-    @Subscribe
-    void onPluginEnable(PluginEnableEvent e) {
+    void register() {
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @Subscribe
-    void onPluginDisable(PluginDisableEvent e) {
+    void unregister() {
         HandlerList.unregisterAll(this);
     }
 
@@ -65,11 +55,9 @@ class EntityDamageByEntityListener implements Listener, EventListener, EventsSou
         Entity damagerEntity = e.getDamager();
 
         // Return if the victim entity is an NPC
-        if (victim.hasMetadata("npc")) return;
+        if (victim.hasMetadata("NPC")) return;
         // Return if the player is attempting to deal damage to himself
         if(victim.getUniqueId().compareTo(damagerEntity.getUniqueId()) == 0) return;
-        // Return if the victim player is a staff member under protection
-        if(victim.hasPermission(Permission.Commands.TOGGLE.value()) && victim.hasMetadata(MetaData.Bypass.OP_PROTECTION.value())) return;
 
         // Determine the damager type (looking for type `Player`)
         @Nullable
@@ -86,17 +74,12 @@ class EntityDamageByEntityListener implements Listener, EventListener, EventsSou
 
             damagerPlayer = (Player) projectile.getShooter();
         }
-
         // Return if the damager was not recognized to be of type `Player`
         if(damagerPlayer == null) return;
-        // Return if NPCs as damagers are not permitted
-        if(!this.settingsProvider.get().PvP().Damager().areNPCsPermitted() && damagerPlayer.hasMetadata("npc")) return;
-        // Return if the damager player is a staff member under protection
-        if(damagerPlayer.hasPermission(Permission.Commands.TOGGLE.value()) && victim.hasMetadata(MetaData.Bypass.OP_PROTECTION.value())) return;
 
         // Propagate `PlayerDamagePlayerEvent` event and return if has been cancelled
         Cancellable event = new PlayerDamagePlayerEvent(victim, damagerPlayer);
-        this.eventBus.post(event);
+        this.combatEventSource.getEventBus().post(event);
         if(event.isCancelled()) return;
 
         CompletableFuture.allOf(
@@ -105,14 +88,4 @@ class EntityDamageByEntityListener implements Listener, EventListener, EventsSou
         ).join();
     }
 
-    /**
-     * Available events:
-     * <ul>
-     *     <li>{@link PlayerDamagePlayerEvent}</li>
-     * </ul>
-     */
-    @Override
-    public EventBus getEventBus() {
-        return this.eventBus;
-    }
 }

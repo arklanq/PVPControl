@@ -100,6 +100,8 @@ public class LanguagesManager {
                             .toString()
                     );
                 }
+
+                this.logger.debug("Language resource bundles have been validated.");
             } catch (Exception e) {
                 throw new CompletionException(e);
             }

@@ -7,40 +7,54 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class BossbarSettings extends AbstractSettingsSection {
-    private final int combatDuration;
+    private int combatDuration;
+    private boolean enabled;
     private BarStyle style;
     private BarColor color;
     private int idleThreshold;
 
-    BossbarSettings(FileConfiguration config, FileConfiguration defaultConfig, int combatDuration) {
+    BossbarSettings(FileConfiguration config, FileConfiguration defaultConfig) {
         super(config, defaultConfig);
-        this.combatDuration = combatDuration;
     }
 
     @Override
     ConfigurationValidation init() {
+        this.bootstrap();
+
         ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
 
-        this.style = configuration.requireEnum("PvP.Bossbar.style", BarStyle.class);
-        this.color = configuration.requireEnum("PvP.Bossbar.color", BarColor.class);
-        this.idleThreshold = configuration.requireInt("PvP.Bossbar.idleThreshold");
+        this.enabled = configuration.requireBoolean("Features.Bossbar.enabled");
+        this.style = configuration.requireEnum("Features.Bossbar.style", BarStyle.class);
+        this.color = configuration.requireEnum("Features.Bossbar.color", BarColor.class);
+        this.idleThreshold = configuration.requireInt("Features.Bossbar.idleThreshold");
 
         if(this.idleThreshold < 0 || this.idleThreshold > this.combatDuration) {
             ViolationMessageBuilder violationBuilder = ViolationMessageBuilder
-                .forPath(ConfigurationSectionUtils.joinPath(this.config.getCurrentPath(), "PvP.Bossbar.idleThreshold"))
+                .forPath(ConfigurationSectionUtils.joinPath(this.config.getCurrentPath(), "Features.Bossbar.idleThreshold"))
                 .expectedType(Integer.class)
                 .actualValue(this.idleThreshold)
-                .defaultValue(this.defaultConfig.getInt("PvP.Bossbar.idleThreshold"))
+                .defaultValue(this.defaultConfig.getInt("Features.Bossbar.idleThreshold"))
                 .message(String.format("Value at path {path} represents a number out of range (0-%s).", this.combatDuration));
 
             configuration.addViolation(violationBuilder.toString());
         }
 
         return configuration;
+    }
+
+    private void bootstrap() {
+        try {
+            this.combatDuration = Integer.parseInt(Objects.requireNonNull(this.config.getString("PvP.combatDuration")));
+        } catch(NullPointerException | NumberFormatException e) {
+            this.combatDuration = this.defaultConfig.getInt("PvP.combatDuration");
+        }
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public BarStyle getStyle() {

@@ -4,10 +4,7 @@ import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
 import com.gmail.nowyarek.pvpcontrol.components.combat.registry.CombatInfo;
 import com.gmail.nowyarek.pvpcontrol.components.combat.registry.CombatRegistry;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
-import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDisableEvent;
-import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.eventbus.Subscribe;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -15,16 +12,13 @@ import org.bukkit.scheduler.BukkitTask;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.inject.Singleton;
-import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-@Singleton
-public class CombatDurationTimer implements EventListener {
+public class CombatDurationTimer {
     private final static int TASK_PERIOD = 5; // ticks
     private final PvPControlPlugin plugin;
     private final Provider<CombatDurationTimerRunnable> runnableProvider;
@@ -38,15 +32,13 @@ public class CombatDurationTimer implements EventListener {
         plugin.getEventBus().register(this);
     }
 
-    @Subscribe
-    void onPluginEnable(PluginEnableEvent e) {
+    void start() {
         task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(
             plugin, this.runnableProvider.get(), 0, TASK_PERIOD
         );
     }
 
-    @Subscribe
-    void onPluginDisable(PluginDisableEvent e) {
+    void stop() {
         if (task != null && !task.isCancelled()) task.cancel();
     }
 
