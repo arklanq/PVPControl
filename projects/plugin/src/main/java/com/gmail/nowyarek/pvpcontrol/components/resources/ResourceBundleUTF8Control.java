@@ -1,6 +1,5 @@
 package com.gmail.nowyarek.pvpcontrol.components.resources;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,9 +12,6 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 public class ResourceBundleUTF8Control extends Control {
-
-    @Inject
-    ResourceBundleUTF8Control() {}
 
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IOException {
         // The below is a copy of the default implementation.

@@ -9,9 +9,9 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-public class ResourceBundleConstructor {
+public class ResourceBundles {
 
-    public static CompletableFuture<Optional<ResourceBundle>> constructExternalResourceBundle(File bundleFile) {
+    public static CompletableFuture<Optional<ResourceBundle>> fromFileSystem(File bundleFile) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 FileInputStream fileInputStream = new FileInputStream(bundleFile);
@@ -26,7 +26,7 @@ public class ResourceBundleConstructor {
         });
     }
 
-    public static CompletableFuture<Optional<ResourceBundle>> constructInternalResourceBundle(String bundlePackage, Locale locale) {
+    public static CompletableFuture<Optional<ResourceBundle>> fromJar(String bundlePackage, Locale locale) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePackage, locale, new ResourceBundleUTF8Control());

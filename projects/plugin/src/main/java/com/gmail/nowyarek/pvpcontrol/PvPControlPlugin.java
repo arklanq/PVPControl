@@ -11,7 +11,6 @@ import com.gmail.nowyarek.pvpcontrol.components.l10n.LocalizationModule;
 import com.gmail.nowyarek.pvpcontrol.components.logging.LoggingModule;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.*;
-import com.gmail.nowyarek.pvpcontrol.components.resources.ResourcesModule;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsModule;
 import com.gmail.nowyarek.pvpcontrol.models.EventSource;
 import com.google.common.eventbus.EventBus;
@@ -38,7 +37,6 @@ public class PvPControlPlugin extends JavaPlugin implements EventSource {
                 new TaskChainModule(),
                 new ConfigurationModule(),
                 new SettingsModule(),
-                new ResourcesModule(),
                 new LocalizationModule(),
                 new CombatRegistryModule(),
                 new CombatModule(),

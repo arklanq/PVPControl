@@ -1,13 +1,13 @@
 package com.gmail.nowyarek.pvpcontrol.components.commands;
 
+import co.aikar.taskchain.TaskChainFactory;
 import com.gmail.nowyarek.pvpcontrol.components.commands.prototype.Command;
 import com.gmail.nowyarek.pvpcontrol.components.commands.prototype.CommandContext;
-import com.gmail.nowyarek.pvpcontrol.components.l10n.LangResourceBundlesManager;
-import com.gmail.nowyarek.pvpcontrol.components.l10n.LanguagesManager;
 import com.gmail.nowyarek.pvpcontrol.components.l10n.Localization;
+import com.gmail.nowyarek.pvpcontrol.components.l10n.TranslationsManager;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsProvider;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
@@ -15,25 +15,27 @@ import javax.inject.Inject;
 public class ReloadCommand extends Command {
     private final Localization localization;
     private final SettingsProvider settingsProvider;
-    private final LangResourceBundlesManager langResourceBundlesManager;
-    private final LanguagesManager languagesManager;
+    private final TranslationsManager translationsManager;
+    private final TaskChainFactory taskChainFactory;
     private final JavaPlugin plugin;
 
     @Inject
     public ReloadCommand(
         Localization localization,
         SettingsProvider settingsProvider,
-        LangResourceBundlesManager langResourceBundlesManager,
-        LanguagesManager languagesManager,
+        TranslationsManager translationsManager,
+        TaskChainFactory taskChainFactory,
         JavaPlugin plugin
     ) {
         super("reload", localization.t("commands.reload.description"));
-        this.defineRequiredPermision("pvpcontrol.commands.reload");
+
         this.localization = localization;
         this.settingsProvider = settingsProvider;
-        this.langResourceBundlesManager = langResourceBundlesManager;
-        this.languagesManager = languagesManager;
+        this.translationsManager = translationsManager;
+        this.taskChainFactory = taskChainFactory;
         this.plugin = plugin;
+
+        this.defineRequiredPermision("pvpcontrol.commands.reload");
     }
 
     @Override
@@ -49,15 +51,20 @@ public class ReloadCommand extends Command {
             return;
         }
 
-        settingsProvider.reinitialize().join();
-        langResourceBundlesManager.reinitialize().join();
-        languagesManager.reinitialize().join();
+        this.taskChainFactory.newChain()
+            .async(() -> {
+                settingsProvider.reinitialize().join();
+                translationsManager.reinitialize().join();
+            })
+            .sync(() -> {
+                String message = this.localization.t("commands.reload.success");
 
-        sender.sendMessage(this.localization.t("commands.reload.success"));
+                if (sender instanceof Player && ((Player) sender).isOnline())
+                    sender.sendMessage(message);
 
-        if(!(sender instanceof ConsoleCommandSender)) {
-            this.plugin.getServer().getConsoleSender().sendMessage(this.localization.t("commands.reload.success"));
-        }
+                this.plugin.getServer().getConsoleSender().sendMessage(message);
+            })
+            .execute();
     }
 
 }

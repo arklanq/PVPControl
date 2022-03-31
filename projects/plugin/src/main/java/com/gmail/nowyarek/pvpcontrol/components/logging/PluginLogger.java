@@ -38,7 +38,7 @@ public class PluginLogger {
 
     public void debug(String message) {
         if (logger.isLoggable(Level.CONFIG))
-            logger.info(String.format(ChatColor.DARK_AQUA + "[DEBUG] %s", message));
+            logger.info(String.format("[DEBUG] %s", message));
     }
 
 }

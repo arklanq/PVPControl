@@ -2,29 +2,24 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
 import com.gmail.nowyarek.pvpcontrol.components.settings.Settings;
 import com.google.inject.AbstractModule;
-import com.google.inject.Key;
 import com.google.inject.Provides;
-import com.google.inject.multibindings.OptionalBinder;
+import com.google.inject.Scopes;
+import com.google.inject.name.Names;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class LocalizationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(LangResourceBundlesManager.class).asEagerSingleton();
-
-        bind(ExternalResourceBundleProvider.class);
-        OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, ExternalLangResourceBundle.class)).setBinding().toProvider(ExternalResourceBundleProvider.class);
-        bind(InternalResourceBundleProvider.class);
-        OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, InternalLangResourceBundle.class)).setBinding().toProvider(InternalResourceBundleProvider.class);
-        bind(DefaultResourceBundleProvider.class);
-        OptionalBinder.newOptionalBinder(binder(), Key.get(ResourceBundle.class, DefaultLangResourceBundle.class)).setBinding().toProvider(DefaultResourceBundleProvider.class);
-
-        bind(Localization.class);
+        bind(TranslationsSupplier.class).annotatedWith(Names.named("External")).to(ExternalTranslationsSupplier.class);
+        bind(TranslationsSupplier.class).annotatedWith(Names.named("Internal")).to(InternalTranslationsSupplier.class);
+        bind(TranslationsSupplier.class).annotatedWith(Names.named("Fallback")).to(FallbackTranslationsSupplier.class);
+        bind(TranslationsSuppliersExecutive.class).in(Scopes.SINGLETON);
+        bind(Localization.class).in(Scopes.SINGLETON);
         bind(LanguagesDetector.class);
-        bind(LanguagesManager.class).asEagerSingleton();
+        bind(TranslationsValidator.class);
+        bind(TranslationsManager.class).asEagerSingleton();
     }
 
     /**
