@@ -18,7 +18,7 @@ public class ResourceBundleCompletenessValidator {
             if (!target.containsKey(key)) missingKeys++;
         }
 
-        return ((double) (requiredKeys.size() - missingKeys)) / (requiredKeys.size()) * 100;
+        return ((double) (requiredKeys.size() - missingKeys)) / requiredKeys.size() * 100;
     }
 
 }

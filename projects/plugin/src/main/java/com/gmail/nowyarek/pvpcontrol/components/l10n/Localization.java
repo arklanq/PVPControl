@@ -3,22 +3,16 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 import com.gmail.nowyarek.pvpcontrol.utils.StringVariable;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
+import javax.inject.Singleton;
 import java.util.*;
 
+@Singleton
 public class Localization {
-    private final Provider<Optional<ResourceBundle>> externalRB, internalRB;
-    private final Provider<ResourceBundle> defaultRB;
+    private final TranslationsSuppliersExecutive translationsSuppliersExecutive;
 
     @Inject
-    Localization(
-        @ExternalLangResourceBundle Provider<Optional<ResourceBundle>> externalRB,
-        @InternalLangResourceBundle Provider<Optional<ResourceBundle>> internalRB,
-        @DefaultLangResourceBundle Provider<ResourceBundle> defaultRB
-    ) {
-        this.externalRB = externalRB;
-        this.internalRB = internalRB;
-        this.defaultRB = defaultRB;
+    Localization(TranslationsSuppliersExecutive translationsSuppliersExecutive) {
+        this.translationsSuppliersExecutive = translationsSuppliersExecutive;
     }
 
     public String t(String key) {
@@ -56,23 +50,7 @@ public class Localization {
     }
 
     public String getString(String key) {
-        Optional<ResourceBundle> externalTranslations = externalRB.get(), internalTranslations = internalRB.get();
-        ResourceBundle defaultTranslations = defaultRB.get();
-
-        try {
-            if(externalTranslations.isPresent() && externalTranslations.get().containsKey(key))
-                return externalTranslations.get().getString(key);
-
-            if(internalTranslations.isPresent() && internalTranslations.get().containsKey(key))
-                return internalTranslations.get().getString(key);
-
-            if(defaultTranslations.containsKey(key))
-                return defaultTranslations.getString(key);
-
-            throw new MissingResourceException(String.format("Could not find the translation for key: %s.", key), "lang.en", key);
-        } catch(MissingResourceException e) {
-            throw new MissingTranslationException(key);
-        }
+        return this.translationsSuppliersExecutive.getString(key);
     }
 
 }
