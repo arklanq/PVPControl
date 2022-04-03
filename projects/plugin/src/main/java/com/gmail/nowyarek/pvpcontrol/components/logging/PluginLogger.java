@@ -1,6 +1,5 @@
 package com.gmail.nowyarek.pvpcontrol.components.logging;
 
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;

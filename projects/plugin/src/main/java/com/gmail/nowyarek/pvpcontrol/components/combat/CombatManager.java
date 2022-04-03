@@ -54,11 +54,11 @@ class CombatManager implements EventListener {
 
     @Subscribe
     void onPluginDisable(PluginDisableEvent e) {
-        this.logger.debug("Stopping CombatDurationTimer...");
+        this.logger.debug("Unregistering EntityDamageByEntityListener listener...");
         rootListener.unregister();
         this.logger.debug(String.format("Disintegrating (%s) combat controls....", this.combatControls.size()));
         this.combatControls.forEach(CombatControl::disintegrate);
-        this.logger.debug("Unregistering EntityDamageByEntityListener listener...");
+        this.logger.debug("Stopping CombatDurationTimer...");
         this.combatDurationTimer.stop();
     }
 

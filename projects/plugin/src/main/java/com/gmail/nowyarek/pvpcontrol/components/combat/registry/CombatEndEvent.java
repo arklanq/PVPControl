@@ -28,6 +28,7 @@ public class CombatEndEvent extends Event {
         return HANDLERS_LIST;
     }
 
+    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return HANDLERS_LIST;
     }

@@ -3,7 +3,6 @@ package com.gmail.nowyarek.pvpcontrol.components.settings;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public class FeaturesSettings extends AbstractSettingsSection {

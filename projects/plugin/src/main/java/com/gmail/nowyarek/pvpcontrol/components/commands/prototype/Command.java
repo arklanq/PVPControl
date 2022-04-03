@@ -17,7 +17,7 @@ public abstract class Command {
     @Nullable
     protected Command parentCommand;
     protected Set<String> requiredPermisions = new HashSet<>();
-    protected Set<Command> subcommands = new HashSet<>();
+    protected final Set<Command> subcommands = new HashSet<>();
 
     public Command(String name) {
         this.name = name;

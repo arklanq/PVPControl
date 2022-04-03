@@ -40,6 +40,7 @@ public class CombatStartEvent extends Event implements Cancellable {
         return HANDLERS_LIST;
     }
 
+    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return HANDLERS_LIST;
     }
