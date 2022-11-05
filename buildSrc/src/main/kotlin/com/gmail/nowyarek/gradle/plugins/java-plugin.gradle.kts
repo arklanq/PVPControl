@@ -6,7 +6,6 @@ import java.nio.file.Paths
 // Specify Gradle plugins
 plugins {
     id("com.gmail.nowyarek.gradle.plugins.java-library")
-    id("co.uzzu.dotenv.gradle")
 }
 
 /* Deployment */

@@ -33,13 +33,13 @@ repositories {
 dependencies {
     /* Available at runtime classpath (shaded by Bukkit/CraftBukkit) */
     // Spigot API
-    compileOnly("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     // API we are actually testing
     compileOnly(project(":projects:api"))
 
     /* Testing libararies */
     // API against which we are writing tests
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     // An implementation of the junit-platform-engine API that runs JUnit 5 tests.
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm").version("1.5.31")
+    kotlin("jvm").version("1.6.21")
 }
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation("co.uzzu.dotenv:gradle:1.1.0")
+    implementation("co.uzzu.dotenv:gradle:2.0.0")
     implementation(kotlin("script-runtime"))
     implementation(kotlin("stdlib-jdk8"))
 }
