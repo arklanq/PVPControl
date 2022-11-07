@@ -15,7 +15,7 @@ public class PluginStageDetector implements Supplier<Stage> {
 
     @Override
     public Stage get() {
-        @Nullable String stageStringValue = System.getProperty("JAVA_ENV");
+        @Nullable String stageStringValue = System.getenv("JAVA_ENV");
 
         if (stageStringValue == null)
             return Stage.PRODUCTION;

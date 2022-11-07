@@ -1,4 +1,4 @@
-package com.gmail.nowyarek.pvpcontrol.components.combat;
+package com.gmail.nowyarek.pvpcontrol.components.combat.controls;
 
 public interface CombatControl {
 

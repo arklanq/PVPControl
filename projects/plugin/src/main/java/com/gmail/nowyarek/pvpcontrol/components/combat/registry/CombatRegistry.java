@@ -11,12 +11,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 public class CombatRegistry implements EventSource {
     private final EventBus eventBus = new EventBus();
-    private final ConcurrentHashMap<Player, CombatInfo> combatInfoMap = new ConcurrentHashMap<>();
+    private final CombatInfoMap combatInfoMap;
     private final StartCombatImplementation startCombatImplementation;
     private final AggressorJoinCombatImplementation aggressorJoinCombatImplementation;
     private final TriggerCombatImplementation triggerCombatImplementation;
@@ -25,21 +24,23 @@ public class CombatRegistry implements EventSource {
 
     @Inject
     public CombatRegistry(
-        StartCombatImplementation.Factory startCombatImplementationFactory,
-        AggressorJoinCombatImplementation.Factory aggressorJoinCombatImplementationFactory,
-        TriggerCombatImplementation.Factory triggerCombatImplementationFactory,
-        AggressorLeavelCombatImplementation.Factory aggressorLeavelCombatImplementationFactory,
-        EndCombatImplementation.Factory endCombatImplementationFactory
+        CombatInfoMap combatInfoMap,
+        StartCombatImplementation startCombatImplementation,
+        AggressorJoinCombatImplementation aggressorJoinCombatImplementation,
+        TriggerCombatImplementation triggerCombatImplementation,
+        AggressorLeavelCombatImplementation aggressorLeavelCombatImplementation,
+        EndCombatImplementation endCombatImplementation
     ) {
-        this.startCombatImplementation = startCombatImplementationFactory.create(this.combatInfoMap);
-        this.aggressorJoinCombatImplementation = aggressorJoinCombatImplementationFactory.create(this.combatInfoMap);
-        this.triggerCombatImplementation = triggerCombatImplementationFactory.create(this.combatInfoMap);
-        this.aggressorLeavelCombatImplementation = aggressorLeavelCombatImplementationFactory.create(this.combatInfoMap);
-        this.endCombatImplementation = endCombatImplementationFactory.create(this.combatInfoMap);
+        this.combatInfoMap = combatInfoMap;
+        this.startCombatImplementation = startCombatImplementation;
+        this.aggressorJoinCombatImplementation = aggressorJoinCombatImplementation;
+        this.triggerCombatImplementation = triggerCombatImplementation;
+        this.aggressorLeavelCombatImplementation = aggressorLeavelCombatImplementation;
+        this.endCombatImplementation = endCombatImplementation;
     }
 
     public Optional<CombatInfo> getCombatInfo(Player player) {
-        return Optional.ofNullable(this.combatInfoMap.get(player));
+        return Optional.ofNullable(this.combatInfoMap.get().get(player));
     }
 
     public boolean isPlayerDuringCombat(Player p) {
@@ -47,11 +48,11 @@ public class CombatRegistry implements EventSource {
     }
 
     public ImmutableMap<Player, CombatInfo> getCombatInfoMap() {
-        return ImmutableMap.copyOf(combatInfoMap);
+        return ImmutableMap.copyOf(combatInfoMap.get());
     }
 
     public ImmutableList<Player> getAllPlayersDuringCombat() {
-        return ImmutableList.copyOf(this.combatInfoMap.keySet());
+        return ImmutableList.copyOf(this.combatInfoMap.get().keySet());
     }
 
     /**

@@ -7,11 +7,12 @@ public class CombatRegistryModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(StartCombatImplementation.Factory.class);
-        bind(AggressorJoinCombatImplementation.Factory.class);
-        bind(TriggerCombatImplementation.Factory.class);
-        bind(AggressorLeavelCombatImplementation.Factory.class);
-        bind(EndCombatImplementation.Factory.class);
+        bind(CombatInfoMap.class);
+        bind(StartCombatImplementation.class);
+        bind(AggressorJoinCombatImplementation.class);
+        bind(TriggerCombatImplementation.class);
+        bind(AggressorLeavelCombatImplementation.class);
+        bind(EndCombatImplementation.class);
         bind(CombatRegistry.class).in(Scopes.SINGLETON);
     }
 }

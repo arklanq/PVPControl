@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-class CombatEventSource implements EventSource {
+public class CombatEventSource implements EventSource {
     private final EventBus eventBus = new EventBus();
 
     @Inject

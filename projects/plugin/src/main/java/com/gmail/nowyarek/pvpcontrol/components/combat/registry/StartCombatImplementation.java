@@ -1,28 +1,25 @@
 package com.gmail.nowyarek.pvpcontrol.components.combat.registry;
 
+import com.gmail.nowyarek.pvpcontrol.components.combat.CombatEventSource;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsProvider;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 class StartCombatImplementation {
-    private final ConcurrentHashMap<Player, CombatInfo> combatInfoMap;
+    private final CombatInfoMap combatInfoMap;
     private final SettingsProvider settingsProvider;
-    private final Server server;
+    private final CombatEventSource combatEventSource;
 
-    public StartCombatImplementation(ConcurrentHashMap<Player, CombatInfo> combatInfoMap, SettingsProvider settingsProvider, Server server) {
+    public StartCombatImplementation(CombatInfoMap combatInfoMap, SettingsProvider settingsProvider, CombatEventSource combatEventSource) {
         this.combatInfoMap = combatInfoMap;
         this.settingsProvider = settingsProvider;
-        this.server = server;
+        this.combatEventSource = combatEventSource;
     }
 
     CompletableFuture<Optional<CombatInfo>> tryStartCombat(Player victim) {
@@ -31,7 +28,7 @@ class StartCombatImplementation {
                 AtomicBoolean isActionTaken = new AtomicBoolean(false);
 
                 @Nullable
-                CombatInfo resultCombatInfo = this.combatInfoMap.computeIfAbsent(victim, (Player _player) -> {
+                CombatInfo resultCombatInfo = this.combatInfoMap.get().computeIfAbsent(victim, (Player _player) -> {
                     // Calculate combat end timestamp
                     long endTimestamp = System.currentTimeMillis() + this.getCombatDurationMillis();
 
@@ -41,7 +38,7 @@ class StartCombatImplementation {
                     // Create an event object
                     CombatStartEvent e = new CombatStartEvent(victim, combatInfo);
                     // Propagate the event accross plugin consumers
-                    this.server.getPluginManager().callEvent(e);
+                    this.combatEventSource.getEventBus().post(e);
                     // If any of the plugin consumers cancels the event then immediately return with null (do not map key).
                     if(e.isCancelled()) return null;
 
@@ -60,22 +57,6 @@ class StartCombatImplementation {
 
     private long getCombatDurationMillis() {
         return this.settingsProvider.get().PvP().getCombatDuration() * 1000L;
-    }
-
-    static class Factory {
-        private final SettingsProvider settingsProvider;
-        private final Server server;
-
-        @Inject
-        Factory(SettingsProvider settingsProvider, JavaPlugin plugin) {
-            this.settingsProvider = settingsProvider;
-            this.server = plugin.getServer();
-        }
-
-        StartCombatImplementation create(ConcurrentHashMap<Player, CombatInfo> combatInfoMap) {
-            return new StartCombatImplementation(combatInfoMap, this.settingsProvider, this.server);
-        }
-
     }
 
 }

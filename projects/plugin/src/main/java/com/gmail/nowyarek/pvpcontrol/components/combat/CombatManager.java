@@ -1,6 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.components.combat;
 
 import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
+import com.gmail.nowyarek.pvpcontrol.components.combat.controls.*;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDisableEvent;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
