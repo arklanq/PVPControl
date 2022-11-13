@@ -1,6 +1,5 @@
 package com.gmail.nowyarek.pvpcontrol.components.settings;
 
-import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigFactory;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigInitializationException;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigWithDefaults;
@@ -18,7 +17,7 @@ public class SettingsConstructor {
     private final ViolationsProcessor violationsProcessor;
 
     @Inject
-    SettingsConstructor(PvPControlPlugin plugin, PluginLogger logger, ConfigFactory configFactory, ViolationsProcessor violationsProcessor) {
+    SettingsConstructor(PluginLogger logger, ConfigFactory configFactory, ViolationsProcessor violationsProcessor) {
         this.logger = logger;
         this.config = configFactory.createConfigWithDefaults("settings.yml");
         this.violationsProcessor = violationsProcessor;

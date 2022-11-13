@@ -20,7 +20,7 @@ public class Settings extends AbstractSettingsSection {
 
     @Override
     ConfigurationValidation init() {
-        ConfigurationValidation configuration = new ConfigurationValidation(this.config, this.defaultConfig);
+        ConfigurationValidation configurationValidation = new ConfigurationValidation(this.config, this.defaultConfig);
 
         this.General = new GeneralSettings(this.config, this.defaultConfig);
         this.PvP = new PvPSettings(this.config, this.defaultConfig);
@@ -31,9 +31,9 @@ public class Settings extends AbstractSettingsSection {
         Stream.of(General, PvP, Features, Commands, Integrations)
             .map(AbstractSettingsSection::init)
             .map(ConfigurationValidation::getViolations)
-            .forEach(configuration::mergeViolations);
+            .forEach(configurationValidation::mergeViolations);
 
-        return configuration;
+        return configurationValidation;
     }
 
     public GeneralSettings General() {
