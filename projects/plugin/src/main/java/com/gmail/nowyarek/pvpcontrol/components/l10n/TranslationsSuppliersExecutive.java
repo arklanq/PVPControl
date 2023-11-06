@@ -2,12 +2,12 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.google.common.collect.ImmutableList;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +32,7 @@ public class TranslationsSuppliersExecutive {
         @LanguageCode Provider<String> langCodeProvider,
         @Named("External") Provider<TranslationsSupplier> externalTSProvider,
         @Named("Internal") Provider<TranslationsSupplier> internalTSProvider,
-        @Named("Fallback") Provider<TranslationsSupplier> fallbackTSProvider,
-        JavaPlugin plugin
+        @Named("Fallback") Provider<TranslationsSupplier> fallbackTSProvider
     ) {
         this.logger = logger;
         this.langCodeProvider = langCodeProvider;
@@ -61,7 +60,7 @@ public class TranslationsSuppliersExecutive {
             Stream<TranslationsSupplier> suppliersStream = suppliersStreamProvider.get();
 
             /*
-             * Filter out (don't initialize) fallback provider if the lang code is english,
+             * Filter out (don't initialize) fallback provider if the lang code is English,
              * because InternalTranslationsSupplier and FallbackTranslationsSupplier would
              * unncecessary duplicate the same ResourceBundle
              */
@@ -82,7 +81,7 @@ public class TranslationsSuppliersExecutive {
 
 
             this.suppliers.forEach((TranslationsSupplier supplier) -> this.logger.debug(
-                String.format("%s %s", supplier.getClass().getSimpleName(), supplier.isAvailable() ? "available" : "not available")
+                String.format("%s (%s) %s", supplier.getClass().getSimpleName(), supplier.getLanguageCode(), supplier.isAvailable() ? "available" : "not available")
             ));
         });
     }

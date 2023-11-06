@@ -7,8 +7,8 @@ import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.eventbus.Subscribe;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.util.EventListener;
 
 @Singleton

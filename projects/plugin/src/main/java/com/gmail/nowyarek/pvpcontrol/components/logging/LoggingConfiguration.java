@@ -3,8 +3,8 @@ package com.gmail.nowyarek.pvpcontrol.components.logging;
 import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.util.logging.Level;
 
 @Singleton

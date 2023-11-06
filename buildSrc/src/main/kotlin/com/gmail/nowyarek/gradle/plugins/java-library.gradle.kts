@@ -6,8 +6,8 @@ plugins {
 }
 
 // Define project properties
-group = project.properties["group"] as String
-version = project.properties["version"] as String
+group = project.property("group").toString()
+version = project.property("version").toString()
 
 // Configure Java
 java {
@@ -16,12 +16,11 @@ java {
     }
 }
 
+tasks.named<Jar>("jar") {
+    archiveBaseName.set("${rootProject.name}-${project.name}")
+}
+
 // Configure built-in tasks from `java-library` plugin
 tasks.named<JavaCompile>("compileJava") {
     options.encoding = "UTF-8"
-}
-
-// Run tests using JUnit Platform
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
 }

@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 class EventsTester implements Listener {
     private final PluginLogger logger;

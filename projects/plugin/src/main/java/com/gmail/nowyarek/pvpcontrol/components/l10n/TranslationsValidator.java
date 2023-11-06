@@ -3,8 +3,8 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.resources.ResourceBundleCompletenessValidator;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
@@ -45,8 +45,8 @@ public class TranslationsValidator {
             // Get fallback translations supplier
             TranslationsSupplier fallbackSupplier = (
                 langCode.equalsIgnoreCase(this.defaultLangCode)
-                    ? findTranslationsSupplier(ExternalTranslationsSupplier.class)
-                    : findTranslationsSupplier(FallbackTranslationsSupplier.class)
+                    ? this.findTranslationsSupplier(InternalTranslationsSupplier.class)
+                    : this.findTranslationsSupplier(FallbackTranslationsSupplier.class)
             ).orElseThrow(
                 () -> new IllegalStateException(String.format("Not found valid fallback translations supplier for language `%s`.", langCode))
             );
@@ -54,7 +54,7 @@ public class TranslationsValidator {
             // Validate ExternalTranslationsSupplier
             Optional<TranslationsSupplier> supplier;
 
-            if ((supplier = findTranslationsSupplier(ExternalTranslationsSupplier.class)).isPresent() && supplier.get().isAvailable()) {
+            if ((supplier = this.findTranslationsSupplier(ExternalTranslationsSupplier.class)).isPresent() && supplier.get().isAvailable()) {
                 double completeness = ResourceBundleCompletenessValidator.checkCompletness(
                     Objects.requireNonNull(fallbackSupplier.getResourceBundle()),
                     Objects.requireNonNull(supplier.get().getResourceBundle())
@@ -74,7 +74,7 @@ public class TranslationsValidator {
                             .addVariable("%link%", "https://blabla")
                             .toString()
                     );
-            } else if ((supplier = findTranslationsSupplier(InternalTranslationsSupplier.class)).isPresent() && supplier.get().isAvailable()) {
+            } else if ((supplier = this.findTranslationsSupplier(InternalTranslationsSupplier.class)).isPresent() && supplier.get().isAvailable()) {
                 double completeness = ResourceBundleCompletenessValidator.checkCompletness(
                     Objects.requireNonNull(fallbackSupplier.getResourceBundle()),
                     Objects.requireNonNull(supplier.get().getResourceBundle())

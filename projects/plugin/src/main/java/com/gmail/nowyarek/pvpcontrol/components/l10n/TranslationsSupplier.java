@@ -3,14 +3,18 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 import com.google.common.base.Preconditions;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-abstract class TranslationsSupplier {
+public abstract class TranslationsSupplier {
     @Nullable
     private volatile ResourceBundle resourceBundle;
+    private final String languageCode;
+
+    public TranslationsSupplier(String languageCode) {
+        this.languageCode = languageCode;
+    }
 
     CompletableFuture<Void> initializeAsync() {
         return this.provideResourceBundle().thenAcceptAsync(
@@ -26,25 +30,21 @@ abstract class TranslationsSupplier {
         return this.resourceBundle != null;
     }
 
-    Optional<String> getString(String key) {
-        Preconditions.checkNotNull(this.resourceBundle, new UnsupportedOperationException("TranslationsSupplier is not available."));
-        assert this.resourceBundle != null;
+    public String getLanguageCode() {
+        return languageCode;
+    }
 
-        if(Objects.requireNonNull(this.resourceBundle).containsKey(key))
-            return Optional.of(Objects.requireNonNull(this.resourceBundle).getString(key));
+    Optional<String> getString(String key) {
+        ResourceBundle bundle = Preconditions.checkNotNull(this.resourceBundle, new UnsupportedOperationException("TranslationsSupplier is not available."));
+
+        if (bundle.containsKey(key))
+            return Optional.of(bundle.getString(key));
         else
             return Optional.empty();
     }
 
     @Nullable
     ResourceBundle getResourceBundle() {
-        return resourceBundle;
-    }
-
-    @Override
-    public String toString() {
-        return "TranslationsSupplier{" +
-            "resourceBundle=" + resourceBundle +
-            '}';
+        return this.resourceBundle;
     }
 }

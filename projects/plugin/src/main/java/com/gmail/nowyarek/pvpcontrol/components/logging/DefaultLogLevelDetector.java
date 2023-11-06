@@ -2,7 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.components.logging;
 
 import com.google.inject.Stage;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 

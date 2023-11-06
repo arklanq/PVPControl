@@ -6,7 +6,7 @@ import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsProvider;
 import com.google.common.eventbus.Subscribe;
 import org.bukkit.entity.Player;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.EventListener;
 import java.util.stream.Stream;
 

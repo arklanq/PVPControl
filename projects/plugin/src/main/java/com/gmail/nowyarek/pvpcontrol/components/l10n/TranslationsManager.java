@@ -3,8 +3,8 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 import com.gmail.nowyarek.pvpcontrol.annotations.Blocking;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.util.concurrent.CompletableFuture;
 
 @Singleton

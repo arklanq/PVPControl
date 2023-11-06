@@ -1,1 +1,1 @@
-rootProject.name="PVPControl-conventions"
+rootProject.name="PvPControl-conventions"

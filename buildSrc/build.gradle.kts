@@ -1,8 +1,9 @@
+import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm").version("1.6.21")
+    kotlin("jvm").version("1.9.10")
 }
 
 repositories {
@@ -15,11 +16,13 @@ dependencies {
     implementation(kotlin("script-runtime"))
     implementation(kotlin("stdlib-jdk8"))
 }
+
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = JvmTarget.JVM_17.toString()
 }
+
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = JvmTarget.JVM_17.toString()
 }

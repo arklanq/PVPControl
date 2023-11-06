@@ -3,8 +3,8 @@ package com.gmail.nowyarek.pvpcontrol.components.combat;
 import com.gmail.nowyarek.pvpcontrol.models.EventSource;
 import com.google.common.eventbus.EventBus;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 @Singleton
 class CombatEventSource implements EventSource {

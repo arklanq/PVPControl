@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.EventListener;
 
 public class InitialAdminProtectionControl implements CombatControl, EventListener, Listener {

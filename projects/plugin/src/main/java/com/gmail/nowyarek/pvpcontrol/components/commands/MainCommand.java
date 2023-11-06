@@ -6,7 +6,7 @@ import com.gmail.nowyarek.pvpcontrol.components.l10n.Localization;
 import com.gmail.nowyarek.pvpcontrol.utils.StringVariable;
 import org.bukkit.command.CommandSender;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class MainCommand extends RootCommand {
     private final Localization localization;

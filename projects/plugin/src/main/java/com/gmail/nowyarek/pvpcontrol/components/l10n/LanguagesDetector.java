@@ -5,7 +5,7 @@ import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDataFolder;
 import com.gmail.nowyarek.pvpcontrol.utils.JarResourcesUtils;
 import com.google.common.collect.ImmutableList;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

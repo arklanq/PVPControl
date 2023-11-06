@@ -7,7 +7,7 @@ import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginVersion;
 import com.google.common.eventbus.Subscribe;
 import org.bukkit.plugin.ServicePriority;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.EventListener;
 
 public class PvPControlImplementation implements PvPControl, EventListener {

@@ -3,7 +3,8 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDataFolder;
 import com.gmail.nowyarek.pvpcontrol.components.resources.ResourceBundles;
 
-import javax.inject.Inject;
+import com.google.common.base.MoreObjects;
+import jakarta.inject.Inject;
 import java.io.File;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -15,6 +16,7 @@ public class ExternalTranslationsSupplier extends TranslationsSupplier {
 
     @Inject
     public ExternalTranslationsSupplier(@PluginDataFolder File dataFolder, @LanguageCode String languageCode) {
+        super(languageCode);
         this.dataFolder = dataFolder;
         this.languageCode = languageCode;
     }
@@ -27,5 +29,12 @@ public class ExternalTranslationsSupplier extends TranslationsSupplier {
 
             return ResourceBundles.fromFileSystem(bundleFile).join();
         });
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+            .add("languageCode", this.languageCode)
+            .toString();
     }
 }

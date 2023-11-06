@@ -1,7 +1,7 @@
-name: "PVPControl_API_Consumer"
-main: "com.gmail.nowyarek.pvpcontrol.components.api.consumer.PvPControl_API_Consumer"
+name: "PvPControl_API_Consumer"
+main: "com.example.plugin_consumer.pvpcontrol.PvPControl_API_Consumer"
 version: "@PLUGIN_VERSION@"
-author: "IdkMan2"
+author: "@PLUGIN_AUTHOR@"
 api-version: "1.18"
 depend:
   - "PvPControl"

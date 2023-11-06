@@ -4,7 +4,7 @@ import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsLoadEvent;
 import com.gmail.nowyarek.pvpcontrol.components.settings.SettingsProvider;
 import com.google.common.eventbus.Subscribe;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.EventListener;
 
 public class NPCsRestrictionControl implements CombatControl, EventListener {

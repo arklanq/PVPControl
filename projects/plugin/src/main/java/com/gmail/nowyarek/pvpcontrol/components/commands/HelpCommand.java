@@ -7,7 +7,7 @@ import com.gmail.nowyarek.pvpcontrol.components.l10n.Localization;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Objects;
 
 public class HelpCommand extends Command {

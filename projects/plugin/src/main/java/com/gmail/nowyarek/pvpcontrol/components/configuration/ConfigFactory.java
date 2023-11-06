@@ -4,8 +4,8 @@ import com.gmail.nowyarek.pvpcontrol.PvPControlPlugin;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDataFolder;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.io.File;
 
 public class ConfigFactory {

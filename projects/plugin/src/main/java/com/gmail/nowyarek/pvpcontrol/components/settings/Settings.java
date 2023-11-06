@@ -3,7 +3,7 @@ package com.gmail.nowyarek.pvpcontrol.components.settings;
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigurationValidation;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.stream.Stream;
 
 @Singleton

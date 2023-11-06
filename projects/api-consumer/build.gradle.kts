@@ -1,12 +1,12 @@
-
-import com.gmail.nowyarek.gradle.tasks.Deploy.Deploy
-import java.nio.file.Path
+import com.gmail.nowyarek.gradle.tasks.Deploy
 import java.nio.file.Paths
 
 // Specify Gradle plugins
 plugins {
     id("com.gmail.nowyarek.gradle.plugins.java-plugin")
 }
+
+group = "com.example.plugin_consumer.pvpcontrol"
 
 // Include repositires
 repositories {
@@ -33,13 +33,13 @@ repositories {
 dependencies {
     /* Available at runtime classpath (shaded by Bukkit/CraftBukkit) */
     // Spigot API
-    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
     // API we are actually testing
     compileOnly(project(":projects:api"))
 
     /* Testing libararies */
     // API against which we are writing tests
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     // An implementation of the junit-platform-engine API that runs JUnit 5 tests.
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
@@ -48,14 +48,22 @@ dependencies {
 
 // Replace variables in resources
 tasks.named<ProcessResources>("processResources") {
-    filter(org.apache.tools.ant.filters.ReplaceTokens::class, "tokens" to mapOf("PLUGIN_VERSION" to project.version))
+    filter(
+        org.apache.tools.ant.filters.ReplaceTokens::class,
+        "tokens" to mapOf(
+            "PLUGIN_VERSION" to project.version,
+            "PLUGIN_AUTHOR" to project.property("author")
+        )
+    )
 }
 
-/* Deployment */
+// Configure base Jar file
+tasks.named<Jar>("jar") {
+    archiveBaseName.set("${rootProject.name}--${project.name}")
+    archiveFileName.set("${archiveBaseName.get()}.${archiveExtension.get()}")
+}
 
+// Deployment
 tasks.named<Deploy>("deploy") {
-    val developmentServerPath: Path = Paths.get(env.fetch("DEV_SERVER_PATH"))
-
-    serverDirectoryPath.set(developmentServerPath)
-    archiveBaseName.set("${rootProject.name}-${project.name}")
+    serverDirectoryPath.set(Paths.get(env.fetch("DEV_SERVER_PATH")))
 }

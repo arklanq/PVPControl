@@ -8,9 +8,9 @@ import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDisableEvent;
 import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginEnableEvent;
 import com.google.common.eventbus.Subscribe;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import java.util.Objects;
 
 @Singleton

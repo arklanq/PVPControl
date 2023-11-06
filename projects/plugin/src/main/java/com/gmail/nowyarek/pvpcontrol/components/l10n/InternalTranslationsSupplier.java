@@ -2,7 +2,9 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
 import com.gmail.nowyarek.pvpcontrol.components.resources.ResourceBundles;
 
-import javax.inject.Inject;
+import com.google.common.base.MoreObjects;
+import jakarta.inject.Inject;
+
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -14,6 +16,7 @@ public class InternalTranslationsSupplier extends TranslationsSupplier {
 
     @Inject
     public InternalTranslationsSupplier(Locale locale, @LanguageCode String languageCode) {
+        super(languageCode);
         this.locale = locale;
         this.languageCode = languageCode;
     }
@@ -25,5 +28,12 @@ public class InternalTranslationsSupplier extends TranslationsSupplier {
 
             return ResourceBundles.fromJar(bundleName, this.locale).join();
         });
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+            .add("languageCode", this.languageCode)
+            .toString();
     }
 }

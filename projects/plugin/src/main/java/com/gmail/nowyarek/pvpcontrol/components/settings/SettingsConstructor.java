@@ -5,7 +5,7 @@ import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigInitializati
 import com.gmail.nowyarek.pvpcontrol.components.configuration.ConfigWithDefaults;
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

@@ -2,7 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.components.logging;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

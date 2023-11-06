@@ -2,8 +2,8 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
 import com.gmail.nowyarek.pvpcontrol.utils.StringVariable;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.util.*;
 
 @Singleton

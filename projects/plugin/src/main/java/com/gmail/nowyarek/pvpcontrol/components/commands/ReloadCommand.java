@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class ReloadCommand extends Command {
     private final Localization localization;

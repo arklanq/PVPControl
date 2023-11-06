@@ -2,7 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.components.settings;
 
 import com.gmail.nowyarek.pvpcontrol.components.logging.PluginLogger;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 public class ViolationsProcessor {

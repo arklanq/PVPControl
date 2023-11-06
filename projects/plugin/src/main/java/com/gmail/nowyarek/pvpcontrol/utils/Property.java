@@ -1,7 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.utils;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 public class Property<T> implements Provider<T> {
     @Nullable
