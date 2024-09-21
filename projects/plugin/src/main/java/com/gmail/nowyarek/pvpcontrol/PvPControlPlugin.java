@@ -1,7 +1,6 @@
 package com.gmail.nowyarek.pvpcontrol;
 
 import com.gmail.nowyarek.pvpcontrol.components.TaskChain.TaskChainModule;
-import com.gmail.nowyarek.pvpcontrol.components.api.API_Module;
 import com.gmail.nowyarek.pvpcontrol.components.combat.CombatModule;
 import com.gmail.nowyarek.pvpcontrol.components.combat.registry.CombatRegistryModule;
 import com.gmail.nowyarek.pvpcontrol.components.commands.CommandsModule;
@@ -25,8 +24,10 @@ public class PvPControlPlugin extends JavaPlugin implements EventSource {
 
     @Override
     public void onEnable() {
+        // Detect stage (aka mode)
         Stage stage = new PluginStageDetector(this.getLogger()).get();
 
+        // Create Guice injector
         try {
             guiceInjector = Guice.createInjector(
                 stage,
@@ -40,8 +41,7 @@ public class PvPControlPlugin extends JavaPlugin implements EventSource {
                 new LocalizationModule(),
                 new CombatRegistryModule(),
                 new CombatModule(),
-                new CommandsModule(),
-                new API_Module()
+                new CommandsModule()
             );
         } catch(Exception e) {
             e.printStackTrace();
@@ -51,19 +51,17 @@ public class PvPControlPlugin extends JavaPlugin implements EventSource {
 
         this.guiceInjector.getInstance(PluginLogger.class).debug("Guice injector created.");
 
-        // Enable.
-        this.eventBus.register(guiceInjector.getInstance(PluginEnableEventListener.class));
-        this.eventBus.post(new PluginEnableEvent(this));
-
+        // Post 'enable' event
+        this.guiceInjector.getInstance(PluginEventsExecutive.class).postEnableEvent();
         this.guiceInjector.getInstance(PluginLogger.class).debug("PluginEnableEvent posted, plugin is fully enabled.");
     }
 
     @Override
     public void onDisable() {
-        // Disable.
+        // If Guice injector is created and available
         if(this.guiceInjector != null) {
-            this.eventBus.register(guiceInjector.getInstance(PluginDisableEventListener.class));
-            this.eventBus.post(new PluginDisableEvent(this));
+            // Post 'disable' event
+            this.guiceInjector.getInstance(PluginEventsExecutive.class).postDisableEvent();
             this.guiceInjector.getInstance(PluginLogger.class).debug("PluginDisableEvent posted, plugin is fully disabled.");
         }
     }

@@ -1,8 +1,7 @@
 package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
-import com.gmail.nowyarek.pvpcontrol.components.resources.ResourceBundles;
-
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import jakarta.inject.Inject;
 
 import java.util.Locale;
@@ -10,23 +9,20 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-public class InternalTranslationsSupplier extends TranslationsSupplier {
-    private final Locale locale;
+public class FallbackTranslationSupplier extends InternalTranslationSupplier {
     private final String languageCode;
 
     @Inject
-    public InternalTranslationsSupplier(Locale locale, @LanguageCode String languageCode) {
-        super(languageCode);
-        this.locale = locale;
+    public FallbackTranslationSupplier(Locale locale, @DefaultLanguageCode String languageCode) {
+        super(locale, languageCode);
         this.languageCode = languageCode;
     }
 
     @Override
     public CompletableFuture<Optional<ResourceBundle>> provideResourceBundle() {
-        return CompletableFuture.supplyAsync(() -> {
-            String bundleName = String.format("lang.%s", this.languageCode);
-
-            return ResourceBundles.fromJar(bundleName, this.locale).join();
+        return super.provideResourceBundle().thenApply((Optional<ResourceBundle> resourceBundle) -> {
+            Preconditions.checkState(resourceBundle.isPresent(), String.format("Fallback translations ResourceBundle (%s) must be available.", languageCode));
+            return resourceBundle;
         });
     }
 

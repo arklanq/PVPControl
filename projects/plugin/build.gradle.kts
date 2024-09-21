@@ -45,29 +45,25 @@ repositories {
 
 // List dependencies
 dependencies {
-    /* Available at runtime classpath (shaded by Bukkit/CraftBukkit) */
-    // Spigot API
+    /* Compile-time only */
+    // Spigot API (provided during runtime by spigot)
     compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
-    // google/guava (provided by spigot)
+    // google/guava (provided during runtime by spigot)
     compileOnly("com.google.guava:guava:32.1.2-jre")
-    // google/jsr305 (provided by spigot -> google/guava)
-    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+    // EssentialsX (optionally available at runtime classpath)
+    compileOnly("net.essentialsx:EssentialsX:2.21.0-SNAPSHOT")
+    // jetbrains/annotations
+    compileOnly("org.jetbrains:annotations:24.0.1")
 
-    /* Own dependencies, shaded into fat-jar */
-    // Internal API library
-    implementation(project(":projects:api"))
-    // Aikar/TaskChain
+    /* Implementation dependencies */
+    // Aikar/TaskChain (shaded)
     implementation("co.aikar:taskchain-bukkit:3.7.2")
-    // google/guice
+    // google/guice (shaded)
     implementation("com.google.inject:guice:7.0.0")
-    // jakarta/inject-api
+    // jakarta/inject-api (shaded)
     implementation("jakarta.inject:jakarta.inject-api:2.0.1")
 
-    /* Optional dependencies on 3rd party plugins */
-    // EssentialsX
-    compileOnly("net.essentialsx:EssentialsX:2.21.0-SNAPSHOT")
-
-    /* Testing libararies */
+    /* Testing dependencies */
     // API against which we are writing tests
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     // An implementation of the junit-platform-engine API that runs JUnit 5 tests.
@@ -91,6 +87,7 @@ tasks.named<ProcessResources>("processResources") {
 tasks.named<Jar>("jar") {
     archiveBaseName.set(rootProject.name)
     archiveFileName.set("${archiveBaseName.get()}-${project.version}.${archiveExtension.get()}")
+    archiveClassifier.set("unshaded")
 
     manifest.attributes.putAll(
         mapOf(
@@ -105,9 +102,13 @@ tasks.named<Jar>("jar") {
 tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set(tasks.getByName<Jar>("jar").archiveBaseName.get())
     archiveFileName.set(tasks.getByName<Jar>("jar").archiveFileName.get())
+    /*
+     * Cannot use .set(null) here because of
+     * https://discuss.kotlinlang.org/t/ambiguous-overload-resolution-when-invoke-extension-function-with-overload-and-generic/27522
+     */
+    archiveClassifier = null
 
     dependencies {
-        include(project(":projects:api"))
         include(dependency("co.aikar:taskchain-bukkit"))
         include(dependency("co.aikar:taskchain-core"))
         include(dependency("com.google.inject:guice"))
@@ -117,6 +118,7 @@ tasks.named<ShadowJar>("shadowJar") {
     }
 
     relocators = listOf<Relocator>(
+        // I don't setup SimpleRelocator for 'api' project as it uses the same package group
         SimpleRelocator(
             "co.aikar.taskchain",
             "com.gmail.nowyarek.pvpcontrol.relocation.co.aikar.taskchain",

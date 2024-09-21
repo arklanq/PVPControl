@@ -2,17 +2,17 @@ package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
 import com.google.common.base.Preconditions;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class TranslationsSupplier {
+public abstract class TranslationSupplier {
     @Nullable
     private volatile ResourceBundle resourceBundle;
     private final String languageCode;
 
-    public TranslationsSupplier(String languageCode) {
+    public TranslationSupplier(String languageCode) {
         this.languageCode = languageCode;
     }
 

@@ -4,7 +4,7 @@ import com.gmail.nowyarek.pvpcontrol.utils.ConfigurationSectionUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

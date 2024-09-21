@@ -8,11 +8,11 @@ import java.util.*;
 
 @Singleton
 public class Localization {
-    private final TranslationsSuppliersExecutive translationsSuppliersExecutive;
+    private final TranslationSuppliersExecutive translationSuppliersExecutive;
 
     @Inject
-    Localization(TranslationsSuppliersExecutive translationsSuppliersExecutive) {
-        this.translationsSuppliersExecutive = translationsSuppliersExecutive;
+    Localization(TranslationSuppliersExecutive translationSuppliersExecutive) {
+        this.translationSuppliersExecutive = translationSuppliersExecutive;
     }
 
     public String t(String key) {
@@ -50,7 +50,7 @@ public class Localization {
     }
 
     public String getString(String key) {
-        return this.translationsSuppliersExecutive.getString(key);
+        return this.translationSuppliersExecutive.getString(key);
     }
 
 }

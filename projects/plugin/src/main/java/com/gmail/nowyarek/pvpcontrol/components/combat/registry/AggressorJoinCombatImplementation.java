@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;

@@ -2,7 +2,7 @@ package com.gmail.nowyarek.pvpcontrol.components.plugin;
 
 import com.google.inject.Stage;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 

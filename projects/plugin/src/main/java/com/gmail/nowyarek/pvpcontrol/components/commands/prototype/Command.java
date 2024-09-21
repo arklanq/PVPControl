@@ -3,7 +3,7 @@ package com.gmail.nowyarek.pvpcontrol.components.commands.prototype;
 import com.google.common.collect.ImmutableSet;
 import org.bukkit.command.CommandSender;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 

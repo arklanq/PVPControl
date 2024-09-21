@@ -5,6 +5,7 @@ import com.gmail.nowyarek.pvpcontrol.components.resources.ResourceBundleComplete
 
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
+
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,7 @@ public class TranslationsValidator {
     private final PluginLogger logger;
     private final Localization localization;
     private final LanguagesDetector languagesDetector;
-    private final TranslationsSuppliersExecutive suppliersExecutive;
+    private final TranslationSuppliersExecutive suppliersExecutive;
     private final String defaultLangCode;
     private final Provider<String> langCodeProvider;
 
@@ -25,7 +26,7 @@ public class TranslationsValidator {
         PluginLogger logger,
         Localization localization,
         LanguagesDetector languagesDetector,
-        TranslationsSuppliersExecutive suppliersExecutive,
+        TranslationSuppliersExecutive suppliersExecutive,
         @DefaultLanguageCode String defaultLangCode,
         @LanguageCode Provider<String> langCodeProvider
     ) {
@@ -43,18 +44,18 @@ public class TranslationsValidator {
             String langCode = this.langCodeProvider.get();
 
             // Get fallback translations supplier
-            TranslationsSupplier fallbackSupplier = (
+            TranslationSupplier fallbackSupplier = (
                 langCode.equalsIgnoreCase(this.defaultLangCode)
-                    ? this.findTranslationsSupplier(InternalTranslationsSupplier.class)
-                    : this.findTranslationsSupplier(FallbackTranslationsSupplier.class)
+                    ? this.findTranslationsSupplier(InternalTranslationSupplier.class)
+                    : this.findTranslationsSupplier(FallbackTranslationSupplier.class)
             ).orElseThrow(
                 () -> new IllegalStateException(String.format("Not found valid fallback translations supplier for language `%s`.", langCode))
             );
 
             // Validate ExternalTranslationsSupplier
-            Optional<TranslationsSupplier> supplier;
+            Optional<TranslationSupplier> supplier;
 
-            if ((supplier = this.findTranslationsSupplier(ExternalTranslationsSupplier.class)).isPresent() && supplier.get().isAvailable()) {
+            if ((supplier = this.findTranslationsSupplier(ExternalTranslationSupplier.class)).isPresent() && supplier.get().isAvailable()) {
                 double completeness = ResourceBundleCompletenessValidator.checkCompletness(
                     Objects.requireNonNull(fallbackSupplier.getResourceBundle()),
                     Objects.requireNonNull(supplier.get().getResourceBundle())
@@ -74,7 +75,7 @@ public class TranslationsValidator {
                             .addVariable("%link%", "https://blabla")
                             .toString()
                     );
-            } else if ((supplier = this.findTranslationsSupplier(InternalTranslationsSupplier.class)).isPresent() && supplier.get().isAvailable()) {
+            } else if ((supplier = this.findTranslationsSupplier(InternalTranslationSupplier.class)).isPresent() && supplier.get().isAvailable()) {
                 double completeness = ResourceBundleCompletenessValidator.checkCompletness(
                     Objects.requireNonNull(fallbackSupplier.getResourceBundle()),
                     Objects.requireNonNull(supplier.get().getResourceBundle())
@@ -102,8 +103,8 @@ public class TranslationsValidator {
         });
     }
 
-    private Optional<TranslationsSupplier> findTranslationsSupplier(Class<? extends TranslationsSupplier> clazz) {
-        return this.suppliersExecutive.getSuppliers().stream()
+    private Optional<TranslationSupplier> findTranslationsSupplier(Class<? extends TranslationSupplier> clazz) {
+        return this.suppliersExecutive.getActiveSuppliers().stream()
             .filter(clazz::isInstance)
             .findFirst();
     }

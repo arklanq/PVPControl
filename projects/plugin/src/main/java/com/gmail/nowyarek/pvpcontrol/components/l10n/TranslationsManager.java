@@ -5,16 +5,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+
 import java.util.concurrent.CompletableFuture;
 
 @Singleton
 public class TranslationsManager {
-    private final TranslationsSuppliersExecutive suppliersExecutive;
+    private final TranslationSuppliersExecutive suppliersExecutive;
     private final TranslationsValidator translationsValidator;
 
-    @Inject @Blocking
+    @Inject
+    @Blocking
     TranslationsManager(
-        TranslationsSuppliersExecutive suppliersExecutive,
+        TranslationSuppliersExecutive suppliersExecutive,
         TranslationsValidator translationsValidator,
         JavaPlugin plugin
     ) {
@@ -26,6 +28,8 @@ public class TranslationsManager {
         } catch (Exception e) {
             e.printStackTrace();
             plugin.onDisable();
+            //TODO: THIS DOESN'T WORK, see scratch notes
+            System.out.println("Disabling in progress...");
         }
     }
 

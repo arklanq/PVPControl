@@ -12,10 +12,10 @@ public class LocalizationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(TranslationsSupplier.class).annotatedWith(Names.named("External")).to(ExternalTranslationsSupplier.class);
-        bind(TranslationsSupplier.class).annotatedWith(Names.named("Internal")).to(InternalTranslationsSupplier.class);
-        bind(TranslationsSupplier.class).annotatedWith(Names.named("Fallback")).to(FallbackTranslationsSupplier.class);
-        bind(TranslationsSuppliersExecutive.class).in(Scopes.SINGLETON);
+        bind(TranslationSupplier.class).annotatedWith(Names.named("External")).to(ExternalTranslationSupplier.class);
+        bind(TranslationSupplier.class).annotatedWith(Names.named("Internal")).to(InternalTranslationSupplier.class);
+        bind(TranslationSupplier.class).annotatedWith(Names.named("Fallback")).to(FallbackTranslationSupplier.class);
+        bind(TranslationSuppliersExecutive.class).in(Scopes.SINGLETON);
         bind(Localization.class).in(Scopes.SINGLETON);
         bind(LanguagesDetector.class);
         bind(TranslationsValidator.class);

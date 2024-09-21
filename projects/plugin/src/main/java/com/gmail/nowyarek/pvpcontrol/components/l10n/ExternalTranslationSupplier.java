@@ -1,35 +1,33 @@
 package com.gmail.nowyarek.pvpcontrol.components.l10n;
 
+import com.gmail.nowyarek.pvpcontrol.components.plugin.PluginDataFolder;
 import com.gmail.nowyarek.pvpcontrol.components.resources.ResourceBundles;
 
 import com.google.common.base.MoreObjects;
 import jakarta.inject.Inject;
-
-import java.util.Locale;
+import java.io.File;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-import static com.google.common.base.Preconditions.checkState;
-
-public class FallbackTranslationsSupplier extends TranslationsSupplier {
+public class ExternalTranslationSupplier extends TranslationSupplier {
+    private final File dataFolder;
     private final String languageCode;
 
     @Inject
-    public FallbackTranslationsSupplier(@DefaultLanguageCode String languageCode) {
+    public ExternalTranslationSupplier(@PluginDataFolder File dataFolder, @LanguageCode String languageCode) {
         super(languageCode);
+        this.dataFolder = dataFolder;
         this.languageCode = languageCode;
     }
 
     @Override
     public CompletableFuture<Optional<ResourceBundle>> provideResourceBundle() {
         return CompletableFuture.supplyAsync(() -> {
-            String bundleName = "lang.en";
-            Optional<ResourceBundle> resourceBundle = ResourceBundles.fromJar(bundleName, Locale.ENGLISH).join();
+            String bundleName = String.format("%s.properties", this.languageCode);
+            File bundleFile = new File(new File(this.dataFolder, "lang"), bundleName);
 
-            checkState(resourceBundle.isPresent(), String.format("Fallback translations ResourceBundle (%s) must be available.", languageCode));
-
-            return resourceBundle;
+            return ResourceBundles.fromFileSystem(bundleFile).join();
         });
     }
 

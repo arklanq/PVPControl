@@ -4,7 +4,7 @@ import com.gmail.nowyarek.pvpcontrol.utils.ConfigurationSectionUtils;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.configuration.ConfigurationSection;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

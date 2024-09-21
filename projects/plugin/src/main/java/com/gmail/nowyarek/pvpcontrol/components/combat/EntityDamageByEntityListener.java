@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import jakarta.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 
